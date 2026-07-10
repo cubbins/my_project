@@ -1,0 +1,17 @@
+
+
+
+
+conda activate torchgpu
+cd C:\Users\cubbi\projects\my_project
+code .
+
+
+git init
+git add .
+git commit -m "Initial commit"
+
+
+gh repo create my_project --public --source=. --remote=origin
+
+git push -u origin main
