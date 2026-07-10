@@ -15,3 +15,7 @@ git commit -m "Initial commit"
 gh repo create my_project --public --source=. --remote=origin
 
 git push -u origin main
+
+git branch
+
+git push -u origin master
