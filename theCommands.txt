@@ -10,7 +10,7 @@ code .
 git init
 git add .
 git commit -m "Initial commit"
-
+git commit -m "7_10_2026 5:32PM"
 
 gh repo create my_project --public --source=. --remote=origin
 
@@ -23,6 +23,6 @@ git push -u origin master
 
 git add .
 
-
+it's push to master, not main
 git commit -m "Add new files and directories"
 git push -u origin master
