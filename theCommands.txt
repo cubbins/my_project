@@ -19,3 +19,10 @@ git push -u origin main
 git branch
 
 git push -u origin master
+
+
+git add .
+
+
+git commit -m "Add new files and directories"
+git push -u origin master

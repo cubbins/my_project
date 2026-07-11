@@ -1,0 +1,33 @@
+Done.
+
+[Download `essay_7_7_10_09_dynamic_thought_memory.py`](sandbox:/mnt/data/essay_7_7_10_09_dynamic_thought_memory.py)
+
+What changed:
+
+* Added a fictitious **“time of thought”** metric.
+* Times each neural-network call from invocation to response.
+* Saves `thought_seconds`, `thought_weight`, prompt size, and output size into the memory JSONL.
+* Reloaded memory now includes those timing labels.
+* Each run writes:
+
+  * `memory_thought_report.md`
+  * `memory_thought_report.json`
+
+Run it the same way, with memory enabled:
+
+```bash
+python essay_7_7_10_09_dynamic_thought_memory.py \
+  --field literary_fiction \
+  --topic "A man in debt wanders through the city while arguing with his own conscience" \
+  --pdfs dostoevsky_pdfs \
+  --mode literary_influence \
+  --style_author dostoevsky \
+  --backend local \
+  --model Qwen/Qwen2.5-3B-Instruct \
+  --output_dir dostoevsky_influenced_run \
+  --output psychological_essay.md \
+  --top_k 2 \
+  --max_context_chars 7000 \
+  --max_new_tokens 700 \
+  --use_instruction_memory
+```

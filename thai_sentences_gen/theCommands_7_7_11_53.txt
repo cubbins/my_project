@@ -1,0 +1,26 @@
+Implemented the update here:
+
+[Download `essay_7_7_10_09_dynamic_thought_memory_audit.py`](sandbox:/mnt/data/essay_7_7_10_09_dynamic_thought_memory_audit.py)
+
+It now writes these additional per-run files:
+
+```text
+memory_composition_report.md
+memory_composition_report.json
+memory_inserted_pieces.txt
+```
+
+These show:
+
+* which saved memory pieces were inserted into each LLM call,
+* source call type and source run ID,
+* retained characters versus original characters,
+* memory fraction of the augmented prompt,
+* thought seconds and thought weight reused from memory.
+
+Run as before with:
+
+```bash
+python essay_7_7_10_09_dynamic_thought_memory_audit.py ... --use_instruction_memory
+```
+Show by producing an output to the disk, the 'pieces' that were combined from memory to the existing object string, to identify the type and the degree of memory retention employed in a particular run, what Python code performs and is needed to update the current version

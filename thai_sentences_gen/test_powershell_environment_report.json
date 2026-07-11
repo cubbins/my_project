@@ -1,0 +1,335 @@
+{
+  "timestamp": "2026-07-08T21:59:48",
+  "current_directory": "/home/cubbi/thai_sentences_gen",
+  "python": {
+    "version": "3.10.19",
+    "executable": "/home/cubbi/anaconda3/envs/transformerLense_new/bin/python3"
+  },
+  "platform": {
+    "system": "Linux",
+    "release": "6.6.87.2-microsoft-standard-WSL2",
+    "machine": "x86_64",
+    "node": "powerpc"
+  },
+  "environment_variables_subset": {
+    "USER": "cubbi",
+    "HOME": "/home/cubbi",
+    "SHELL": "/bin/bash",
+    "PATH": "/home/cubbi/anaconda3/envs/transformerLense_new/bin:/opt/intel/oneapi/vtune/2025.10/bin64:/opt/intel/oneapi/mpi/2021.17/bin:/opt/intel/oneapi/mkl/2025.3/bin:/opt/intel/oneapi/ishmem/1.5/bin:/opt/intel/oneapi/dpcpp-ct/2025.3/bin:/opt/intel/oneapi/dev-utilities/2025.3/bin:/opt/intel/oneapi/debugger/2025.3/opt/debugger/bin:/opt/intel/oneapi/compiler/2025.3/bin:/opt/intel/oneapi/advisor/2025.4/bin64:/mnt/c/Users/cubbi/AppData/Local/Programs/Microsoft VS Code/bin:/home/cubbi/.vscode-server/bin/4fe60c8b1cdac1c4c174f2fb180d0d758272d713/bin/remote-cli:/home/cubbi/anaconda3/condabin:/home/cubbi/verilator/bin:/usr/local/cuda-13.2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/VulkanSDK/1.4.309.0/Bin:/mnt/c/VulkanSDK/1.4.341.1/Bin:/mnt/c/Users/cubbi/anaconda3:/mnt/c/Users/cubbi/anaconda3/Library/mingw-w64/bin:/mnt/c/Users/cubbi/anaconda3/Library/usr/bin:/mnt/c/Users/cubbi/anaconda3/Library/bin:/mnt/c/Users/cubbi/anaconda3/Scripts:/mnt/c/Users/cubbi/anaconda3/bin:/mnt/c/Users/cubbi/anaconda3/condabin:/mnt/c/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64:/mnt/c/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0:/mnt/c/Windows/System32/OpenSSH:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/Wolfram Research/WolframScript:/mnt/c/Program Files/Microsoft SQL Server/170/Tools/Binn:/mnt/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn:/mnt/c/Program Files/dotnet:/mnt/c/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit:/mnt/c/Users/cubbi/AppData/Local/Muse Hub/lib:/mnt/c/Program Files/nodejs:/mnt/c/Program Files/LLVM/bin:/mnt/c/Program Files/CMake/bin:/mnt/c/poppler-26.02.0/Library/bin:/mnt/c/Program Files (x86)/Wolfram Research/WolframScript:/mnt/c/Program Files/Tesseract-OCR:/mnt/c/Users/cubbi/AppData/Local/Muse Hub/lib:/mnt/c/Users/cubbi/anaconda3/envs/torchgpu:/mnt/c/Users/cubbi/anaconda3/envs/torchgpu/Library/mingw-w64/bin:/mnt/c/Users/cubbi/anaconda3/envs/torchgpu/Library/usr/bin:/mnt/c/Users/cubbi/anaconda3/envs/torchgpu/Library/bin:/mnt/c/Users/cubbi/anaconda3/envs/torchgpu/Scripts:/mnt/c/Users/cubbi/anaconda3/envs/torchgpu/bin:/mnt/c/VulkanSDK/1.4.309.0/Bin:/mnt/c/VulkanSDK/1.4.341.1/Bin:/mnt/c/Users/cubbi/anaconda3:/mnt/c/Users/cubbi/anaconda3/Library/mingw-w64/bin:/mnt/c/Users/cubbi/anaconda3/Library/usr/bin:/mnt/c/Users/cubbi/anaconda3/Library/bin:/mnt/c/Users/cubbi/anaconda3/Scripts:/mnt/c/Users/cubbi/anaconda3/bin:/mnt/c/Users/cubbi/anaconda3/condabin:/mnt/c/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/x64:/mnt/c/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0:/mnt/c/Windows/System32/OpenSSH:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Program Files/Git:/mnt/c/Program Files/Tesseract-OCR:/mnt/c/Users/cubbi/AppData/Local/Programs/MiKTeX/miktex/bin/x64:/mnt/c/Users/cubbi/AppData/Local/Programs/Ollama:/mnt/c/Users/cubbi/.dotnet/tools:/snap/bin:/home/cubbi/.dotnet/tools:/opt/mssql-tools18/bin:/home/cubbi/cad/eda-magic/glnxa64/bin:/home/cubbi/llama.cpp/build/bin",
+    "LANG": "C.UTF-8",
+    "VIRTUAL_ENV": null,
+    "CONDA_DEFAULT_ENV": "transformerLense_new",
+    "WSL_DISTRO_NAME": "Ubuntu-22.04-Blackwell"
+  },
+  "powershell": {
+    "available": true,
+    "path": "/usr/bin/pwsh",
+    "version": {
+      "command": "pwsh -NoProfile -Command $PSVersionTable | ConvertTo-Json -Depth 4",
+      "returncode": 0,
+      "stdout": "{\n  \"PSEdition\": \"Core\",\n  \"WSManStackVersion\": {\n    \"Major\": 3,\n    \"Minor\": 0,\n    \"Build\": -1,\n    \"Revision\": -1,\n    \"MajorRevision\": -1,\n    \"MinorRevision\": -1\n  },\n  \"Platform\": \"Unix\",\n  \"PSVersion\": {\n    \"Major\": 7,\n    \"Minor\": 6,\n    \"Patch\": 3,\n    \"PreReleaseLabel\": null,\n    \"BuildLabel\": null\n  },\n  \"PSRemotingProtocolVersion\": {\n    \"Major\": 2,\n    \"Minor\": 4,\n    \"Build\": -1,\n    \"Revision\": -1,\n    \"MajorRevision\": -1,\n    \"MinorRevision\": -1\n  },\n  \"GitCommitId\": \"7.6.3\",\n  \"PSCompatibleVersions\": [\n    {\n      \"Major\": 1,\n      \"Minor\": 0,\n      \"Build\": -1,\n      \"Revision\": -1,\n      \"MajorRevision\": -1,\n      \"MinorRevision\": -1\n    },\n    {\n      \"Major\": 2,\n      \"Minor\": 0,\n      \"Build\": -1,\n      \"Revision\": -1,\n      \"MajorRevision\": -1,\n      \"MinorRevision\": -1\n    },\n    {\n      \"Major\": 3,\n      \"Minor\": 0,\n      \"Build\": -1,\n      \"Revision\": -1,\n      \"MajorRevision\": -1,\n      \"MinorRevision\": -1\n    },\n    {\n      \"Major\": 4,\n      \"Minor\": 0,\n      \"Build\": -1,\n      \"Revision\": -1,\n      \"MajorRevision\": -1,\n      \"MinorRevision\": -1\n    },\n    {\n      \"Major\": 5,\n      \"Minor\": 0,\n      \"Build\": -1,\n      \"Revision\": -1,\n      \"MajorRevision\": -1,\n      \"MinorRevision\": -1\n    },\n    {\n      \"Major\": 5,\n      \"Minor\": 1,\n      \"Build\": -1,\n      \"Revision\": -1,\n      \"MajorRevision\": -1,\n      \"MinorRevision\": -1\n    },\n    {\n      \"Major\": 6,\n      \"Minor\": 0,\n      \"Build\": -1,\n      \"Revision\": -1,\n      \"MajorRevision\": -1,\n      \"MinorRevision\": -1\n    },\n    {\n      \"Major\": 7,\n      \"Minor\": 0,\n      \"Build\": -1,\n      \"Revision\": -1,\n      \"MajorRevision\": -1,\n      \"MinorRevision\": -1\n    }\n  ],\n  \"SerializationVersion\": {\n    \"Major\": 1,\n    \"Minor\": 1,\n    \"Build\": 0,\n    \"Revision\": 1,\n    \"MajorRevision\": 0,\n    \"MinorRevision\": 1\n  },\n  \"OS\": \"Ubuntu 22.04.5 LTS\"\n}",
+      "stderr": ""
+    }
+  },
+  "linux_security_environment": {
+    "whoami": {
+      "command": "pwsh -NoProfile -Command whoami",
+      "returncode": 0,
+      "stdout": "cubbi",
+      "stderr": ""
+    },
+    "id": {
+      "command": "pwsh -NoProfile -Command id",
+      "returncode": 0,
+      "stdout": "uid=1000(cubbi) gid=1000(cubbi) groups=1000(cubbi),4(adm),20(dialout),24(cdrom),25(floppy),27(sudo),29(audio),30(dip),44(video),46(plugdev),117(netdev),999(ollama),1001(docker)",
+      "stderr": ""
+    },
+    "sudo_access_check": {
+      "command": "pwsh -NoProfile -Command sudo -n true 2>$null; if ($LASTEXITCODE -eq 0) { 'sudo without password: yes' } else { 'sudo without password: no or unavailable' }",
+      "returncode": 0,
+      "stdout": "sudo without password: yes",
+      "stderr": ""
+    },
+    "groups": {
+      "command": "pwsh -NoProfile -Command groups",
+      "returncode": 0,
+      "stdout": "cubbi adm dialout cdrom floppy sudo audio dip video plugdev netdev ollama docker",
+      "stderr": ""
+    },
+    "umask": {
+      "command": "pwsh -NoProfile -Command umask",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "\u001b[31;1mumask: \u001b[31;1mThe term 'umask' is not recognized as a name of a cmdlet, function, script file, or executable program.\u001b[0m\n\u001b[31;1m\u001b[31;1mCheck the spelling of the name, or if a path was included, verify that the path is correct and try again.\u001b[0m"
+    },
+    "capabilities": {
+      "command": "pwsh -NoProfile -Command getcap -r /usr/bin /bin 2>$null | Select-Object -First 50",
+      "returncode": 0,
+      "stdout": "/usr/bin/ping cap_net_raw=ep\n/usr/bin/mtr-packet cap_net_raw=ep",
+      "stderr": ""
+    },
+    "listening_processes": {
+      "command": "pwsh -NoProfile -Command ss -tulpn 2>$null | Select-Object -First 100",
+      "returncode": 0,
+      "stdout": "Netid State  Recv-Q Send-Q  Local Address:Port  Peer Address:PortProcess                               \nudp   UNCONN 0      0       127.0.0.53%lo:53         0.0.0.0:*                                         \nudp   UNCONN 0      0      10.255.255.254:53         0.0.0.0:*                                         \nudp   UNCONN 0      0           127.0.0.1:323        0.0.0.0:*                                         \nudp   UNCONN 0      0               [::1]:323           [::]:*                                         \ntcp   LISTEN 0      1000   10.255.255.254:53         0.0.0.0:*                                         \ntcp   LISTEN 0      511         127.0.0.1:44220      0.0.0.0:*    users:((\"MainThread\",pid=5624,fd=44))\ntcp   LISTEN 0      4096        127.0.0.1:11434      0.0.0.0:*                                         \ntcp   LISTEN 0      128           0.0.0.0:22         0.0.0.0:*                                         \ntcp   LISTEN 0      4096          0.0.0.0:631        0.0.0.0:*                                         \ntcp   LISTEN 0      511         127.0.0.1:60189      0.0.0.0:*    users:((\"MainThread\",pid=3537,fd=48))\ntcp   LISTEN 0      4096    127.0.0.53%lo:53         0.0.0.0:*                                         \ntcp   LISTEN 0      511         127.0.0.1:36705      0.0.0.0:*    users:((\"MainThread\",pid=2548,fd=22))\ntcp   LISTEN 0      128              [::]:22            [::]:*                                         \ntcp   LISTEN 0      4096             [::]:631           [::]:*",
+      "stderr": ""
+    },
+    "firewall_ufw": {
+      "command": "pwsh -NoProfile -Command sudo ufw status 2>$null",
+      "returncode": 0,
+      "stdout": "Status: inactive",
+      "stderr": ""
+    },
+    "apparmor_status": {
+      "command": "pwsh -NoProfile -Command aa-status 2>$null",
+      "returncode": 1,
+      "stdout": "apparmor module is loaded.",
+      "stderr": ""
+    }
+  },
+  "network_environment": {
+    "hostname": {
+      "command": "pwsh -NoProfile -Command hostname",
+      "returncode": 0,
+      "stdout": "powerpc",
+      "stderr": ""
+    },
+    "ip_addresses": {
+      "command": "pwsh -NoProfile -Command ip addr",
+      "returncode": 0,
+      "stdout": "1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000\n    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00\n    inet 127.0.0.1/8 scope host lo\n       valid_lft forever preferred_lft forever\n    inet 10.255.255.254/32 brd 10.255.255.254 scope global lo\n       valid_lft forever preferred_lft forever\n    inet6 ::1/128 scope host \n       valid_lft forever preferred_lft forever\n2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000\n    link/ether 00:15:5d:85:2c:0e brd ff:ff:ff:ff:ff:ff\n    inet 172.31.176.106/20 brd 172.31.191.255 scope global eth0\n       valid_lft forever preferred_lft forever\n    inet6 fe80::215:5dff:fe85:2c0e/64 scope link \n       valid_lft forever preferred_lft forever",
+      "stderr": ""
+    },
+    "routes": {
+      "command": "pwsh -NoProfile -Command ip route",
+      "returncode": 0,
+      "stdout": "default via 172.31.176.1 dev eth0 proto kernel \n172.31.176.0/20 dev eth0 proto kernel scope link src 172.31.176.106",
+      "stderr": ""
+    },
+    "dns": {
+      "command": "pwsh -NoProfile -Command cat /etc/resolv.conf",
+      "returncode": 0,
+      "stdout": "# This file was automatically generated by WSL. To stop automatic generation of this file, add the following entry to /etc/wsl.conf:\n# [network]\n# generateResolvConf = false\nnameserver 10.255.255.254\nsearch hsd1.wa.comcast.net",
+      "stderr": ""
+    },
+    "open_connections": {
+      "command": "pwsh -NoProfile -Command ss -tunap 2>$null | Select-Object -First 100",
+      "returncode": 0,
+      "stdout": "Netid State  Recv-Q Send-Q  Local Address:Port  Peer Address:Port Process                               \nudp   UNCONN 0      0       127.0.0.53%lo:53         0.0.0.0:*                                          \nudp   UNCONN 0      0      10.255.255.254:53         0.0.0.0:*                                          \nudp   UNCONN 0      0           127.0.0.1:323        0.0.0.0:*                                          \nudp   UNCONN 0      0               [::1]:323           [::]:*                                          \ntcp   LISTEN 0      1000   10.255.255.254:53         0.0.0.0:*                                          \ntcp   LISTEN 0      511         127.0.0.1:44220      0.0.0.0:*     users:((\"MainThread\",pid=5624,fd=44))\ntcp   LISTEN 0      4096        127.0.0.1:11434      0.0.0.0:*                                          \ntcp   LISTEN 0      128           0.0.0.0:22         0.0.0.0:*                                          \ntcp   LISTEN 0      4096          0.0.0.0:631        0.0.0.0:*                                          \ntcp   LISTEN 0      511         127.0.0.1:60189      0.0.0.0:*     users:((\"MainThread\",pid=3537,fd=48))\ntcp   LISTEN 0      4096    127.0.0.53%lo:53         0.0.0.0:*                                          \ntcp   LISTEN 0      511         127.0.0.1:36705      0.0.0.0:*     users:((\"MainThread\",pid=2548,fd=22))\ntcp   ESTAB  0      0           127.0.0.1:36705    127.0.0.1:38890 users:((\"MainThread\",pid=2548,fd=26))\ntcp   ESTAB  0      0           127.0.0.1:52384    127.0.0.1:36705 users:((\"MainThread\",pid=5028,fd=22))\ntcp   ESTAB  0      0           127.0.0.1:52370    127.0.0.1:36705 users:((\"MainThread\",pid=5019,fd=22))\ntcp   ESTAB  0      0           127.0.0.1:36705    127.0.0.1:52384 users:((\"MainThread\",pid=5046,fd=22))\ntcp   ESTAB  0      0           127.0.0.1:38892    127.0.0.1:36705 users:((\"MainThread\",pid=2571,fd=22))\ntcp   ESTAB  0      0           127.0.0.1:36705    127.0.0.1:38892 users:((\"MainThread\",pid=3169,fd=22))\ntcp   ESTAB  0      0           127.0.0.1:38890    127.0.0.1:36705 users:((\"MainThread\",pid=2562,fd=22))\ntcp   ESTAB  0      0           127.0.0.1:36705    127.0.0.1:52370 users:((\"MainThread\",pid=2548,fd=29))\ntcp   LISTEN 0      128              [::]:22            [::]:*                                          \ntcp   LISTEN 0      4096             [::]:631           [::]:*",
+      "stderr": ""
+    }
+  },
+  "filesystem_environment": {
+    "pwd": {
+      "command": "pwsh -NoProfile -Command Get-Location",
+      "returncode": 0,
+      "stdout": "\u001b[32;1mPath\u001b[0m\n\u001b[32;1m----\u001b[0m\n/home/cubbi/thai_sentences_gen",
+      "stderr": ""
+    },
+    "directory_listing": {
+      "command": "pwsh -NoProfile -Command Get-ChildItem -Force | Select-Object Mode,Length,LastWriteTime,Name | ConvertTo-Json -Depth 3",
+      "returncode": 0,
+      "stdout": "[\n  {\n    \"Mode\": \"d----\",\n    \"Length\": null,\n    \"LastWriteTime\": \"2026-07-07T10:30:54.9264361-07:00\",\n    \"Name\": \"__pycache__\"\n  },\n  {\n    \"Mode\": \"d----\",\n    \"Length\": null,\n    \"LastWriteTime\": \"2026-07-08T06:54:36.5032196-07:00\",\n    \"Name\": \"dostoevsky_influenced_run\"\n  },\n  {\n    \"Mode\": \"d----\",\n    \"Length\": null,\n    \"LastWriteTime\": \"2026-07-07T00:09:28.266304-07:00\",\n    \"Name\": \"dostoevsky_pdfs\"\n  },\n  {\n    \"Mode\": \"d----\",\n    \"Length\": null,\n    \"LastWriteTime\": \"2026-07-06T12:18:11.2731496-07:00\",\n    \"Name\": \"essay_output\"\n  },\n  {\n    \"Mode\": \"d----\",\n    \"Length\": null,\n    \"LastWriteTime\": \"2026-07-06T22:10:18.895874-07:00\",\n    \"Name\": \"hesse_influenced_run\"\n  },\n  {\n    \"Mode\": \"d----\",\n    \"Length\": null,\n    \"LastWriteTime\": \"2026-07-06T21:34:26.2560677-07:00\",\n    \"Name\": \"hesse_pdfs\"\n  },\n  {\n    \"Mode\": \"d----\",\n    \"Length\": null,\n    \"LastWriteTime\": \"2026-07-07T11:28:56.0315041-07:00\",\n    \"Name\": \"instruction_memory\"\n  },\n  {\n    \"Mode\": \"d----\",\n    \"Length\": null,\n    \"LastWriteTime\": \"2026-07-06T09:08:13.4826905-07:00\",\n    \"Name\": \"jpg_pages\"\n  },\n  {\n    \"Mode\": \"d----\",\n    \"Length\": null,\n    \"LastWriteTime\": \"2026-07-06T08:16:56.8940852-07:00\",\n    \"Name\": \"latex_outputs\"\n  },\n  {\n    \"Mode\": \"d----\",\n    \"Length\": null,\n    \"LastWriteTime\": \"2026-07-07T12:27:09.8358256-07:00\",\n    \"Name\": \"memory_composition_analysis\"\n  },\n  {\n    \"Mode\": \"d----\",\n    \"Length\": null,\n    \"LastWriteTime\": \"2026-07-08T07:05:50.2674494-07:00\",\n    \"Name\": \"memory_thought_analysis\"\n  },\n  {\n    \"Mode\": \"d----\",\n    \"Length\": null,\n    \"LastWriteTime\": \"2026-07-07T13:48:27.0693555-07:00\",\n    \"Name\": \"memory_thought_report_analysis\"\n  },\n  {\n    \"Mode\": \"d----\",\n    \"Length\": null,\n    \"LastWriteTime\": \"2026-07-06T11:19:50.5638333-07:00\",\n    \"Name\": \"papers\"\n  },\n  {\n    \"Mode\": \"d----\",\n    \"Length\": null,\n    \"LastWriteTime\": \"2026-07-07T10:03:57.9515271-07:00\",\n    \"Name\": \"PythonClassFactory\"\n  },\n  {\n    \"Mode\": \"d----\",\n    \"Length\": null,\n    \"LastWriteTime\": \"2026-07-06T10:00:57.5712062-07:00\",\n    \"Name\": \"qwen_vl_outputs\"\n  },\n  {\n    \"Mode\": \"d----\",\n    \"Length\": null,\n    \"LastWriteTime\": \"2026-07-05T20:55:23.372017-07:00\",\n    \"Name\": \"reports\"\n  },\n  {\n    \"Mode\": \"d----\",\n    \"Length\": null,\n    \"LastWriteTime\": \"2026-07-06T20:33:50.6734612-07:00\",\n    \"Name\": \"save_txt_html\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 17366,\n    \"LastWriteTime\": \"2026-07-08T07:05:43.7594395-07:00\",\n    \"Name\": \"analyze_memory_7_8_7_00.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 13016,\n    \"LastWriteTime\": \"2026-07-07T12:27:04.3432228-07:00\",\n    \"Name\": \"analyze_memory_composition_report.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 17202,\n    \"LastWriteTime\": \"2026-07-07T13:47:17.9759838-07:00\",\n    \"Name\": \"analyze_memory_thought_report.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 5511,\n    \"LastWriteTime\": \"2026-07-06T11:04:09.5600153-07:00\",\n    \"Name\": \"calculator_problem_14.3.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 26528,\n    \"LastWriteTime\": \"2026-07-07T10:46:44.3488823-07:00\",\n    \"Name\": \"essay_7_7_10_09_dynamic_edited.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 23950,\n    \"LastWriteTime\": \"2026-07-07T10:30:28.7938825-07:00\",\n    \"Name\": \"essay_7_7_10_09_dynamic_fixed.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 30907,\n    \"LastWriteTime\": \"2026-07-07T11:25:25.2014615-07:00\",\n    \"Name\": \"essay_7_7_10_09_dynamic_memory.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 49874,\n    \"LastWriteTime\": \"2026-07-07T11:55:37.5834454-07:00\",\n    \"Name\": \"essay_7_7_10_09_dynamic_thought_memory_audit.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 35727,\n    \"LastWriteTime\": \"2026-07-07T11:42:25.5083584-07:00\",\n    \"Name\": \"essay_7_7_10_09_dynamic_thought_memory.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 23950,\n    \"LastWriteTime\": \"2026-07-07T10:30:42.8413299-07:00\",\n    \"Name\": \"essay_7_7_10_09_dynamic.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 35093,\n    \"LastWriteTime\": \"2026-07-07T10:12:16.2982884-07:00\",\n    \"Name\": \"essay_7_7_6_24AM.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 50382,\n    \"LastWriteTime\": \"2026-07-08T06:51:33.8795022-07:00\",\n    \"Name\": \"essay_7_8_6_48.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 13091,\n    \"LastWriteTime\": \"2026-07-08T07:02:22.7714518-07:00\",\n    \"Name\": \"essay_generator__7_8_7_00.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 13091,\n    \"LastWriteTime\": \"2026-07-07T10:30:03.7365919-07:00\",\n    \"Name\": \"essay_generator_class_fixed.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 13091,\n    \"LastWriteTime\": \"2026-07-07T10:30:42.8413299-07:00\",\n    \"Name\": \"essay_generator_class.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 18723,\n    \"LastWriteTime\": \"2026-07-06T12:15:00.5094381-07:00\",\n    \"Name\": \"essay_generator.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 34045,\n    \"LastWriteTime\": \"2026-07-07T06:51:34.4870476-07:00\",\n    \"Name\": \"essay_generator2_corrected_fixed.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 26537,\n    \"LastWriteTime\": \"2026-07-07T00:11:59.1150747-07:00\",\n    \"Name\": \"essay_generator2_corrected.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 21258,\n    \"LastWriteTime\": \"2026-07-06T21:57:29.6719382-07:00\",\n    \"Name\": \"essay_generator2.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 2999,\n    \"LastWriteTime\": \"2026-07-06T07:43:53.6654448-07:00\",\n    \"Name\": \"formulas_on_page.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 6471,\n    \"LastWriteTime\": \"2026-07-06T08:14:07.9737546-07:00\",\n    \"Name\": \"generalized_jpg_to_latex.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 9289,\n    \"LastWriteTime\": \"2026-07-08T07:03:59.5754211-07:00\",\n    \"Name\": \"generalized_ocr_7_8_7_00.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 9289,\n    \"LastWriteTime\": \"2026-07-06T09:08:29.8967686-07:00\",\n    \"Name\": \"generalized_qwen_vl_ocr.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 4658,\n    \"LastWriteTime\": \"2026-07-05T22:29:09.9186685-07:00\",\n    \"Name\": \"legal_rewrite_html.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 3217,\n    \"LastWriteTime\": \"2026-07-05T21:47:42.0786824-07:00\",\n    \"Name\": \"legal_rewrite.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 5924,\n    \"LastWriteTime\": \"2026-07-05T19:42:21.2543365-07:00\",\n    \"Name\": \"Local_LLaMA‑Tha.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 6358,\n    \"LastWriteTime\": \"2026-07-05T18:27:52.9816183-07:00\",\n    \"Name\": \"Local_LLaMA‑Tha2.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 162155,\n    \"LastWriteTime\": \"2026-07-07T12:30:59.0296966-07:00\",\n    \"Name\": \"memory_thought_report.json\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 155512,\n    \"LastWriteTime\": \"2026-07-05T23:05:27.8726701-07:00\",\n    \"Name\": \"page_13.jpg\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 4658,\n    \"LastWriteTime\": \"2026-07-05T22:34:39.6843448-07:00\",\n    \"Name\": \"simplify_public_text_qwen_html.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 60688,\n    \"LastWriteTime\": \"2026-07-08T20:48:21.5036394-07:00\",\n    \"Name\": \"temp.txt\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 54037,\n    \"LastWriteTime\": \"2026-07-08T21:32:52.3465718-07:00\",\n    \"Name\": \"test_powershell_environment_report.json\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 9462,\n    \"LastWriteTime\": \"2026-07-08T20:47:04.9759011-07:00\",\n    \"Name\": \"test_powerShell_save.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 19154,\n    \"LastWriteTime\": \"2026-07-08T21:32:20.8634906-07:00\",\n    \"Name\": \"test_powerShell.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 2242,\n    \"LastWriteTime\": \"2026-07-07T11:27:49.852993-07:00\",\n    \"Name\": \"theCommands_7_7_11_26.txt\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 1034,\n    \"LastWriteTime\": \"2026-07-07T11:43:09.5400659-07:00\",\n    \"Name\": \"theCommands_7_7_11_42.txt\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 958,\n    \"LastWriteTime\": \"2026-07-07T11:53:57.3293363-07:00\",\n    \"Name\": \"theCommands_7_7_11_53.txt\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 0,\n    \"LastWriteTime\": \"2026-07-07T12:25:41.7657579-07:00\",\n    \"Name\": \"theCommands_7_7_12_25.txt\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 341,\n    \"LastWriteTime\": \"2026-07-08T07:27:21.6353657-07:00\",\n    \"Name\": \"theCommands_7_8_7_26.txt\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 7717,\n    \"LastWriteTime\": \"2026-07-05T18:51:49.483924-07:00\",\n    \"Name\": \"word-spaced_segmented.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 10222,\n    \"LastWriteTime\": \"2026-07-05T18:59:24.9072102-07:00\",\n    \"Name\": \"word-spaced_segmented2.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 13414,\n    \"LastWriteTime\": \"2026-07-05T19:07:07.3901647-07:00\",\n    \"Name\": \"word-spaced_segmented3.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 13482,\n    \"LastWriteTime\": \"2026-07-05T19:11:34.3598485-07:00\",\n    \"Name\": \"word-spaced_segmented4.py\"\n  },\n  {\n    \"Mode\": \"-----\",\n    \"Length\": 19726,\n    \"LastWriteTime\": \"2026-07-05T20:54:52.5918859-07:00\",\n    \"Name\": \"word-spaced_segmented5.py\"\n  }\n]",
+      "stderr": ""
+    },
+    "mnt_c_listing": {
+      "command": "pwsh -NoProfile -Command ls -la /mnt/c",
+      "returncode": 1,
+      "stdout": "total 4677300\ndrwxrwxrwx 1 cubbi cubbi       4096 Mar  7 13:16 $Recycle.Bin\ndrwxrwxrwx 1 cubbi cubbi       4096 Jul  8 20:10 .\ndrwxr-xr-x 6 root  root        4096 Mar 22 15:25 ..\ndrwxrwxrwx 1 cubbi cubbi       4096 May  6 19:55 Audacity_files_audio\ndrwxrwxrwx 1 cubbi cubbi       4096 Mar 13 17:08 Backups3_saveThis_One\nlrwxrwxrwx 1 cubbi cubbi         12 Jul 16  2024 Documents and Settings -> /mnt/c/Users\n-????????? ? ?     ?              ?            ? DumpStack.log.tmp\ndrwxrwxrwx 1 cubbi cubbi       4096 May  6 22:07 Jts\ndrwxrwxrwx 1 cubbi cubbi       4096 May 11 10:27 Mathematica_11.2.0_WIN\n-rwxrwxrwx 1 cubbi cubbi 3565970199 May 11 10:18 Mathematica_11.2.0_WIN.zip\ndrwxrwxrwx 1 cubbi cubbi       4096 May 25 13:07 Models\ndrwxrwxrwx 1 cubbi cubbi       4096 Mar  7 12:35 OneDriveTemp\ndrwxrwxrwx 1 cubbi cubbi       4096 Apr  1  2024 PerfLogs\ndr-xr-xr-x 1 cubbi cubbi       4096 Jun 16 09:53 Program Files\ndr-xr-xr-x 1 cubbi cubbi       4096 May 11 10:32 Program Files (x86)\ndrwxrwxrwx 1 cubbi cubbi       4096 Jun 16 09:53 ProgramData\nd--x--x--x 1 cubbi cubbi       4096 Jul 16  2024 Recovery\ndrwxrwxrwx 1 cubbi cubbi       4096 Jun  9 08:39 Robert_Pape\ndrwxrwxrwx 1 cubbi cubbi       4096 Mar 30 08:01 SQL2025\ndrwxrwxrwx 1 cubbi cubbi       4096 Mar 22 15:24 Spice_general\nd--x--x--x 1 cubbi cubbi       4096 Jul  8 12:09 System Volume Information\ndr-xr-xr-x 1 cubbi cubbi       4096 Mar  7 12:47 Users\ndrwxrwxrwx 1 cubbi cubbi       4096 May  4 05:46 VoiceTypr_1.12.3_aarch64.app\n-rwxrwxrwx 1 cubbi cubbi   57450090 May  4 05:45 VoiceTypr_1.12.3_aarch64.app.tar.gz\ndrwxrwxrwx 1 cubbi cubbi       4096 May  4 05:47 VoiceTypr_1.12.3_x86_64.app\n-rwxrwxrwx 1 cubbi cubbi   68214688 May  4 05:47 VoiceTypr_1.12.3_x86_64.app.tar.gz\ndrwxrwxrwx 1 cubbi cubbi       4096 May  4 22:37 VulkanSDK\ndrwxrwxrwx 1 cubbi cubbi       4096 Apr  8 17:33 WSL\ndrwxrwxrwx 1 cubbi cubbi       4096 Jun 12 21:41 Walsh\ndr-xr-xr-x 1 cubbi cubbi       4096 Jul  3 09:56 Windows\ndrwxrwxrwx 1 cubbi cubbi       4096 Jun 13 00:17 _5_16_17_18_2026\ndrwxrwxrwx 1 cubbi cubbi       4096 Jun 12 21:32 _6_11_Class_Downloads_CSE599\ndrwxrwxrwx 1 cubbi cubbi       4096 Jul  8 20:37 __CloudDeployment_dslabs\ndrwxrwxrwx 1 cubbi cubbi       4096 Jun  8 19:11 ___LANG_language_pdfs\ndrwxrwxrwx 1 cubbi cubbi       4096 Jul  4 15:58 ____ScannedFiles_10_21_2023_Valvano_Ts\ndrwxrwxrwx 1 cubbi cubbi       4096 Jul  5 08:59 _____Summer_legal_class\ndrwxrwxrwx 1 cubbi cubbi       4096 May 16 10:09 ________desktop_2_5_2026_new_RAZ\ndrwxrwxrwx 1 cubbi cubbi       4096 May 20 07:45 ___newPDFs_11_26_2024_Turnovsky\ndrwxrwxrwx 1 cubbi cubbi       4096 May  1 09:02 __desktop_4_30_2026\ndrwxrwxrwx 1 cubbi cubbi       4096 May 16 09:18 _desktop_3_7_2026\ndrwxrwxrwx 1 cubbi cubbi       4096 Apr  9 09:00 _french_history\ndrwxrwxrwx 1 cubbi cubbi       4096 May 25 22:06 _newAI_study_\ndrwxrwxrwx 1 cubbi cubbi       4096 Jul  4 15:48 _scrollable_pdf_viewer\ndrwxrwxrwx 1 cubbi cubbi       4096 Apr 10 16:00 _ss_documents\ndrwxrwxrwx 1 cubbi cubbi       4096 Jun 17 18:31 _susan_oberland_6_12_2026\ndrwxrwxrwx 1 cubbi cubbi       4096 Jul  5 16:42 _thai_word_download\ndrwxrwxrwx 1 cubbi cubbi       4096 Jun  4 07:19 annotated-transformer\n-r-xr-xr-x 1 cubbi cubbi     112184 Mar 12  2025 appverifUI.dll\n-r-xr-xr-x 1 cubbi cubbi        153 May  5 08:42 build_5.bat\n-r-xr-xr-x 1 cubbi cubbi        386 May  5 08:44 build_5_1.bat\n-r-xr-xr-x 1 cubbi cubbi        437 May  5 08:47 build_5_2.bat\n-r-xr-xr-x 1 cubbi cubbi        135 May  6 10:28 build_6_1.bat\n-r-xr-xr-x 1 cubbi cubbi        102 May  6 10:33 build_6_2.bat\ndrwxrwxrwx 1 cubbi cubbi       4096 Jun 19 05:23 collection_5_10_2026\ndrwxrwxrwx 1 cubbi cubbi       4096 May 22 16:23 cse446\ndrwxrwxrwx 1 cubbi cubbi       4096 May 25 09:48 cse447\ndrwxrwxrwx 1 cubbi cubbi       4096 Jun 11 08:06 econ586_SpringQuarter\ndrwxrwxrwx 1 cubbi cubbi       4096 Jun 11 08:03 econAutumnQuarter2023_thisIsIt\ndrwxrwxrwx 1 cubbi cubbi       4096 May 25 11:09 econ_yu_chin\ndrwxrwxrwx 1 cubbi cubbi       4096 Mar  7 23:47 foundary\ndrwxrwxrwx 1 cubbi cubbi       4096 Apr 10 11:17 french\n-????????? ? ?     ?              ?            ? hiberfil.sys\ndrwxrwxrwx 1 cubbi cubbi       4096 Jun 21 15:47 html_convert\ndr-xr-xr-x 1 cubbi cubbi       4096 Oct 29  2025 inetpub\n-r-xr-xr-x 1 cubbi cubbi 1097726778 Jun 30 21:11 journey_to_center_e.mkv\ndrwxrwxrwx 1 cubbi cubbi       4096 Apr 29 10:33 jupyter\ndrwxrwxrwx 1 cubbi cubbi       4096 Jun  5 21:21 labor_bureau_stats\ndrwxrwxrwx 1 cubbi cubbi       4096 Jun 13 18:39 labor_consumerPrices_stats\ndrwxrwxrwx 1 cubbi cubbi       4096 Mar 24 09:51 macroEconomicsTs\ndrwxrwxrwx 1 cubbi cubbi       4096 Mar 25 06:10 mnt\ndrwxrwxrwx 1 cubbi cubbi       4096 Jun 25 12:38 msft_download_stats\ndrwxrwxrwx 1 cubbi cubbi       4096 May  6 13:50 openwhispr\n-????????? ? ?     ?              ?            ? pagefile.sys\ndrwxrwxrwx 1 cubbi cubbi       4096 Jul  6 21:16 pdf_maker\ndrwxrwxrwx 1 cubbi cubbi       4096 Mar 22 14:33 phoenix_stuff\ndrwxrwxrwx 1 cubbi cubbi       4096 Apr  4 16:37 poppler-25.12.0\ndrwxrwxrwx 1 cubbi cubbi       4096 May 10 23:01 poppler-26.02.0\ndrwxrwxrwx 1 cubbi cubbi       4096 May  9 09:38 pyprobml\ndrwxrwxrwx 1 cubbi cubbi       4096 May  8 17:30 qiskit_dir\ndrwxrwxrwx 1 cubbi cubbi       4096 Jun  2 19:49 roof_6_2_2026\ndrwxrwxrwx 1 cubbi cubbi       4096 Jun  1 22:38 roof_dimensions_files\ndrwxrwxrwx 1 cubbi cubbi       4096 May  6 19:51 solid_state_circuits\n-????????? ? ?     ?              ?            ? swapfile.sys\ndrwxrwxrwx 1 cubbi cubbi       4096 May  6 11:08 t\ndrwxrwxrwx 1 cubbi cubbi       4096 Jul  8 21:51 temp\ndrwxrwxrwx 1 cubbi cubbi       4096 May 16 09:44 temp2\ndrwxrwxrwx 1 cubbi cubbi       4096 May  4 22:37 tempVulcan\ndrwxrwxrwx 1 cubbi cubbi       4096 Apr 28 19:31 time_waits_for_no_one\ndrwxrwxrwx 1 cubbi cubbi       4096 May  6 11:00 v\ndrwxrwxrwx 1 cubbi cubbi       4096 May  4 22:40 vcpkg\n-r-xr-xr-x 1 cubbi cubbi      68120 Jan 27 05:18 vfcompat.dll\ndrwxrwxrwx 1 cubbi cubbi       4096 May  5 08:27 voicetypr\ndrwxrwxrwx 1 cubbi cubbi       4096 Jul  4 19:10 wenlin\ndrwxrwxrwx 1 cubbi cubbi       4096 Jul  5 22:47 wikipedia_download_db",
+      "stderr": "/usr/bin/ls: cannot access '/mnt/c/DumpStack.log.tmp': Permission denied\n/usr/bin/ls: cannot access '/mnt/c/hiberfil.sys': Permission denied\n/usr/bin/ls: cannot access '/mnt/c/pagefile.sys': Permission denied\n/usr/bin/ls: /mnt/c/Recovery: Permission denied\n/usr/bin/ls: cannot access '/mnt/c/swapfile.sys': Permission denied\n/usr/bin/ls: '/mnt/c/System Volume Information': Permission denied"
+    },
+    "disk_usage": {
+      "command": "pwsh -NoProfile -Command df -h",
+      "returncode": 0,
+      "stdout": "Filesystem      Size  Used Avail Use% Mounted on\nnone             12G     0   12G   0% /usr/lib/modules/6.6.87.2-microsoft-standard-WSL2\nnone             12G  4.0K   12G   1% /mnt/wsl\ndrivers         1.9T  1.7T  241G  88% /usr/lib/wsl/drivers\n/dev/sdd       1007G  574G  383G  60% /\nnone             12G  108K   12G   1% /mnt/wslg\nnone             12G     0   12G   0% /usr/lib/wsl/lib\nrootfs           12G  2.7M   12G   1% /init\nnone             12G  1.2M   12G   1% /run\nnone             12G     0   12G   0% /run/lock\nnone             12G     0   12G   0% /run/shm\nnone             12G   76K   12G   1% /mnt/wslg/versions.txt\nnone             12G   76K   12G   1% /mnt/wslg/doc\nC:\\             1.9T  1.7T  241G  88% /mnt/c\nsnapfuse        186M  186M     0 100% /snap/chromium/3479\nsnapfuse        189M  189M     0 100% /snap/chromium/3483\nsnapfuse        128K  128K     0 100% /snap/bare/5\nsnapfuse         74M   74M     0 100% /snap/core22/2339\nsnapfuse         74M   74M     0 100% /snap/core22/2411\nsnapfuse         67M   67M     0 100% /snap/core24/1587\nsnapfuse         67M   67M     0 100% /snap/core24/1643\nsnapfuse         48M   48M     0 100% /snap/cups/1206\nsnapfuse         50M   50M     0 100% /snap/cups/1225\nsnapfuse        253M  253M     0 100% /snap/firefox/8585\nsnapfuse        532M  532M     0 100% /snap/gnome-42-2204/247\nsnapfuse        532M  532M     0 100% /snap/gnome-42-2204/263\nsnapfuse        607M  607M     0 100% /snap/gnome-46-2404/153\nsnapfuse         92M   92M     0 100% /snap/gtk-common-themes/1535\nsnapfuse        395M  395M     0 100% /snap/mesa-2404/1165\nsnapfuse         50M   50M     0 100% /snap/snapd/26865\nsnapfuse         51M   51M     0 100% /snap/snapd/27406\ntmpfs           2.4G   12K  2.4G   1% /run/user/1000\nsnapfuse        253M  253M     0 100% /snap/firefox/8595",
+      "stderr": ""
+    },
+    "mounts": {
+      "command": "pwsh -NoProfile -Command mount | Select-Object -First 100",
+      "returncode": 0,
+      "stdout": "none on /usr/lib/modules/6.6.87.2-microsoft-standard-WSL2 type overlay (rw,nosuid,nodev,noatime,lowerdir=/modules,upperdir=/lib/modules/6.6.87.2-microsoft-standard-WSL2/rw/upper,workdir=/lib/modules/6.6.87.2-microsoft-standard-WSL2/rw/work,uuid=on)\nnone on /mnt/wsl type tmpfs (rw,relatime)\ndrivers on /usr/lib/wsl/drivers type 9p (ro,nosuid,nodev,noatime,aname=drivers;fmask=222;dmask=222,cache=5,access=client,msize=65536,trans=fd,rfd=8,wfd=8)\n/dev/sdd on / type ext4 (rw,relatime,discard,errors=remount-ro,data=ordered)\nnone on /mnt/wslg type tmpfs (rw,relatime)\n/dev/sdd on /mnt/wslg/distro type ext4 (ro,relatime,discard,errors=remount-ro,data=ordered)\nnone on /usr/lib/wsl/lib type overlay (rw,nosuid,nodev,noatime,lowerdir=/gpu_lib_packaged:/gpu_lib_inbox,upperdir=/gpu_lib/rw/upper,workdir=/gpu_lib/rw/work,uuid=on)\nrootfs on /init type rootfs (ro,size=12300476k,nr_inodes=3075119)\nnone on /dev type devtmpfs (rw,nosuid,relatime,size=12300476k,nr_inodes=3075119,mode=755)\nsysfs on /sys type sysfs (rw,nosuid,nodev,noexec,noatime)\nproc on /proc type proc (rw,nosuid,nodev,noexec,noatime)\ndevpts on /dev/pts type devpts (rw,nosuid,noexec,noatime,gid=5,mode=620,ptmxmode=000)\nnone on /run type tmpfs (rw,nosuid,nodev,mode=755)\nnone on /run/lock type tmpfs (rw,nosuid,nodev,noexec,noatime)\nnone on /run/shm type tmpfs (rw,nosuid,nodev,noatime)\nnone on /dev/shm type tmpfs (rw,nosuid,nodev,noatime)\nnone on /run/user type tmpfs (rw,nosuid,nodev,noexec,noatime,mode=755)\nbinfmt_misc on /proc/sys/fs/binfmt_misc type binfmt_misc (rw,relatime)\ncgroup2 on /sys/fs/cgroup type cgroup2 (rw,nosuid,nodev,noexec,relatime,nsdelegate)\nnone on /mnt/wslg/versions.txt type overlay (rw,relatime,lowerdir=/systemvhd,upperdir=/system/rw/upper,workdir=/system/rw/work,uuid=on)\nnone on /mnt/wslg/doc type overlay (rw,relatime,lowerdir=/systemvhd,upperdir=/system/rw/upper,workdir=/system/rw/work,uuid=on)\nnone on /tmp/.X11-unix type tmpfs (ro,relatime)\nC:\\ on /mnt/c type 9p (rw,noatime,aname=drvfs;path=C:\\;uid=1000;gid=1000;symlinkroot=/mnt/,cache=5,access=client,msize=65536,trans=fd,rfd=6,wfd=6)\nnone on /run/user type tmpfs (rw,relatime)\nhugetlbfs on /dev/hugepages type hugetlbfs (rw,relatime,pagesize=2M)\nmqueue on /dev/mqueue type mqueue (rw,nosuid,nodev,noexec,relatime)\ndebugfs on /sys/kernel/debug type debugfs (rw,nosuid,nodev,noexec,relatime)\ntracefs on /sys/kernel/tracing type tracefs (rw,nosuid,nodev,noexec,relatime)\nfusectl on /sys/fs/fuse/connections type fusectl (rw,nosuid,nodev,noexec,relatime)\nramfs on /run/credentials/systemd-sysusers.service type ramfs (ro,nosuid,nodev,noexec,relatime,mode=700)\n/dev/sdd on /snap type ext4 (rw,relatime,discard,errors=remount-ro,data=ordered)\nsnapfuse on /snap/chromium/3479 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)\nsnapfuse on /snap/chromium/3483 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)\nsnapfuse on /snap/bare/5 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)\nsnapfuse on /snap/core22/2339 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)\nsnapfuse on /snap/core22/2411 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)\nsnapfuse on /snap/core24/1587 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)\nsnapfuse on /snap/core24/1643 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)\nsnapfuse on /snap/cups/1206 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)\nsnapfuse on /snap/cups/1225 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)\nsnapfuse on /snap/firefox/8585 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)\nsnapfuse on /snap/gnome-42-2204/247 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)\nsnapfuse on /snap/gnome-42-2204/263 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)\nsnapfuse on /snap/gnome-46-2404/153 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)\nsnapfuse on /snap/gtk-common-themes/1535 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)\nsnapfuse on /snap/mesa-2404/1165 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)\nsnapfuse on /snap/snapd/26865 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)\nsnapfuse on /snap/snapd/27406 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)\nnone on /run/snapd/ns type tmpfs (rw,nosuid,nodev,mode=755)\nnsfs on /run/snapd/ns/cups.mnt type nsfs (rw)\ntmpfs on /run/user/1000 type tmpfs (rw,nosuid,nodev,relatime,size=2461100k,nr_inodes=615275,mode=700,uid=1000,gid=1000)\ntmpfs on /mnt/wslg/run/user/1000 type tmpfs (rw,nosuid,nodev,relatime,size=2461100k,nr_inodes=615275,mode=700,uid=1000,gid=1000)\nsnapfuse on /snap/firefox/8595 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)\nnsfs on /run/snapd/ns/firefox.mnt type nsfs (rw)",
+      "stderr": ""
+    }
+  },
+  "process_environment": {
+    "top_processes": {
+      "command": "pwsh -NoProfile -Command ps aux --sort=-%mem | head -30",
+      "returncode": 0,
+      "stdout": "USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND\ncubbi       5624  0.7  3.6 11797912 910528 pts/2 Sl+  19:28   1:06 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node /home/cubbi/.vscode-server/extensions/ms-python.vscode-pylance-2026.2.1/dist/server.bundle.js --cancellationReceive=file:e30ee35638aba1e0cbb6d5ad3a5e6d81ab697c2609 --node-ipc --clientProcessId=5046\ncubbi       3537  0.0  2.4 11479056 609084 pts/2 Sl+  19:22   0:09 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node /home/cubbi/.vscode-server/extensions/ms-python.vscode-pylance-2026.2.1/dist/server.bundle.js --cancellationReceive=file:3f1f4b7e4ea180535b8534db94c63cc18ed3df9027 --node-ipc --clientProcessId=3169\ncubbi       5046  1.4  2.1 19563380 537404 pts/2 Sl+  19:27   2:12 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node --dns-result-order=ipv4first /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/out/bootstrap-fork --type=extensionHost --transformURIs --useHostProxy=true\ncubbi       3169  1.2  2.1 19555268 526152 pts/2 Sl+  19:22   2:01 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node --dns-result-order=ipv4first /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/out/bootstrap-fork --type=extensionHost --transformURIs --useHostProxy=true\ncubbi       2548  0.1  0.8 1862540 208008 pts/2  Sl+  19:22   0:11 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/out/server-main.js --host=127.0.0.1 --port=0 --connection-token=990247417-422105906-2321151650-1184241652 --use-host-proxy --without-browser-env-var --disable-websocket-compression --accept-server-license-terms --telemetry-level=all\ncubbi      66471  0.0  0.3 53279168 93528 pts/0  Sl+  21:59   0:00 pwsh -NoProfile -Command ps aux --sort=-%mem | head -30\ncubbi       5075  0.0  0.3 1495768 78312 pts/2   Sl+  19:27   0:00 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/extensions/json-language-features/server/dist/node/jsonServerMain --node-ipc --clientProcessId=5046\ncubbi       3366  0.1  0.2 1473792 73576 pts/2   Sl+  19:22   0:12 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/out/bootstrap-fork --type=ptyHost --logsPath /home/cubbi/.vscode-server/data/logs/20260708T192625\ncubbi       2562  0.0  0.2 1420344 69152 pts/3   Ssl+ 19:22   0:00 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node -e const net = require('net'); process.stdin.pause(); const client = net.createConnection({ host: '127.0.0.1', port: 36705 }, () => { client.pipe(process.stdout); process.stdin.pipe(client); }); client.on('close', function (hadError) { console.error(hadError ? 'Remote close with error' : 'Remote close'); process.exit(hadError ? 1 : 0); }); client.on('error', function (err) { process.stderr.write(err && (err.stack || err.message) || String(err)); });\ncubbi       5019  0.0  0.2 1418472 67652 pts/5   Ssl+ 19:27   0:01 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node -e const net = require('net'); process.stdin.pause(); const client = net.createConnection({ host: '127.0.0.1', port: 36705 }, () => { client.pipe(process.stdout); process.stdin.pipe(client); }); client.on('close', function (hadError) { console.error(hadError ? 'Remote close with error' : 'Remote close'); process.exit(hadError ? 1 : 0); }); client.on('error', function (err) { process.stderr.write(err && (err.stack || err.message) || String(err)); });\ncubbi       5029  0.0  0.2 1726196 64688 pts/2   Sl+  19:27   0:02 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/out/bootstrap-fork --type=fileWatcher\ncubbi       2572  0.0  0.2 1791096 64676 pts/2   Sl+  19:22   0:02 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/out/bootstrap-fork --type=fileWatcher\ncubbi       5028  0.0  0.2 1411076 62008 pts/7   Ssl+ 19:27   0:04 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node -e const net = require('net'); process.stdin.pause(); const client = net.createConnection({ host: '127.0.0.1', port: 36705 }, () => { client.pipe(process.stdout); process.stdin.pipe(client); }); client.on('close', function (hadError) { console.error(hadError ? 'Remote close with error' : 'Remote close'); process.exit(hadError ? 1 : 0); }); client.on('error', function (err) { process.stderr.write(err && (err.stack || err.message) || String(err)); });\ncubbi       2571  0.0  0.2 1411560 59648 pts/4   Ssl+ 19:22   0:01 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node -e const net = require('net'); process.stdin.pause(); const client = net.createConnection({ host: '127.0.0.1', port: 36705 }, () => { client.pipe(process.stdout); process.stdin.pipe(client); }); client.on('close', function (hadError) { console.error(hadError ? 'Remote close with error' : 'Remote close'); process.exit(hadError ? 1 : 0); }); client.on('error', function (err) { process.stderr.write(err && (err.stack || err.message) || String(err)); });\nollama       303  0.0  0.1 2337436 41368 ?       Ssl  19:16   0:00 /usr/local/bin/ollama serve\nroot         307  0.0  0.1 2221512 40996 ?       Ssl  19:16   0:02 /snap/snapd/current/usr/lib/snapd/snapd\nroot         396  0.0  0.0 112940 22912 ?        Ssl  19:16   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal\nroot       58435  0.0  0.0 293084 20224 ?        Ssl  21:39   0:00 /usr/libexec/packagekitd\nroot         301  0.0  0.0  35952 20204 ?        Ss   19:16   0:00 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers\nroot          57  0.0  0.0  64364 18700 ?        S<s  19:16   0:00 /lib/systemd/systemd-journald\nroot         194  0.0  0.0 824836 18560 ?        Ssl  19:16   0:02 snapfuse /var/lib/snapd/snaps/snapd_27406.snap /snap/snapd/27406 -o ro,nodev,allow_other,suid\nroot        1050  0.0  0.0 260140 16512 ?        Sl   19:16   0:00 cups-browsed -c /var/snap/cups/common/etc/cups/cups-browsed.conf\nsystemd+     247  0.0  0.0  25548 13312 ?        Ss   19:16   0:00 /lib/systemd/systemd-resolved\ncubbi      65968  0.4  0.0  15216 12908 pts/0    S+   21:59   0:00 python test_powerShell.py\nroot         119  0.0  0.0 676340 12712 ?        Ssl  19:16   0:00 snapfuse /var/lib/snapd/snaps/core22_2411.snap /snap/core22/2411 -o ro,nodev,allow_other,suid\nroot           1  0.0  0.0 167460 12408 ?        Ss   19:16   0:00 /sbin/init\nroot         881  0.0  0.0 135156 12288 ?        Sl   19:16   0:00 cupsd -f -s /var/snap/cups/common/etc/cups/cups-files.conf -c /var/snap/cups/common/etc/cups/cupsd.conf\nroot         147  0.0  0.0 452048 11308 ?        Ssl  19:16   0:00 snapfuse /var/lib/snapd/snaps/cups_1225.snap /snap/cups/1225 -o ro,nodev,allow_other,suid\ncubbi        941  0.0  0.0  17336  9472 ?        Ss   19:16   0:00 /lib/systemd/systemd --user",
+      "stderr": ""
+    },
+    "system_info": {
+      "command": "pwsh -NoProfile -Command uname -a",
+      "returncode": 0,
+      "stdout": "Linux powerpc 6.6.87.2-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux",
+      "stderr": ""
+    },
+    "os_release": {
+      "command": "pwsh -NoProfile -Command cat /etc/os-release",
+      "returncode": 0,
+      "stdout": "PRETTY_NAME=\"Ubuntu 22.04.5 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"22.04\"\nVERSION=\"22.04.5 LTS (Jammy Jellyfish)\"\nVERSION_CODENAME=jammy\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=jammy",
+      "stderr": ""
+    }
+  },
+  "sql_server_environment": {
+    "pyodbc_available": true,
+    "odbc_drivers": [
+      "ODBC Driver 18 for SQL Server"
+    ],
+    "sqlcmd_available": "/opt/mssql-tools18/bin/sqlcmd",
+    "common_ports": {
+      "localhost:1433": "closed/unreachable: ConnectionRefusedError",
+      "127.0.0.1:1433": "closed/unreachable: ConnectionRefusedError",
+      "localhost:1434": "closed/unreachable: ConnectionRefusedError",
+      "10.0.0.20:63451": "open"
+    },
+    "connection_tests": [
+      {
+        "driver": "ODBC Driver 18 for SQL Server",
+        "server": "localhost",
+        "database": "mov",
+        "auth": "SQL Login",
+        "connection_string_without_password": "DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost;DATABASE=mov;AUTH=SQL Login;Encrypt=no;TrustServerCertificate=yes;Connection Timeout=5;",
+        "status": "failed",
+        "error": "OperationalError: ('HYT00', '[HYT00] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0) (SQLDriverConnect)')"
+      },
+      {
+        "driver": "ODBC Driver 18 for SQL Server",
+        "server": "127.0.0.1",
+        "database": "mov",
+        "auth": "SQL Login",
+        "connection_string_without_password": "DRIVER={ODBC Driver 18 for SQL Server};SERVER=127.0.0.1;DATABASE=mov;AUTH=SQL Login;Encrypt=no;TrustServerCertificate=yes;Connection Timeout=5;",
+        "status": "failed",
+        "error": "OperationalError: ('HYT00', '[HYT00] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0) (SQLDriverConnect)')"
+      },
+      {
+        "driver": "ODBC Driver 18 for SQL Server",
+        "server": "localhost,1433",
+        "database": "mov",
+        "auth": "SQL Login",
+        "connection_string_without_password": "DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;DATABASE=mov;AUTH=SQL Login;Encrypt=no;TrustServerCertificate=yes;Connection Timeout=5;",
+        "status": "failed",
+        "error": "OperationalError: ('HYT00', '[HYT00] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0) (SQLDriverConnect)')"
+      },
+      {
+        "driver": "ODBC Driver 18 for SQL Server",
+        "server": "127.0.0.1,1433",
+        "database": "mov",
+        "auth": "SQL Login",
+        "connection_string_without_password": "DRIVER={ODBC Driver 18 for SQL Server};SERVER=127.0.0.1,1433;DATABASE=mov;AUTH=SQL Login;Encrypt=no;TrustServerCertificate=yes;Connection Timeout=5;",
+        "status": "failed",
+        "error": "OperationalError: ('HYT00', '[HYT00] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0) (SQLDriverConnect)')"
+      },
+      {
+        "driver": "ODBC Driver 18 for SQL Server",
+        "server": "10.0.0.20,63451",
+        "database": "mov",
+        "auth": "SQL Login",
+        "connection_string_without_password": "DRIVER={ODBC Driver 18 for SQL Server};SERVER=10.0.0.20,63451;DATABASE=mov;AUTH=SQL Login;Encrypt=no;TrustServerCertificate=yes;Connection Timeout=5;",
+        "status": "connected",
+        "server_name": "powerpc\\MSSQLSERVER01",
+        "database_name": "mov",
+        "version_text": "Microsoft SQL Server 2025 (RTM) - 17.0.1000.7 (X64) \n\tOct 21 2025 12:05:57 \n\tCopyright (C) 2025 Microsoft Corporation\n\tStandard Developer Edition (64-bit) on Windows 10 Home 10.0 <X64> (Build 26200: ) (Hypervisor)\n",
+        "databases": [
+          {
+            "name": "master",
+            "database_id": 1,
+            "create_date": "2003-04-08 09:13:36.390000",
+            "state_desc": "ONLINE",
+            "recovery_model_desc": "SIMPLE"
+          },
+          {
+            "name": "tempdb",
+            "database_id": 2,
+            "create_date": "2026-07-08 17:16:17.387000",
+            "state_desc": "ONLINE",
+            "recovery_model_desc": "SIMPLE"
+          },
+          {
+            "name": "model",
+            "database_id": 3,
+            "create_date": "2003-04-08 09:13:36.390000",
+            "state_desc": "ONLINE",
+            "recovery_model_desc": "FULL"
+          },
+          {
+            "name": "msdb",
+            "database_id": 4,
+            "create_date": "2025-10-21 12:53:13.233000",
+            "state_desc": "ONLINE",
+            "recovery_model_desc": "SIMPLE"
+          },
+          {
+            "name": "mov",
+            "database_id": 5,
+            "create_date": "2026-04-03 11:12:55.997000",
+            "state_desc": "ONLINE",
+            "recovery_model_desc": "FULL"
+          },
+          {
+            "name": "labor",
+            "database_id": 6,
+            "create_date": "2026-06-05 19:42:41.757000",
+            "state_desc": "ONLINE",
+            "recovery_model_desc": "FULL"
+          },
+          {
+            "name": "ThaiDictionary",
+            "database_id": 7,
+            "create_date": "2026-06-19 21:14:29.973000",
+            "state_desc": "ONLINE",
+            "recovery_model_desc": "FULL"
+          },
+          {
+            "name": "LLMResearch",
+            "database_id": 8,
+            "create_date": "2026-06-26 00:15:29.197000",
+            "state_desc": "ONLINE",
+            "recovery_model_desc": "FULL"
+          },
+          {
+            "name": "StudentDetailsDB",
+            "database_id": 9,
+            "create_date": "2026-06-26 18:54:44.480000",
+            "state_desc": "ONLINE",
+            "recovery_model_desc": "FULL"
+          },
+          {
+            "name": "JournalSummaryDB",
+            "database_id": 10,
+            "create_date": "2026-06-26 19:52:28.417000",
+            "state_desc": "ONLINE",
+            "recovery_model_desc": "FULL"
+          },
+          {
+            "name": "WikipediaSearchDB",
+            "database_id": 11,
+            "create_date": "2026-07-01 17:59:53.710000",
+            "state_desc": "ONLINE",
+            "recovery_model_desc": "FULL"
+          },
+          {
+            "name": "WikiThaiSearchDB",
+            "database_id": 12,
+            "create_date": "2026-07-07 16:20:00.193000",
+            "state_desc": "ONLINE",
+            "recovery_model_desc": "FULL"
+          }
+        ],
+        "database_count": 12
+      }
+    ],
+    "configuration": {
+      "servers": [
+        "localhost",
+        "127.0.0.1",
+        "localhost,1433",
+        "127.0.0.1,1433",
+        "10.0.0.20,63451"
+      ],
+      "database": "mov",
+      "username_supplied": true,
+      "password_supplied": true
+    }
+  }
+}

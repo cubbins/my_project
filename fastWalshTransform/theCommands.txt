@@ -1,0 +1,53 @@
+
+
+python cuda_gdb_pty_driver_steps10_more.py ./fastWalshTransform_debug
+
+produces this log file: cuda_gdb_pty_steps10_ops.log
+
+
+(torch-src-backup) cubbi@powerpc:~/cuda-samples/Samples/5_Domain_Specific/fastWalshTransform$ python3 analyze_cuda_gdb_s
+teps_log.py cuda_gdb_pty_steps10_ops.log
+Parsed steps: 40
+Kernel: fwtBatch2Kernel
+Source file: /home/cubbi/cuda-samples/Samples/5_Domain_Specific/fastWalshTransform/fastWalshTransform_kernel.cuh
+Wrote: cuda_gdb_steps_analysis.json
+Wrote: cuda_gdb_steps_analysis.md
+
+nvcc -O2 flash_like_cuda.cu -o flash_like_cuda
+./flash_like_cuda
+
+nvcc -g -G -O0 -arch=sm_120 multi-warp.cu -o multi-warp
+nvcc -g -G -O0 -arch=sm_120 flash_like_cuda.cu -o flash_like_cuda
+nvcc -O3 -std=c++17 -arch=sm_120 flash_v2_5060.cu -o flash_v2_5060
+./flash_v2_5060
+nvcc -O3 -std=c++17 -arch=sm_120 flash_v2_ada.cu -o flash_v2_ada
+./flash_v2_ada
+
+lsb_release -a
+No LSB modules are available.
+Distributor ID: Ubuntu
+Description:    Ubuntu 22.04.5 LTS
+Release:        22.04
+Codename:       jammy
+
+mkdir WalshDemo
+cd WalshDemo
+nano Program.cs
+dotnet build
+
+
+python KimStyle.py
+python MultiNew_Attn.py
+python MultiNew_Invokable.py
+python ThetaVsH.py
+python TransStyle.py
+python WalshAttention.py
+python analyze_cuda_gdb_steps_log.py
+python cuda_gdb_pty_driver_steps10_more.py
+python ginanone.py
+python kim_model.py
+python tinyMath.py
+python walsh_attention_full_demo.py
+python walsh_new_6_10.py
+python walsh_test_walsh_attention.py
+

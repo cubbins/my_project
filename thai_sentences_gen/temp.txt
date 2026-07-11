@@ -1,0 +1,1214 @@
+
+================================================================================
+                     POWERSHELL / UBUNTU ENVIRONMENT SURVEY                     
+================================================================================
+Timestamp                : 2026-07-08T20:48:03
+Current directory        : /home/cubbi/thai_sentences_gen
+
+--------------------------------------------------------------------------------
+Python
+--------------------------------------------------------------------------------
+Version                  : 3.10.19
+Executable               : /home/cubbi/anaconda3/envs/transformerLense_new/bin/p
+                           ython3
+
+--------------------------------------------------------------------------------
+Platform
+--------------------------------------------------------------------------------
+system                   : Linux
+release                  : 6.6.87.2-microsoft-standard-WSL2
+machine                  : x86_64
+node                     : powerpc
+
+--------------------------------------------------------------------------------
+Environment Variables
+--------------------------------------------------------------------------------
+USER                     : cubbi
+HOME                     : /home/cubbi
+SHELL                    : /bin/bash
+PATH                     : /home/cubbi/anaconda3/envs/transformerLense_new/bin:/
+                           opt/intel/oneapi/vtune/202
+                           5.10/bin64:/opt/intel/onea
+                           pi/mpi/2021.17/bin:/opt/in
+                           tel/oneapi/mkl/2025.3/bin:
+                           /opt/intel/oneapi/ishmem/1
+                           .5/bin:/opt/intel/oneapi/d
+                           pcpp-ct/2025.3/bin:/opt/in
+                           tel/oneapi/dev-utilities/2
+                           025.3/bin:/opt/intel/oneap
+                           i/debugger/2025.3/opt/debu
+                           gger/bin:/opt/intel/oneapi
+                           /compiler/2025.3/bin:/opt/
+                           intel/oneapi/advisor/2025.
+                           4/bin64:/mnt/c/Users/cubbi
+                           /AppData/Local/Programs/Mi
+                           crosoft VS Code/bin:/home/
+                           cubbi/.vscode-server/bin/4
+                           fe60c8b1cdac1c4c174f2fb180
+                           d0d758272d713/bin/remote-c
+                           li:/home/cubbi/anaconda3/c
+                           ondabin:/home/cubbi/verila
+                           tor/bin:/usr/local/cuda-
+                           13.2/bin:/usr/local/sbin:/
+                           usr/local/bin:/usr/sbin:/u
+                           sr/bin:/sbin:/bin:/usr/gam
+                           es:/usr/local/games:/usr/l
+                           ib/wsl/lib:/mnt/c/VulkanSD
+                           K/1.4.309.0/Bin:/mnt/c/Vul
+                           kanSDK/1.4.341.1/Bin:/mnt/
+                           c/Users/cubbi/anaconda3:/m
+                           nt/c/Users/cubbi/anaconda3
+                           /Library/mingw-
+                           w64/bin:/mnt/c/Users/cubbi
+                           /anaconda3/Library/usr/bin
+                           :/mnt/c/Users/cubbi/anacon
+                           da3/Library/bin:/mnt/c/Use
+                           rs/cubbi/anaconda3/Scripts
+                           :/mnt/c/Users/cubbi/anacon
+                           da3/bin:/mnt/c/Users/cubbi
+                           /anaconda3/condabin:/mnt/c
+                           /Program Files/NVIDIA GPU
+                           Computing Toolkit/CUDA/v13
+                           .2/bin/x64:/mnt/c/Program
+                           Files/NVIDIA GPU Computing
+                           Toolkit/CUDA/v13.2/bin:/mn
+                           t/c/Windows/system32:/mnt/
+                           c/Windows:/mnt/c/Windows/S
+                           ystem32/Wbem:/mnt/c/Window
+                           s/System32/WindowsPowerShe
+                           ll/v1.0:/mnt/c/Windows/Sys
+                           tem32/OpenSSH:/mnt/c/Progr
+                           am Files/NVIDIA
+                           Corporation/NVIDIA
+                           App/NvDLISR:/mnt/c/Program
+                           Files (x86)/NVIDIA Corpora
+                           tion/PhysX/Common:/mnt/c/P
+                           rogram Files/Docker/Docker
+                           /resources/bin:/mnt/c/Prog
+                           ram Files/Git/cmd:/mnt/c/P
+                           rogram Files/Wolfram Resea
+                           rch/WolframScript:/mnt/c/P
+                           rogram Files/Microsoft SQL
+                           Server/170/Tools/Binn:/mnt
+                           /c/Program Files/Microsoft
+                           SQL Server/Client SDK/ODBC
+                           /170/Tools/Binn:/mnt/c/Pro
+                           gram Files/dotnet:/mnt/c/P
+                           rogram Files (x86)/Windows
+                           Kits/10/Windows
+                           Performance Toolkit:/mnt/c
+                           /Users/cubbi/AppData/Local
+                           /Muse
+                           Hub/lib:/mnt/c/Program Fil
+                           es/nodejs:/mnt/c/Program F
+                           iles/LLVM/bin:/mnt/c/Progr
+                           am Files/CMake/bin:/mnt/c/
+                           poppler-
+                           26.02.0/Library/bin:/mnt/c
+                           /Program Files
+                           (x86)/Wolfram Research/Wol
+                           framScript:/mnt/c/Program
+                           Files/Tesseract-OCR:/mnt/c
+                           /Users/cubbi/AppData/Local
+                           /Muse Hub/lib:/mnt/c/Users
+                           /cubbi/anaconda3/envs/torc
+                           hgpu:/mnt/c/Users/cubbi/an
+                           aconda3/envs/torchgpu/Libr
+                           ary/mingw-
+                           w64/bin:/mnt/c/Users/cubbi
+                           /anaconda3/envs/torchgpu/L
+                           ibrary/usr/bin:/mnt/c/User
+                           s/cubbi/anaconda3/envs/tor
+                           chgpu/Library/bin:/mnt/c/U
+                           sers/cubbi/anaconda3/envs/
+                           torchgpu/Scripts:/mnt/c/Us
+                           ers/cubbi/anaconda3/envs/t
+                           orchgpu/bin:/mnt/c/VulkanS
+                           DK/1.4.309.0/Bin:/mnt/c/Vu
+                           lkanSDK/1.4.341.1/Bin:/mnt
+                           /c/Users/cubbi/anaconda3:/
+                           mnt/c/Users/cubbi/anaconda
+                           3/Library/mingw-
+                           w64/bin:/mnt/c/Users/cubbi
+                           /anaconda3/Library/usr/bin
+                           :/mnt/c/Users/cubbi/anacon
+                           da3/Library/bin:/mnt/c/Use
+                           rs/cubbi/anaconda3/Scripts
+                           :/mnt/c/Users/cubbi/anacon
+                           da3/bin:/mnt/c/Users/cubbi
+                           /anaconda3/condabin:/mnt/c
+                           /Program Files/NVIDIA GPU
+                           Computing Toolkit/CUDA/v13
+                           .2/bin/x64:/mnt/c/Program
+                           Files/NVIDIA GPU Computing
+                           Toolkit/CUDA/v13.2/bin:/mn
+                           t/c/Windows/system32:/mnt/
+                           c/Windows:/mnt/c/Windows/S
+                           ystem32/Wbem:/mnt/c/Window
+                           s/System32/WindowsPowerShe
+                           ll/v1.0:/mnt/c/Windows/Sys
+                           tem32/OpenSSH:/mnt/c/Progr
+                           am Files/NVIDIA
+                           Corporation/NVIDIA
+                           App/NvDLISR:/mnt/c/Program
+                           Files (x86)/NVIDIA Corpora
+                           tion/PhysX/Common:/mnt/c/P
+                           rogram Files/Docker/Docker
+                           /resources/bin:/mnt/c/Prog
+                           ram
+                           Files/Git:/mnt/c/Program
+                           Files/Tesseract-OCR:/mnt/c
+                           /Users/cubbi/AppData/Local
+                           /Programs/MiKTeX/miktex/bi
+                           n/x64:/mnt/c/Users/cubbi/A
+                           ppData/Local/Programs/Olla
+                           ma:/mnt/c/Users/cubbi/.dot
+                           net/tools:/snap/bin:/home/
+                           cubbi/.dotnet/tools:/opt/m
+                           ssql-tools18/bin:/home/cub
+                           bi/cad/eda-magic/glnxa64/b
+                           in:/home/cubbi/llama.cpp/b
+                           uild/bin
+LANG                     : C.UTF-8
+VIRTUAL_ENV              : 
+CONDA_DEFAULT_ENV        : transformerLense_new
+WSL_DISTRO_NAME          : Ubuntu-22.04-Blackwell
+
+================================================================================
+                             POWERSHELL ENVIRONMENT                             
+================================================================================
+Available                : True
+Path                     : /usr/bin/pwsh
+
+--------------------------------------------------------------------------------
+PowerShell Version
+--------------------------------------------------------------------------------
+Command                  : pwsh -NoProfile -Command $PSVersionTable | ConvertTo-
+                           Json -Depth 4
+Return code              : 0
+
+Output:
+    {
+      "PSEdition": "Core",
+      "PSCompatibleVersions": [
+        {
+          "Major": 1,
+          "Minor": 0,
+          "Build": -1,
+          "Revision": -1,
+          "MajorRevision": -1,
+          "MinorRevision": -1
+        },
+        {
+          "Major": 2,
+          "Minor": 0,
+          "Build": -1,
+          "Revision": -1,
+          "MajorRevision": -1,
+          "MinorRevision": -1
+        },
+        {
+          "Major": 3,
+          "Minor": 0,
+          "Build": -1,
+          "Revision": -1,
+          "MajorRevision": -1,
+          "MinorRevision": -1
+        },
+        {
+          "Major": 4,
+          "Minor": 0,
+          "Build": -1,
+          "Revision": -1,
+          "MajorRevision": -1,
+          "MinorRevision": -1
+        },
+        {
+          "Major": 5,
+          "Minor": 0,
+          "Build": -1,
+          "Revision": -1,
+          "MajorRevision": -1,
+          "MinorRevision": -1
+        },
+        {
+          "Major": 5,
+          "Minor": 1,
+          "Build": -1,
+          "Revision": -1,
+          "MajorRevision": -1,
+          "MinorRevision": -1
+        },
+        {
+          "Major": 6,
+          "Minor": 0,
+          "Build": -1,
+          "Revision": -1,
+          "MajorRevision": -1,
+          "MinorRevision": -1
+        },
+        {
+          "Major": 7,
+          "Minor": 0,
+          "Build": -1,
+          "Revision": -1,
+          "MajorRevision": -1,
+          "MinorRevision": -1
+        }
+      ],
+      "WSManStackVersion": {
+        "Major": 3,
+        "Minor": 0,
+        "Build": -1,
+        "Revision": -1,
+        "MajorRevision": -1,
+        "MinorRevision": -1
+      },
+      "PSVersion": {
+        "Major": 7,
+        "Minor": 6,
+        "Patch": 3,
+        "PreReleaseLabel": null,
+        "BuildLabel": null
+      },
+      "PSRemotingProtocolVersion": {
+        "Major": 2,
+        "Minor": 4,
+        "Build": -1,
+        "Revision": -1,
+        "MajorRevision": -1,
+        "MinorRevision": -1
+      },
+      "GitCommitId": "7.6.3",
+      "Platform": "Unix",
+      "SerializationVersion": {
+        "Major": 1,
+        "Minor": 1,
+        "Build": 0,
+        "Revision": 1,
+        "MajorRevision": 0,
+        "MinorRevision": 1
+      },
+      "OS": "Ubuntu 22.04.5 LTS"
+    }
+
+================================================================================
+                           LINUX SECURITY ENVIRONMENT                           
+================================================================================
+
+--------------------------------------------------------------------------------
+whoami
+--------------------------------------------------------------------------------
+Command                  : pwsh -NoProfile -Command whoami
+Return code              : 0
+
+Output:
+    cubbi
+
+--------------------------------------------------------------------------------
+id
+--------------------------------------------------------------------------------
+Command                  : pwsh -NoProfile -Command id
+Return code              : 0
+
+Output:
+    uid=1000(cubbi) gid=1000(cubbi) groups=1000(cubbi),4(adm),20(dialout),24(cdrom),25(floppy),27(sudo),29(audio),30(dip),44(video),46(plugdev),117(netdev),999(ollama),1001(docker)
+
+--------------------------------------------------------------------------------
+sudo_access_check
+--------------------------------------------------------------------------------
+Command                  : pwsh -NoProfile -Command sudo -n true 2>$null; if
+                           ($LASTEXITCODE -eq 0) {
+                           'sudo without password:
+                           yes' } else { 'sudo
+                           without password: no or
+                           unavailable' }
+Return code              : 0
+
+Output:
+    sudo without password: yes
+
+--------------------------------------------------------------------------------
+groups
+--------------------------------------------------------------------------------
+Command                  : pwsh -NoProfile -Command groups
+Return code              : 0
+
+Output:
+    cubbi adm dialout cdrom floppy sudo audio dip video plugdev netdev ollama docker
+
+--------------------------------------------------------------------------------
+umask
+--------------------------------------------------------------------------------
+Command                  : pwsh -NoProfile -Command umask
+Return code              : 1
+
+Errors:
+    [31;1mumask: [31;1mThe term 'umask' is not recognized as a name of a cmdlet, function, script file, or executable program.[0m
+    [31;1m[31;1mCheck the spelling of the name, or if a path was included, verify that the path is correct and try again.[0m
+
+--------------------------------------------------------------------------------
+capabilities
+--------------------------------------------------------------------------------
+Command                  : pwsh -NoProfile -Command getcap -r /usr/bin /bin
+                           2>$null | Select-Object
+                           -First 50
+Return code              : 0
+
+Output:
+    /usr/bin/ping cap_net_raw=ep
+    /usr/bin/mtr-packet cap_net_raw=ep
+
+--------------------------------------------------------------------------------
+listening_processes
+--------------------------------------------------------------------------------
+Command                  : pwsh -NoProfile -Command ss -tulpn 2>$null | Select-
+                           Object -First 100
+Return code              : 0
+
+Output:
+    Netid State  Recv-Q Send-Q  Local Address:Port  Peer Address:PortProcess                               
+    udp   UNCONN 0      0       127.0.0.53%lo:53         0.0.0.0:*                                         
+    udp   UNCONN 0      0      10.255.255.254:53         0.0.0.0:*                                         
+    udp   UNCONN 0      0           127.0.0.1:323        0.0.0.0:*                                         
+    udp   UNCONN 0      0               [::1]:323           [::]:*                                         
+    tcp   LISTEN 0      1000   10.255.255.254:53         0.0.0.0:*                                         
+    tcp   LISTEN 0      511         127.0.0.1:44220      0.0.0.0:*    users:(("MainThread",pid=5624,fd=44))
+    tcp   LISTEN 0      4096        127.0.0.1:11434      0.0.0.0:*                                         
+    tcp   LISTEN 0      128           0.0.0.0:22         0.0.0.0:*                                         
+    tcp   LISTEN 0      4096          0.0.0.0:631        0.0.0.0:*                                         
+    tcp   LISTEN 0      511         127.0.0.1:60189      0.0.0.0:*    users:(("MainThread",pid=3537,fd=48))
+    tcp   LISTEN 0      4096    127.0.0.53%lo:53         0.0.0.0:*                                         
+    tcp   LISTEN 0      511         127.0.0.1:36705      0.0.0.0:*    users:(("MainThread",pid=2548,fd=22))
+    tcp   LISTEN 0      128              [::]:22            [::]:*                                         
+    tcp   LISTEN 0      4096             [::]:631           [::]:*
+
+--------------------------------------------------------------------------------
+firewall_ufw
+--------------------------------------------------------------------------------
+Command                  : pwsh -NoProfile -Command sudo ufw status 2>$null
+Return code              : 0
+
+Output:
+    Status: inactive
+
+--------------------------------------------------------------------------------
+apparmor_status
+--------------------------------------------------------------------------------
+Command                  : pwsh -NoProfile -Command aa-status 2>$null
+Return code              : 1
+
+Output:
+    apparmor module is loaded.
+
+================================================================================
+                              NETWORK ENVIRONMENT                               
+================================================================================
+
+--------------------------------------------------------------------------------
+hostname
+--------------------------------------------------------------------------------
+Command                  : pwsh -NoProfile -Command hostname
+Return code              : 0
+
+Output:
+    powerpc
+
+--------------------------------------------------------------------------------
+ip_addresses
+--------------------------------------------------------------------------------
+Command                  : pwsh -NoProfile -Command ip addr
+Return code              : 0
+
+Output:
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+        inet 127.0.0.1/8 scope host lo
+           valid_lft forever preferred_lft forever
+        inet 10.255.255.254/32 brd 10.255.255.254 scope global lo
+           valid_lft forever preferred_lft forever
+        inet6 ::1/128 scope host 
+           valid_lft forever preferred_lft forever
+    2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+        link/ether 00:15:5d:85:2c:0e brd ff:ff:ff:ff:ff:ff
+        inet 172.31.176.106/20 brd 172.31.191.255 scope global eth0
+           valid_lft forever preferred_lft forever
+        inet6 fe80::215:5dff:fe85:2c0e/64 scope link 
+           valid_lft forever preferred_lft forever
+
+--------------------------------------------------------------------------------
+routes
+--------------------------------------------------------------------------------
+Command                  : pwsh -NoProfile -Command ip route
+Return code              : 0
+
+Output:
+    default via 172.31.176.1 dev eth0 proto kernel 
+    172.31.176.0/20 dev eth0 proto kernel scope link src 172.31.176.106
+
+--------------------------------------------------------------------------------
+dns
+--------------------------------------------------------------------------------
+Command                  : pwsh -NoProfile -Command cat /etc/resolv.conf
+Return code              : 0
+
+Output:
+    # This file was automatically generated by WSL. To stop automatic generation of this file, add the following entry to /etc/wsl.conf:
+    # [network]
+    # generateResolvConf = false
+    nameserver 10.255.255.254
+    search hsd1.wa.comcast.net
+
+--------------------------------------------------------------------------------
+open_connections
+--------------------------------------------------------------------------------
+Command                  : pwsh -NoProfile -Command ss -tunap 2>$null | Select-
+                           Object -First 100
+Return code              : 0
+
+Output:
+    Netid State  Recv-Q Send-Q  Local Address:Port  Peer Address:Port Process                               
+    udp   UNCONN 0      0       127.0.0.53%lo:53         0.0.0.0:*                                          
+    udp   UNCONN 0      0      10.255.255.254:53         0.0.0.0:*                                          
+    udp   UNCONN 0      0           127.0.0.1:323        0.0.0.0:*                                          
+    udp   UNCONN 0      0               [::1]:323           [::]:*                                          
+    tcp   LISTEN 0      1000   10.255.255.254:53         0.0.0.0:*                                          
+    tcp   LISTEN 0      511         127.0.0.1:44220      0.0.0.0:*     users:(("MainThread",pid=5624,fd=44))
+    tcp   LISTEN 0      4096        127.0.0.1:11434      0.0.0.0:*                                          
+    tcp   LISTEN 0      128           0.0.0.0:22         0.0.0.0:*                                          
+    tcp   LISTEN 0      4096          0.0.0.0:631        0.0.0.0:*                                          
+    tcp   LISTEN 0      511         127.0.0.1:60189      0.0.0.0:*     users:(("MainThread",pid=3537,fd=48))
+    tcp   LISTEN 0      4096    127.0.0.53%lo:53         0.0.0.0:*                                          
+    tcp   LISTEN 0      511         127.0.0.1:36705      0.0.0.0:*     users:(("MainThread",pid=2548,fd=22))
+    tcp   ESTAB  0      0           127.0.0.1:36705    127.0.0.1:38890 users:(("MainThread",pid=2548,fd=26))
+    tcp   ESTAB  0      0           127.0.0.1:52384    127.0.0.1:36705 users:(("MainThread",pid=5028,fd=22))
+    tcp   ESTAB  0      0           127.0.0.1:52370    127.0.0.1:36705 users:(("MainThread",pid=5019,fd=22))
+    tcp   ESTAB  0      0           127.0.0.1:36705    127.0.0.1:52384 users:(("MainThread",pid=5046,fd=22))
+    tcp   ESTAB  0      0           127.0.0.1:38892    127.0.0.1:36705 users:(("MainThread",pid=2571,fd=22))
+    tcp   ESTAB  0      0           127.0.0.1:36705    127.0.0.1:38892 users:(("MainThread",pid=3169,fd=22))
+    tcp   ESTAB  0      0           127.0.0.1:38890    127.0.0.1:36705 users:(("MainThread",pid=2562,fd=22))
+    tcp   ESTAB  0      0           127.0.0.1:36705    127.0.0.1:52370 users:(("MainThread",pid=2548,fd=29))
+    tcp   LISTEN 0      128              [::]:22            [::]:*                                          
+    tcp   LISTEN 0      4096             [::]:631           [::]:*
+
+================================================================================
+                             FILESYSTEM ENVIRONMENT                             
+================================================================================
+
+--------------------------------------------------------------------------------
+pwd
+--------------------------------------------------------------------------------
+Command                  : pwsh -NoProfile -Command Get-Location
+Return code              : 0
+
+Output:
+    [32;1mPath[0m
+    [32;1m----[0m
+    /home/cubbi/thai_sentences_gen
+
+--------------------------------------------------------------------------------
+directory_listing
+--------------------------------------------------------------------------------
+Command                  : pwsh -NoProfile -Command Get-ChildItem -Force |
+                           Select-Object Mode,Length,
+                           LastWriteTime,Name |
+                           ConvertTo-Json -Depth 3
+Return code              : 0
+
+Output:
+    [
+      {
+        "Mode": "d----",
+        "Length": null,
+        "LastWriteTime": "2026-07-07T10:30:54.9264361-07:00",
+        "Name": "__pycache__"
+      },
+      {
+        "Mode": "d----",
+        "Length": null,
+        "LastWriteTime": "2026-07-08T06:54:36.5032196-07:00",
+        "Name": "dostoevsky_influenced_run"
+      },
+      {
+        "Mode": "d----",
+        "Length": null,
+        "LastWriteTime": "2026-07-07T00:09:28.266304-07:00",
+        "Name": "dostoevsky_pdfs"
+      },
+      {
+        "Mode": "d----",
+        "Length": null,
+        "LastWriteTime": "2026-07-06T12:18:11.2731496-07:00",
+        "Name": "essay_output"
+      },
+      {
+        "Mode": "d----",
+        "Length": null,
+        "LastWriteTime": "2026-07-06T22:10:18.895874-07:00",
+        "Name": "hesse_influenced_run"
+      },
+      {
+        "Mode": "d----",
+        "Length": null,
+        "LastWriteTime": "2026-07-06T21:34:26.2560677-07:00",
+        "Name": "hesse_pdfs"
+      },
+      {
+        "Mode": "d----",
+        "Length": null,
+        "LastWriteTime": "2026-07-07T11:28:56.0315041-07:00",
+        "Name": "instruction_memory"
+      },
+      {
+        "Mode": "d----",
+        "Length": null,
+        "LastWriteTime": "2026-07-06T09:08:13.4826905-07:00",
+        "Name": "jpg_pages"
+      },
+      {
+        "Mode": "d----",
+        "Length": null,
+        "LastWriteTime": "2026-07-06T08:16:56.8940852-07:00",
+        "Name": "latex_outputs"
+      },
+      {
+        "Mode": "d----",
+        "Length": null,
+        "LastWriteTime": "2026-07-07T12:27:09.8358256-07:00",
+        "Name": "memory_composition_analysis"
+      },
+      {
+        "Mode": "d----",
+        "Length": null,
+        "LastWriteTime": "2026-07-08T07:05:50.2674494-07:00",
+        "Name": "memory_thought_analysis"
+      },
+      {
+        "Mode": "d----",
+        "Length": null,
+        "LastWriteTime": "2026-07-07T13:48:27.0693555-07:00",
+        "Name": "memory_thought_report_analysis"
+      },
+      {
+        "Mode": "d----",
+        "Length": null,
+        "LastWriteTime": "2026-07-06T11:19:50.5638333-07:00",
+        "Name": "papers"
+      },
+      {
+        "Mode": "d----",
+        "Length": null,
+        "LastWriteTime": "2026-07-07T10:03:57.9515271-07:00",
+        "Name": "PythonClassFactory"
+      },
+      {
+        "Mode": "d----",
+        "Length": null,
+        "LastWriteTime": "2026-07-06T10:00:57.5712062-07:00",
+        "Name": "qwen_vl_outputs"
+      },
+      {
+        "Mode": "d----",
+        "Length": null,
+        "LastWriteTime": "2026-07-05T20:55:23.372017-07:00",
+        "Name": "reports"
+      },
+      {
+        "Mode": "d----",
+        "Length": null,
+        "LastWriteTime": "2026-07-06T20:33:50.6734612-07:00",
+        "Name": "save_txt_html"
+      },
+      {
+        "Mode": "-----",
+        "Length": 17366,
+        "LastWriteTime": "2026-07-08T07:05:43.7594395-07:00",
+        "Name": "analyze_memory_7_8_7_00.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 13016,
+        "LastWriteTime": "2026-07-07T12:27:04.3432228-07:00",
+        "Name": "analyze_memory_composition_report.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 17202,
+        "LastWriteTime": "2026-07-07T13:47:17.9759838-07:00",
+        "Name": "analyze_memory_thought_report.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 5511,
+        "LastWriteTime": "2026-07-06T11:04:09.5600153-07:00",
+        "Name": "calculator_problem_14.3.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 26528,
+        "LastWriteTime": "2026-07-07T10:46:44.3488823-07:00",
+        "Name": "essay_7_7_10_09_dynamic_edited.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 23950,
+        "LastWriteTime": "2026-07-07T10:30:28.7938825-07:00",
+        "Name": "essay_7_7_10_09_dynamic_fixed.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 30907,
+        "LastWriteTime": "2026-07-07T11:25:25.2014615-07:00",
+        "Name": "essay_7_7_10_09_dynamic_memory.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 49874,
+        "LastWriteTime": "2026-07-07T11:55:37.5834454-07:00",
+        "Name": "essay_7_7_10_09_dynamic_thought_memory_audit.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 35727,
+        "LastWriteTime": "2026-07-07T11:42:25.5083584-07:00",
+        "Name": "essay_7_7_10_09_dynamic_thought_memory.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 23950,
+        "LastWriteTime": "2026-07-07T10:30:42.8413299-07:00",
+        "Name": "essay_7_7_10_09_dynamic.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 35093,
+        "LastWriteTime": "2026-07-07T10:12:16.2982884-07:00",
+        "Name": "essay_7_7_6_24AM.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 50382,
+        "LastWriteTime": "2026-07-08T06:51:33.8795022-07:00",
+        "Name": "essay_7_8_6_48.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 13091,
+        "LastWriteTime": "2026-07-08T07:02:22.7714518-07:00",
+        "Name": "essay_generator__7_8_7_00.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 13091,
+        "LastWriteTime": "2026-07-07T10:30:03.7365919-07:00",
+        "Name": "essay_generator_class_fixed.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 13091,
+        "LastWriteTime": "2026-07-07T10:30:42.8413299-07:00",
+        "Name": "essay_generator_class.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 18723,
+        "LastWriteTime": "2026-07-06T12:15:00.5094381-07:00",
+        "Name": "essay_generator.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 34045,
+        "LastWriteTime": "2026-07-07T06:51:34.4870476-07:00",
+        "Name": "essay_generator2_corrected_fixed.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 26537,
+        "LastWriteTime": "2026-07-07T00:11:59.1150747-07:00",
+        "Name": "essay_generator2_corrected.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 21258,
+        "LastWriteTime": "2026-07-06T21:57:29.6719382-07:00",
+        "Name": "essay_generator2.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 2999,
+        "LastWriteTime": "2026-07-06T07:43:53.6654448-07:00",
+        "Name": "formulas_on_page.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 6471,
+        "LastWriteTime": "2026-07-06T08:14:07.9737546-07:00",
+        "Name": "generalized_jpg_to_latex.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 9289,
+        "LastWriteTime": "2026-07-08T07:03:59.5754211-07:00",
+        "Name": "generalized_ocr_7_8_7_00.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 9289,
+        "LastWriteTime": "2026-07-06T09:08:29.8967686-07:00",
+        "Name": "generalized_qwen_vl_ocr.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 4658,
+        "LastWriteTime": "2026-07-05T22:29:09.9186685-07:00",
+        "Name": "legal_rewrite_html.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 3217,
+        "LastWriteTime": "2026-07-05T21:47:42.0786824-07:00",
+        "Name": "legal_rewrite.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 5924,
+        "LastWriteTime": "2026-07-05T19:42:21.2543365-07:00",
+        "Name": "Local_LLaMA‑Tha.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 6358,
+        "LastWriteTime": "2026-07-05T18:27:52.9816183-07:00",
+        "Name": "Local_LLaMA‑Tha2.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 162155,
+        "LastWriteTime": "2026-07-07T12:30:59.0296966-07:00",
+        "Name": "memory_thought_report.json"
+      },
+      {
+        "Mode": "-----",
+        "Length": 155512,
+        "LastWriteTime": "2026-07-05T23:05:27.8726701-07:00",
+        "Name": "page_13.jpg"
+      },
+      {
+        "Mode": "-----",
+        "Length": 4658,
+        "LastWriteTime": "2026-07-05T22:34:39.6843448-07:00",
+        "Name": "simplify_public_text_qwen_html.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 15148,
+        "LastWriteTime": "2026-07-08T20:48:06.5219594-07:00",
+        "Name": "temp.txt"
+      },
+      {
+        "Mode": "-----",
+        "Length": 49371,
+        "LastWriteTime": "2026-07-08T20:47:52.2552679-07:00",
+        "Name": "test_powershell_environment_report.json"
+      },
+      {
+        "Mode": "-----",
+        "Length": 9462,
+        "LastWriteTime": "2026-07-08T20:47:04.9759011-07:00",
+        "Name": "test_powerShell_save.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 12987,
+        "LastWriteTime": "2026-07-08T20:47:26.7205304-07:00",
+        "Name": "test_powerShell.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 2242,
+        "LastWriteTime": "2026-07-07T11:27:49.852993-07:00",
+        "Name": "theCommands_7_7_11_26.txt"
+      },
+      {
+        "Mode": "-----",
+        "Length": 1034,
+        "LastWriteTime": "2026-07-07T11:43:09.5400659-07:00",
+        "Name": "theCommands_7_7_11_42.txt"
+      },
+      {
+        "Mode": "-----",
+        "Length": 958,
+        "LastWriteTime": "2026-07-07T11:53:57.3293363-07:00",
+        "Name": "theCommands_7_7_11_53.txt"
+      },
+      {
+        "Mode": "-----",
+        "Length": 0,
+        "LastWriteTime": "2026-07-07T12:25:41.7657579-07:00",
+        "Name": "theCommands_7_7_12_25.txt"
+      },
+      {
+        "Mode": "-----",
+        "Length": 341,
+        "LastWriteTime": "2026-07-08T07:27:21.6353657-07:00",
+        "Name": "theCommands_7_8_7_26.txt"
+      },
+      {
+        "Mode": "-----",
+        "Length": 7717,
+        "LastWriteTime": "2026-07-05T18:51:49.483924-07:00",
+        "Name": "word-spaced_segmented.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 10222,
+        "LastWriteTime": "2026-07-05T18:59:24.9072102-07:00",
+        "Name": "word-spaced_segmented2.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 13414,
+        "LastWriteTime": "2026-07-05T19:07:07.3901647-07:00",
+        "Name": "word-spaced_segmented3.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 13482,
+        "LastWriteTime": "2026-07-05T19:11:34.3598485-07:00",
+        "Name": "word-spaced_segmented4.py"
+      },
+      {
+        "Mode": "-----",
+        "Length": 19726,
+        "LastWriteTime": "2026-07-05T20:54:52.5918859-07:00",
+        "Name": "word-spaced_segmented5.py"
+      }
+    ]
+
+--------------------------------------------------------------------------------
+mnt_c_listing
+--------------------------------------------------------------------------------
+Command                  : pwsh -NoProfile -Command ls -la /mnt/c
+Return code              : 1
+
+Output:
+    total 4677300
+    drwxrwxrwx 1 cubbi cubbi       4096 Mar  7 13:16 $Recycle.Bin
+    drwxrwxrwx 1 cubbi cubbi       4096 Jul  8 20:10 .
+    drwxr-xr-x 6 root  root        4096 Mar 22 15:25 ..
+    drwxrwxrwx 1 cubbi cubbi       4096 May  6 19:55 Audacity_files_audio
+    drwxrwxrwx 1 cubbi cubbi       4096 Mar 13 17:08 Backups3_saveThis_One
+    lrwxrwxrwx 1 cubbi cubbi         12 Jul 16  2024 Documents and Settings -> /mnt/c/Users
+    -????????? ? ?     ?              ?            ? DumpStack.log.tmp
+    drwxrwxrwx 1 cubbi cubbi       4096 May  6 22:07 Jts
+    drwxrwxrwx 1 cubbi cubbi       4096 May 11 10:27 Mathematica_11.2.0_WIN
+    -rwxrwxrwx 1 cubbi cubbi 3565970199 May 11 10:18 Mathematica_11.2.0_WIN.zip
+    drwxrwxrwx 1 cubbi cubbi       4096 May 25 13:07 Models
+    drwxrwxrwx 1 cubbi cubbi       4096 Mar  7 12:35 OneDriveTemp
+    drwxrwxrwx 1 cubbi cubbi       4096 Apr  1  2024 PerfLogs
+    dr-xr-xr-x 1 cubbi cubbi       4096 Jun 16 09:53 Program Files
+    dr-xr-xr-x 1 cubbi cubbi       4096 May 11 10:32 Program Files (x86)
+    drwxrwxrwx 1 cubbi cubbi       4096 Jun 16 09:53 ProgramData
+    d--x--x--x 1 cubbi cubbi       4096 Jul 16  2024 Recovery
+    drwxrwxrwx 1 cubbi cubbi       4096 Jun  9 08:39 Robert_Pape
+    drwxrwxrwx 1 cubbi cubbi       4096 Mar 30 08:01 SQL2025
+    drwxrwxrwx 1 cubbi cubbi       4096 Mar 22 15:24 Spice_general
+    d--x--x--x 1 cubbi cubbi       4096 Jul  8 12:09 System Volume Information
+    dr-xr-xr-x 1 cubbi cubbi       4096 Mar  7 12:47 Users
+    drwxrwxrwx 1 cubbi cubbi       4096 May  4 05:46 VoiceTypr_1.12.3_aarch64.app
+    -rwxrwxrwx 1 cubbi cubbi   57450090 May  4 05:45 VoiceTypr_1.12.3_aarch64.app.tar.gz
+    drwxrwxrwx 1 cubbi cubbi       4096 May  4 05:47 VoiceTypr_1.12.3_x86_64.app
+    -rwxrwxrwx 1 cubbi cubbi   68214688 May  4 05:47 VoiceTypr_1.12.3_x86_64.app.tar.gz
+    drwxrwxrwx 1 cubbi cubbi       4096 May  4 22:37 VulkanSDK
+    drwxrwxrwx 1 cubbi cubbi       4096 Apr  8 17:33 WSL
+    drwxrwxrwx 1 cubbi cubbi       4096 Jun 12 21:41 Walsh
+    dr-xr-xr-x 1 cubbi cubbi       4096 Jul  3 09:56 Windows
+    drwxrwxrwx 1 cubbi cubbi       4096 Jun 13 00:17 _5_16_17_18_2026
+    drwxrwxrwx 1 cubbi cubbi       4096 Jun 12 21:32 _6_11_Class_Downloads_CSE599
+    drwxrwxrwx 1 cubbi cubbi       4096 Jul  8 20:37 __CloudDeployment_dslabs
+    drwxrwxrwx 1 cubbi cubbi       4096 Jun  8 19:11 ___LANG_language_pdfs
+    drwxrwxrwx 1 cubbi cubbi       4096 Jul  4 15:58 ____ScannedFiles_10_21_2023_Valvano_Ts
+    drwxrwxrwx 1 cubbi cubbi       4096 Jul  5 08:59 _____Summer_legal_class
+    drwxrwxrwx 1 cubbi cubbi       4096 May 16 10:09 ________desktop_2_5_2026_new_RAZ
+    drwxrwxrwx 1 cubbi cubbi       4096 May 20 07:45 ___newPDFs_11_26_2024_Turnovsky
+    drwxrwxrwx 1 cubbi cubbi       4096 May  1 09:02 __desktop_4_30_2026
+    drwxrwxrwx 1 cubbi cubbi       4096 May 16 09:18 _desktop_3_7_2026
+    drwxrwxrwx 1 cubbi cubbi       4096 Apr  9 09:00 _french_history
+    drwxrwxrwx 1 cubbi cubbi       4096 May 25 22:06 _newAI_study_
+    drwxrwxrwx 1 cubbi cubbi       4096 Jul  4 15:48 _scrollable_pdf_viewer
+    drwxrwxrwx 1 cubbi cubbi       4096 Apr 10 16:00 _ss_documents
+    drwxrwxrwx 1 cubbi cubbi       4096 Jun 17 18:31 _susan_oberland_6_12_2026
+    drwxrwxrwx 1 cubbi cubbi       4096 Jul  5 16:42 _thai_word_download
+    drwxrwxrwx 1 cubbi cubbi       4096 Jun  4 07:19 annotated-transformer
+    -r-xr-xr-x 1 cubbi cubbi     112184 Mar 12  2025 appverifUI.dll
+    -r-xr-xr-x 1 cubbi cubbi        153 May  5 08:42 build_5.bat
+    -r-xr-xr-x 1 cubbi cubbi        386 May  5 08:44 build_5_1.bat
+    -r-xr-xr-x 1 cubbi cubbi        437 May  5 08:47 build_5_2.bat
+    -r-xr-xr-x 1 cubbi cubbi        135 May  6 10:28 build_6_1.bat
+    -r-xr-xr-x 1 cubbi cubbi        102 May  6 10:33 build_6_2.bat
+    drwxrwxrwx 1 cubbi cubbi       4096 Jun 19 05:23 collection_5_10_2026
+    drwxrwxrwx 1 cubbi cubbi       4096 May 22 16:23 cse446
+    drwxrwxrwx 1 cubbi cubbi       4096 May 25 09:48 cse447
+    drwxrwxrwx 1 cubbi cubbi       4096 Jun 11 08:06 econ586_SpringQuarter
+    drwxrwxrwx 1 cubbi cubbi       4096 Jun 11 08:03 econAutumnQuarter2023_thisIsIt
+    drwxrwxrwx 1 cubbi cubbi       4096 May 25 11:09 econ_yu_chin
+    drwxrwxrwx 1 cubbi cubbi       4096 Mar  7 23:47 foundary
+    drwxrwxrwx 1 cubbi cubbi       4096 Apr 10 11:17 french
+    -????????? ? ?     ?              ?            ? hiberfil.sys
+    drwxrwxrwx 1 cubbi cubbi       4096 Jun 21 15:47 html_convert
+    dr-xr-xr-x 1 cubbi cubbi       4096 Oct 29  2025 inetpub
+    -r-xr-xr-x 1 cubbi cubbi 1097726778 Jun 30 21:11 journey_to_center_e.mkv
+    drwxrwxrwx 1 cubbi cubbi       4096 Apr 29 10:33 jupyter
+    drwxrwxrwx 1 cubbi cubbi       4096 Jun  5 21:21 labor_bureau_stats
+    drwxrwxrwx 1 cubbi cubbi       4096 Jun 13 18:39 labor_consumerPrices_stats
+    drwxrwxrwx 1 cubbi cubbi       4096 Mar 24 09:51 macroEconomicsTs
+    drwxrwxrwx 1 cubbi cubbi       4096 Mar 25 06:10 mnt
+    drwxrwxrwx 1 cubbi cubbi       4096 Jun 25 12:38 msft_download_stats
+    drwxrwxrwx 1 cubbi cubbi       4096 May  6 13:50 openwhispr
+    -????????? ? ?     ?              ?            ? pagefile.sys
+    drwxrwxrwx 1 cubbi cubbi       4096 Jul  6 21:16 pdf_maker
+    drwxrwxrwx 1 cubbi cubbi       4096 Mar 22 14:33 phoenix_stuff
+    drwxrwxrwx 1 cubbi cubbi       4096 Apr  4 16:37 poppler-25.12.0
+    drwxrwxrwx 1 cubbi cubbi       4096 May 10 23:01 poppler-26.02.0
+    drwxrwxrwx 1 cubbi cubbi       4096 May  9 09:38 pyprobml
+    drwxrwxrwx 1 cubbi cubbi       4096 May  8 17:30 qiskit_dir
+    drwxrwxrwx 1 cubbi cubbi       4096 Jun  2 19:49 roof_6_2_2026
+    drwxrwxrwx 1 cubbi cubbi       4096 Jun  1 22:38 roof_dimensions_files
+    drwxrwxrwx 1 cubbi cubbi       4096 May  6 19:51 solid_state_circuits
+    -????????? ? ?     ?              ?            ? swapfile.sys
+    drwxrwxrwx 1 cubbi cubbi       4096 May  6 11:08 t
+    drwxrwxrwx 1 cubbi cubbi       4096 Jul  8 20:19 temp
+    drwxrwxrwx 1 cubbi cubbi       4096 May 16 09:44 temp2
+    drwxrwxrwx 1 cubbi cubbi       4096 May  4 22:37 tempVulcan
+    drwxrwxrwx 1 cubbi cubbi       4096 Apr 28 19:31 time_waits_for_no_one
+    drwxrwxrwx 1 cubbi cubbi       4096 May  6 11:00 v
+    drwxrwxrwx 1 cubbi cubbi       4096 May  4 22:40 vcpkg
+    -r-xr-xr-x 1 cubbi cubbi      68120 Jan 27 05:18 vfcompat.dll
+    drwxrwxrwx 1 cubbi cubbi       4096 May  5 08:27 voicetypr
+    drwxrwxrwx 1 cubbi cubbi       4096 Jul  4 19:10 wenlin
+    drwxrwxrwx 1 cubbi cubbi       4096 Jul  5 22:47 wikipedia_download_db
+
+Errors:
+    /usr/bin/ls: cannot access '/mnt/c/DumpStack.log.tmp': Permission denied
+    /usr/bin/ls: cannot access '/mnt/c/hiberfil.sys': Permission denied
+    /usr/bin/ls: cannot access '/mnt/c/pagefile.sys': Permission denied
+    /usr/bin/ls: /mnt/c/Recovery: Permission denied
+    /usr/bin/ls: cannot access '/mnt/c/swapfile.sys': Permission denied
+    /usr/bin/ls: '/mnt/c/System Volume Information': Permission denied
+
+--------------------------------------------------------------------------------
+disk_usage
+--------------------------------------------------------------------------------
+Command                  : pwsh -NoProfile -Command df -h
+Return code              : 0
+
+Output:
+    Filesystem      Size  Used Avail Use% Mounted on
+    none             12G     0   12G   0% /usr/lib/modules/6.6.87.2-microsoft-standard-WSL2
+    none             12G  4.0K   12G   1% /mnt/wsl
+    drivers         1.9T  1.7T  242G  88% /usr/lib/wsl/drivers
+    /dev/sdd       1007G  574G  383G  60% /
+    none             12G  104K   12G   1% /mnt/wslg
+    none             12G     0   12G   0% /usr/lib/wsl/lib
+    rootfs           12G  2.7M   12G   1% /init
+    none             12G  1.2M   12G   1% /run
+    none             12G     0   12G   0% /run/lock
+    none             12G     0   12G   0% /run/shm
+    none             12G   76K   12G   1% /mnt/wslg/versions.txt
+    none             12G   76K   12G   1% /mnt/wslg/doc
+    C:\             1.9T  1.7T  242G  88% /mnt/c
+    snapfuse        186M  186M     0 100% /snap/chromium/3479
+    snapfuse        189M  189M     0 100% /snap/chromium/3483
+    snapfuse        128K  128K     0 100% /snap/bare/5
+    snapfuse         74M   74M     0 100% /snap/core22/2339
+    snapfuse         74M   74M     0 100% /snap/core22/2411
+    snapfuse         67M   67M     0 100% /snap/core24/1587
+    snapfuse         67M   67M     0 100% /snap/core24/1643
+    snapfuse         48M   48M     0 100% /snap/cups/1206
+    snapfuse         50M   50M     0 100% /snap/cups/1225
+    snapfuse        253M  253M     0 100% /snap/firefox/8585
+    snapfuse        532M  532M     0 100% /snap/gnome-42-2204/247
+    snapfuse        532M  532M     0 100% /snap/gnome-42-2204/263
+    snapfuse        607M  607M     0 100% /snap/gnome-46-2404/153
+    snapfuse         92M   92M     0 100% /snap/gtk-common-themes/1535
+    snapfuse        395M  395M     0 100% /snap/mesa-2404/1165
+    snapfuse         50M   50M     0 100% /snap/snapd/26865
+    snapfuse         51M   51M     0 100% /snap/snapd/27406
+    tmpfs           2.4G   12K  2.4G   1% /run/user/1000
+    snapfuse        253M  253M     0 100% /snap/firefox/8595
+
+--------------------------------------------------------------------------------
+mounts
+--------------------------------------------------------------------------------
+Command                  : pwsh -NoProfile -Command mount | Select-Object -First
+                           100
+Return code              : 0
+
+Output:
+    none on /usr/lib/modules/6.6.87.2-microsoft-standard-WSL2 type overlay (rw,nosuid,nodev,noatime,lowerdir=/modules,upperdir=/lib/modules/6.6.87.2-microsoft-standard-WSL2/rw/upper,workdir=/lib/modules/6.6.87.2-microsoft-standard-WSL2/rw/work,uuid=on)
+    none on /mnt/wsl type tmpfs (rw,relatime)
+    drivers on /usr/lib/wsl/drivers type 9p (ro,nosuid,nodev,noatime,aname=drivers;fmask=222;dmask=222,cache=5,access=client,msize=65536,trans=fd,rfd=8,wfd=8)
+    /dev/sdd on / type ext4 (rw,relatime,discard,errors=remount-ro,data=ordered)
+    none on /mnt/wslg type tmpfs (rw,relatime)
+    /dev/sdd on /mnt/wslg/distro type ext4 (ro,relatime,discard,errors=remount-ro,data=ordered)
+    none on /usr/lib/wsl/lib type overlay (rw,nosuid,nodev,noatime,lowerdir=/gpu_lib_packaged:/gpu_lib_inbox,upperdir=/gpu_lib/rw/upper,workdir=/gpu_lib/rw/work,uuid=on)
+    rootfs on /init type rootfs (ro,size=12300476k,nr_inodes=3075119)
+    none on /dev type devtmpfs (rw,nosuid,relatime,size=12300476k,nr_inodes=3075119,mode=755)
+    sysfs on /sys type sysfs (rw,nosuid,nodev,noexec,noatime)
+    proc on /proc type proc (rw,nosuid,nodev,noexec,noatime)
+    devpts on /dev/pts type devpts (rw,nosuid,noexec,noatime,gid=5,mode=620,ptmxmode=000)
+    none on /run type tmpfs (rw,nosuid,nodev,mode=755)
+    none on /run/lock type tmpfs (rw,nosuid,nodev,noexec,noatime)
+    none on /run/shm type tmpfs (rw,nosuid,nodev,noatime)
+    none on /dev/shm type tmpfs (rw,nosuid,nodev,noatime)
+    none on /run/user type tmpfs (rw,nosuid,nodev,noexec,noatime,mode=755)
+    binfmt_misc on /proc/sys/fs/binfmt_misc type binfmt_misc (rw,relatime)
+    cgroup2 on /sys/fs/cgroup type cgroup2 (rw,nosuid,nodev,noexec,relatime,nsdelegate)
+    none on /mnt/wslg/versions.txt type overlay (rw,relatime,lowerdir=/systemvhd,upperdir=/system/rw/upper,workdir=/system/rw/work,uuid=on)
+    none on /mnt/wslg/doc type overlay (rw,relatime,lowerdir=/systemvhd,upperdir=/system/rw/upper,workdir=/system/rw/work,uuid=on)
+    none on /tmp/.X11-unix type tmpfs (ro,relatime)
+    C:\ on /mnt/c type 9p (rw,noatime,aname=drvfs;path=C:\;uid=1000;gid=1000;symlinkroot=/mnt/,cache=5,access=client,msize=65536,trans=fd,rfd=6,wfd=6)
+    none on /run/user type tmpfs (rw,relatime)
+    hugetlbfs on /dev/hugepages type hugetlbfs (rw,relatime,pagesize=2M)
+    mqueue on /dev/mqueue type mqueue (rw,nosuid,nodev,noexec,relatime)
+    debugfs on /sys/kernel/debug type debugfs (rw,nosuid,nodev,noexec,relatime)
+    tracefs on /sys/kernel/tracing type tracefs (rw,nosuid,nodev,noexec,relatime)
+    fusectl on /sys/fs/fuse/connections type fusectl (rw,nosuid,nodev,noexec,relatime)
+    ramfs on /run/credentials/systemd-sysusers.service type ramfs (ro,nosuid,nodev,noexec,relatime,mode=700)
+    /dev/sdd on /snap type ext4 (rw,relatime,discard,errors=remount-ro,data=ordered)
+    snapfuse on /snap/chromium/3479 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)
+    snapfuse on /snap/chromium/3483 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)
+    snapfuse on /snap/bare/5 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)
+    snapfuse on /snap/core22/2339 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)
+    snapfuse on /snap/core22/2411 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)
+    snapfuse on /snap/core24/1587 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)
+    snapfuse on /snap/core24/1643 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)
+    snapfuse on /snap/cups/1206 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)
+    snapfuse on /snap/cups/1225 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)
+    snapfuse on /snap/firefox/8585 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)
+    snapfuse on /snap/gnome-42-2204/247 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)
+    snapfuse on /snap/gnome-42-2204/263 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)
+    snapfuse on /snap/gnome-46-2404/153 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)
+    snapfuse on /snap/gtk-common-themes/1535 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)
+    snapfuse on /snap/mesa-2404/1165 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)
+    snapfuse on /snap/snapd/26865 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)
+    snapfuse on /snap/snapd/27406 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)
+    none on /run/snapd/ns type tmpfs (rw,nosuid,nodev,mode=755)
+    nsfs on /run/snapd/ns/cups.mnt type nsfs (rw)
+    tmpfs on /run/user/1000 type tmpfs (rw,nosuid,nodev,relatime,size=2461100k,nr_inodes=615275,mode=700,uid=1000,gid=1000)
+    tmpfs on /mnt/wslg/run/user/1000 type tmpfs (rw,nosuid,nodev,relatime,size=2461100k,nr_inodes=615275,mode=700,uid=1000,gid=1000)
+    snapfuse on /snap/firefox/8595 type fuse.snapfuse (ro,nodev,relatime,user_id=0,group_id=0,allow_other)
+    nsfs on /run/snapd/ns/firefox.mnt type nsfs (rw)
+
+================================================================================
+                              PROCESS ENVIRONMENT                               
+================================================================================
+
+--------------------------------------------------------------------------------
+top_processes
+--------------------------------------------------------------------------------
+Command                  : pwsh -NoProfile -Command ps aux --sort=-%mem | head
+                           -30
+Return code              : 0
+
+Output:
+    USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+    cubbi       5624  0.7  3.8 11825364 955180 pts/2 Sl+  19:30   0:33 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node /home/cubbi/.vscode-server/extensions/ms-python.vscode-pylance-2026.2.1/dist/server.bundle.js --cancellationReceive=file:e30ee35638aba1e0cbb6d5ad3a5e6d81ab697c2609 --node-ipc --clientProcessId=5046
+    cubbi       3537  0.1  2.3 11453692 570932 pts/2 Sl+  19:23   0:06 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node /home/cubbi/.vscode-server/extensions/ms-python.vscode-pylance-2026.2.1/dist/server.bundle.js --cancellationReceive=file:3f1f4b7e4ea180535b8534db94c63cc18ed3df9027 --node-ipc --clientProcessId=3169
+    cubbi       5046  1.4  2.1 19562868 535996 pts/2 Sl+  19:29   1:09 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node --dns-result-order=ipv4first /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/out/bootstrap-fork --type=extensionHost --transformURIs --useHostProxy=true
+    cubbi       3169  1.2  2.1 19556036 526416 pts/2 Sl+  19:23   1:04 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node --dns-result-order=ipv4first /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/out/bootstrap-fork --type=extensionHost --transformURIs --useHostProxy=true
+    cubbi       2548  0.1  0.8 1862540 207880 pts/2  Sl+  19:23   0:07 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/out/server-main.js --host=127.0.0.1 --port=0 --connection-token=990247417-422105906-2321151650-1184241652 --use-host-proxy --without-browser-env-var --disable-websocket-compression --accept-server-license-terms --telemetry-level=all
+    cubbi      36786  0.0  0.3 53573852 92888 pts/0  Sl+  20:48   0:00 pwsh -NoProfile -Command ps aux --sort=-%mem | head -30
+    cubbi       5075  0.0  0.3 1495768 78312 pts/2   Sl+  19:29   0:00 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/extensions/json-language-features/server/dist/node/jsonServerMain --node-ipc --clientProcessId=5046
+    cubbi       3366  0.1  0.2 1473792 73576 pts/2   Sl+  19:23   0:06 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/out/bootstrap-fork --type=ptyHost --logsPath /home/cubbi/.vscode-server/data/logs/20260708T192625
+    cubbi       5019  0.0  0.2 1418472 67652 pts/5   Ssl+ 19:29   0:00 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node -e const net = require('net'); process.stdin.pause(); const client = net.createConnection({ host: '127.0.0.1', port: 36705 }, () => { client.pipe(process.stdout); process.stdin.pipe(client); }); client.on('close', function (hadError) { console.error(hadError ? 'Remote close with error' : 'Remote close'); process.exit(hadError ? 1 : 0); }); client.on('error', function (err) { process.stderr.write(err && (err.stack || err.message) || String(err)); });
+    cubbi       2562  0.0  0.2 1420344 64032 pts/3   Ssl+ 19:23   0:00 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node -e const net = require('net'); process.stdin.pause(); const client = net.createConnection({ host: '127.0.0.1', port: 36705 }, () => { client.pipe(process.stdout); process.stdin.pipe(client); }); client.on('close', function (hadError) { console.error(hadError ? 'Remote close with error' : 'Remote close'); process.exit(hadError ? 1 : 0); }); client.on('error', function (err) { process.stderr.write(err && (err.stack || err.message) || String(err)); });
+    cubbi       5029  0.0  0.2 1725640 62904 pts/2   Sl+  19:29   0:01 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/out/bootstrap-fork --type=fileWatcher
+    cubbi       2572  0.0  0.2 1659900 62748 pts/2   Sl+  19:23   0:01 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/out/bootstrap-fork --type=fileWatcher
+    cubbi       5028  0.0  0.2 1411076 62008 pts/7   Ssl+ 19:29   0:01 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node -e const net = require('net'); process.stdin.pause(); const client = net.createConnection({ host: '127.0.0.1', port: 36705 }, () => { client.pipe(process.stdout); process.stdin.pipe(client); }); client.on('close', function (hadError) { console.error(hadError ? 'Remote close with error' : 'Remote close'); process.exit(hadError ? 1 : 0); }); client.on('error', function (err) { process.stderr.write(err && (err.stack || err.message) || String(err)); });
+    cubbi       2571  0.0  0.2 1411560 59648 pts/4   Ssl+ 19:23   0:00 /home/cubbi/.vscode-server/bin/fc3def6774c76082adf699d366f31a557ce5573f/node -e const net = require('net'); process.stdin.pause(); const client = net.createConnection({ host: '127.0.0.1', port: 36705 }, () => { client.pipe(process.stdout); process.stdin.pipe(client); }); client.on('close', function (hadError) { console.error(hadError ? 'Remote close with error' : 'Remote close'); process.exit(hadError ? 1 : 0); }); client.on('error', function (err) { process.stderr.write(err && (err.stack || err.message) || String(err)); });
+    ollama       303  0.0  0.1 2337436 41368 ?       Ssl  19:18   0:00 /usr/local/bin/ollama serve
+    root         307  0.0  0.1 2221512 40740 ?       Ssl  19:18   0:02 /snap/snapd/current/usr/lib/snapd/snapd
+    root         396  0.0  0.0 112940 22912 ?        Ssl  19:18   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+    root         301  0.0  0.0  35952 20204 ?        Ss   19:18   0:00 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+    root         194  0.0  0.0 824836 18176 ?        Ssl  19:18   0:01 snapfuse /var/lib/snapd/snaps/snapd_27406.snap /snap/snapd/27406 -o ro,nodev,allow_other,suid
+    root          57  0.0  0.0  64364 18048 ?        S<s  19:18   0:00 /lib/systemd/systemd-journald
+    root        1050  0.0  0.0 260140 16512 ?        Sl   19:18   0:00 cups-browsed -c /var/snap/cups/common/etc/cups/cups-browsed.conf
+    systemd+     247  0.0  0.0  25548 13312 ?        Ss   19:18   0:00 /lib/systemd/systemd-resolved
+    cubbi      36271  0.5  0.0  15976 12796 pts/0    S+   20:48   0:00 python test_powerShell.py
+    root         119  0.0  0.0 676340 12712 ?        Ssl  19:18   0:00 snapfuse /var/lib/snapd/snaps/core22_2411.snap /snap/core22/2411 -o ro,nodev,allow_other,suid
+    root           1  0.0  0.0 167460 12408 ?        Ss   19:18   0:00 /sbin/init
+    root         881  0.0  0.0 135156 12288 ?        Sl   19:18   0:00 cupsd -f -s /var/snap/cups/common/etc/cups/cups-files.conf -c /var/snap/cups/common/etc/cups/cupsd.conf
+    root         147  0.0  0.0 452048 11308 ?        Ssl  19:18   0:00 snapfuse /var/lib/snapd/snaps/cups_1225.snap /snap/cups/1225 -o ro,nodev,allow_other,suid
+    cubbi        941  0.0  0.0  17336  9472 ?        Ss   19:18   0:00 /lib/systemd/systemd --user
+    root         389  0.0  0.0  15436  9088 ?        Ss   19:18   0:00 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
+
+--------------------------------------------------------------------------------
+system_info
+--------------------------------------------------------------------------------
+Command                  : pwsh -NoProfile -Command uname -a
+Return code              : 0
+
+Output:
+    Linux powerpc 6.6.87.2-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+
+--------------------------------------------------------------------------------
+os_release
+--------------------------------------------------------------------------------
+Command                  : pwsh -NoProfile -Command cat /etc/os-release
+Return code              : 0
+
+Output:
+    PRETTY_NAME="Ubuntu 22.04.5 LTS"
+    NAME="Ubuntu"
+    VERSION_ID="22.04"
+    VERSION="22.04.5 LTS (Jammy Jellyfish)"
+    VERSION_CODENAME=jammy
+    ID=ubuntu
+    ID_LIKE=debian
+    HOME_URL="https://www.ubuntu.com/"
+    SUPPORT_URL="https://help.ubuntu.com/"
+    BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+    PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+    UBUNTU_CODENAME=jammy
+
+================================================================================
+                             SQL SERVER ENVIRONMENT                             
+================================================================================
+pyodbc available         : True
+sqlcmd available         : /opt/mssql-tools18/bin/sqlcmd
+
+--------------------------------------------------------------------------------
+ODBC Drivers
+--------------------------------------------------------------------------------
+    • ODBC Driver 18 for SQL Server
+
+--------------------------------------------------------------------------------
+Common SQL Ports
+--------------------------------------------------------------------------------
+localhost:1433           : closed/unreachable: ConnectionRefusedError
+127.0.0.1:1433           : closed/unreachable: ConnectionRefusedError
+localhost:1434           : closed/unreachable: ConnectionRefusedError
+
+--------------------------------------------------------------------------------
+SQL Server Connection Tests
+--------------------------------------------------------------------------------
+Server                    Status       Driver
+--------------------------------------------------------------------------------
+localhost                 failed       ODBC Driver 18 for SQL Server
+    Error: OperationalError: ('HYT00', '[HYT00] [Microsoft][ODBC Driver 18 for
+           SQL Server]Login timeout expired (0) (SQLDriverConnect)')
+127.0.0.1                 failed       ODBC Driver 18 for SQL Server
+    Error: OperationalError: ('HYT00', '[HYT00] [Microsoft][ODBC Driver 18 for
+           SQL Server]Login timeout expired (0) (SQLDriverConnect)')
+localhost,1433            failed       ODBC Driver 18 for SQL Server
+    Error: OperationalError: ('HYT00', '[HYT00] [Microsoft][ODBC Driver 18 for
+           SQL Server]Login timeout expired (0) (SQLDriverConnect)')
+127.0.0.1,1433            failed       ODBC Driver 18 for SQL Server
+    Error: OperationalError: ('HYT00', '[HYT00] [Microsoft][ODBC Driver 18 for
+           SQL Server]Login timeout expired (0) (SQLDriverConnect)')
+
+================================================================================
+                                  REPORT SAVED                                  
+================================================================================
+JSON file                : test_powershell_environment_report.json

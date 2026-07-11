@@ -1,0 +1,9 @@
+{
+  "TraiContext": "data/train_text.txt",
+  "TraiLabel": "data/train_label.txt",
+  "TestContext": "data/test_text.txt",
+  "TestLabel": "data/test_label.txt",
+  "WordVector": "data/word_vectors.txt",
+  "mrPath": "../data/corpus/mr_Lscope.p",
+  "saveEmpath": "../data/embedding"
+}

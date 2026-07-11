@@ -1,0 +1,39 @@
+
+
+(attention-keras-legacy) cubbi@powerpc:~/code_journalArt$ ll
+total 104
+drwxr-xr-x 15 cubbi cubbi 4096 Jun 17 09:09  ./
+drwxr-x--- 90 cubbi cubbi 4096 Jun 17 09:08  ../
+drwxr-xr-x  2 cubbi cubbi 4096 Jun 16 23:53  .idea/
+drwxr-xr-x  2 cubbi cubbi 4096 Jun 17 00:39  __pycache__/
+drwxr-xr-x  3 cubbi cubbi 4096 Jun 16 23:53  attModel1/
+drwxr-xr-x  2 cubbi cubbi 4096 Jun 16 23:53  attModel1-luoling/
+drwxr-xr-x  3 cubbi cubbi 4096 Jun 16 23:53  attModel2/
+drwxr-xr-x  3 cubbi cubbi 4096 Jun 16 23:53 'attModel3(error)'/
+drwxr-xr-x  2 cubbi cubbi 4096 Jun 16 23:53  attModel4_yyl/
+drwxr-xr-x  2 cubbi cubbi 4096 Jun 16 23:53 'attention is all you need'/
+-rwxr-xr-x  1 cubbi cubbi 9868 Jun 17 00:38  attention_lstm.py*
+drwxr-xr-x  2 cubbi cubbi 4096 Jun 17 00:22  data/
+drwxr-xr-x  2 cubbi cubbi 4096 Jun 16 23:53  hierarchical-attention_synthesio/
+drwxr-xr-x  2 cubbi cubbi 4096 Jun 16 23:53  hierarchical-attention_yyl/
+-rwxr-xr-x  1 cubbi cubbi 6299 Jun 17 00:28  main_new.py*
+-rwxr-xr-x  1 cubbi cubbi 8463 Jun 17 00:07  preprocess.py*
+-rwxr-xr-x  1 cubbi cubbi 7275 Jun 17 00:07  process_data.py*
+drwxr-xr-x  2 cubbi cubbi 4096 Jun 16 23:53  self-attention/
+-rw-r--r--  1 cubbi cubbi  279 Jun 17 00:23  test.json
+-rw-r--r--  1 cubbi cubbi    0 Jun 17 09:09  theCommands.txt
+drwxr-xr-x  3 cubbi cubbi 4096 Jun 16 23:53  utils/
+(attention-keras-legacy) cubbi@powerpc:~/code_journalArt$
+
+cp attention_lstm.py attention_lstm_save.py
+cp main_new.py main_new_save.py
+cp attention_lstm.py /mnt/c/temp
+
+CUDA_VISIBLE_DEVICES="" python main_new.py
+
+cp main_new.py main_new_working_keras210.py
+cp attention_lstm.py attention_lstm_working_keras210.py
+conda env export --no-builds > attention-keras-legacy.yml
+
+CUDA_VISIBLE_DEVICES="" python main_new.py
+

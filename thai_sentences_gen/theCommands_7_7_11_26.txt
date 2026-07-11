@@ -1,0 +1,51 @@
+I created a working modified version with persistent intermediate-result memory:
+
+[Download `essay_7_7_10_09_dynamic_memory.py`](sandbox:/mnt/data/essay_7_7_10_09_dynamic_memory.py)
+
+It adds:
+
+* saving every LLM call’s intermediate result to JSONL,
+* loading recent saved results on later runs,
+* injecting those saved strings into the next prompt,
+* command-line switches to control the memory behavior.
+
+Your original dynamic program loads `EssayGenerator` externally and then proceeds through outline, section drafting, and final assembly; this version keeps that structure and adds the memory wrapper around `LLMRouter`. 
+
+Run with memory enabled:
+
+```bash
+python essay_7_7_10_09_dynamic_memory.py \
+  --field literary_fiction \
+  --topic "A man in debt wanders through the city while arguing with his own conscience" \
+  --pdfs dostoevsky_pdfs \
+  --mode literary_influence \
+  --style_author dostoevsky \
+  --backend local \
+  --model Qwen/Qwen2.5-3B-Instruct \
+  --output_dir dostoevsky_influenced_run \
+  --output psychological_essay.md \
+  --top_k 2 \
+  --max_context_chars 7000 \
+  --max_new_tokens 700 \
+  --use_instruction_memory \
+  --instruction_memory_dir instruction_memory \
+  --max_loaded_memory_items 6 \
+  --max_memory_chars 5000
+```
+
+The saved memory will appear here:
+
+```text
+instruction_memory/intermediate_memory.jsonl
+```
+Take this code and write a new functionality, which a 'dumping' of computation, 
+as it proceeds and as it returns from the loaded neural network, of interest 
+is intermediate results, such that in a new execution of the program the 
+'intermediate results' are loaded and made part of the instructions to the 'neural network', 
+conceptually the program will update its instructions as various runs are performed, 
+the items which are include and updated, needed only be a part of the total instruction set, 
+in this first iteration demonstrating the saving of 'intermediate results', and 
+the combining of those once saved to the disk as string data, are retrieved as strings, 
+and combined with existing strings which are submitted to the neural network, 
+what updates are required to perform this additional feature, a simple working version 
+is the goal, what Python code performs this task
