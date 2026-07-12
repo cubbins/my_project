@@ -1,0 +1,29 @@
+(glidre_ir) cubbi@powerpc:~/glidre_ir_source$ hf models ls --search Babelscape
+ID                        CREATED_AT DOWNLOADS LIBRARY_NAME LIKES PRIVATE TAGS                       TRENDING_SCORE
+------------------------- ---------- --------- ------------ ----- ------- -------------------------- --------------
+Babelscape/rebel-large    2022-03-02     49620 transformers   240         transformers, pytorch, ...              1
+Babelscape/mrebel-large   2023-06-12      6137 transformers    80         transformers, pytorch, ...              1
+Babelscape/wikineural-... 2022-03-02    904955 transformers   165         transformers, pytorch, ...              0
+Babelscape/mrebel-larg... 2023-06-12       299 transformers     8         transformers, pytorch, ...              0
+Babelscape/mrebel-base    2023-06-12       109 transformers     8         transformers, pytorch, ...              0
+Babelscape/mdeberta-v3... 2023-06-15         8 transformers    10         transformers, pytorch, ...              0
+Babelscape/cner-base      2024-04-10        11 transformers     6         transformers, tensorboa...              0
+RichardErkhov/Babelsca... 2024-05-12         2 transformers     0         transformers, safetenso...              0
+RichardErkhov/Babelsca... 2024-05-12         2 transformers     0         transformers, safetenso...              0
+Babelscape/t5-base-sum... 2024-06-27      4980 transformers    15         transformers, safetenso...              0
+Babelscape/wsl-retriev... 2024-08-02         6                  5         word-sense-linking, wor...              0
+Babelscape/wsl-retriev... 2024-08-05        10                  3         pytorch, bert, word-sen...              0
+Babelscape/wsl-reader-... 2024-08-05         7                  4         safetensors, wsl-reader...              0
+Babelscape/wsl-base       2024-08-05         8                  3         word-sense-linking, wor...              0
+Babelscape/FENICE         2024-08-25         0                  6         en, dataset:Babelscape/...              0
+Babelscape/Llama-3.1-8... 2026-04-09         7                  0         safetensors, prm_reward...              0
+Babelscape/Llama-3.1-8... 2026-04-12         1                  0         safetensors, prm_reward...              0
+Babelscape/Qwen2.5-Mat... 2026-04-13         1                  0         safetensors, prm_reward...              0
+Babelscape/Qwen2.5-Mat... 2026-04-13         3                  0         safetensors, prm_reward...              0
+Babelscape/Qwen2.5-Mat... 2026-06-01         5                  0         safetensors, qwen2, cus...              0
+Hint: Use `--no-truncate` or `--format json` to display full values.
+
+
+What are synonyms with the POL S 333 readings, in order
+to make writing understanding more tractable.
+

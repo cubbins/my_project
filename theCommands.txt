@@ -26,3 +26,7 @@ git add .
 it's push to master, not main
 git commit -m "Add new files and directories"
 git push -u origin master
+git add .
+git commit -m "Add matlab and mathematica local pytorch Windows"
+git push -u origin master
+
