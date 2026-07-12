@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SmolVLA Visual Episode Test</title>
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 0;
+        background: #f2f3f5;
+        color: #222;
+        line-height: 1.45;
+    }
+
+    main {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 28px;
+    }
+
+    .report-header,
+    .frame-card {
+        background: white;
+        border: 1px solid #d5d8dc;
+        border-radius: 10px;
+        padding: 24px;
+        margin-bottom: 24px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.07);
+    }
+
+    h1, h2, h3 {
+        margin-top: 0;
+    }
+
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        gap: 12px;
+    }
+
+    .summary-item {
+        background: #f7f8fa;
+        padding: 12px;
+        border-radius: 6px;
+    }
+
+    .task {
+        font-size: 1.05rem;
+    }
+
+    .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 18px;
+        margin: 18px 0;
+    }
+
+    figure {
+        margin: 0;
+    }
+
+    figure img {
+        width: 100%;
+        height: auto;
+        border: 1px solid #bbb;
+        border-radius: 6px;
+        image-rendering: auto;
+    }
+
+    figcaption {
+        margin-top: 6px;
+        text-align: center;
+    }
+
+    .camera-note {
+        padding: 12px;
+        background: #fff8dc;
+        border-left: 4px solid #c9a227;
+        margin: 14px 0 22px;
+    }
+
+    .legend {
+        margin-bottom: 8px;
+    }
+
+    .legend span {
+        display: inline-block;
+        width: 16px;
+        height: 12px;
+        margin-left: 14px;
+        margin-right: 4px;
+    }
+
+    .legend span:first-child {
+        margin-left: 0;
+    }
+
+    .legend-predicted {
+        background: #4472c4;
+    }
+
+    .legend-recorded {
+        background: #ed7d31;
+    }
+
+    .chart-container {
+        width: 100%;
+        overflow-x: auto;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+
+    .chart-container svg {
+        width: 100%;
+        min-width: 680px;
+        height: auto;
+    }
+
+    table.metrics {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 18px;
+    }
+
+    table.metrics th,
+    table.metrics td {
+        padding: 9px 12px;
+        border: 1px solid #d7d7d7;
+        text-align: left;
+    }
+
+    table.metrics th {
+        width: 40%;
+        background: #f4f5f6;
+    }
+
+    code {
+        overflow-wrap: anywhere;
+    }
+
+    .warning {
+        background: #fff3cd;
+        border: 1px solid #e6cf7b;
+        padding: 14px;
+        border-radius: 6px;
+    }
+</style>
+</head>
+<body>
+<main>
+    <section class="report-header">
+        <h1>SmolVLA Visual Offline Episode Test</h1>
+
+        <div class="summary-grid">
+            <div class="summary-item">
+                <strong>Model</strong><br>
+                lerobot/smolvla_base
+            </div>
+
+            <div class="summary-item">
+                <strong>Dataset</strong><br>
+                lerobot/libero
+            </div>
+
+            <div class="summary-item">
+                <strong>Episode</strong><br>
+                0
+            </div>
+
+            <div class="summary-item">
+                <strong>Frames tested</strong><br>
+                10
+            </div>
+
+            <div class="summary-item">
+                <strong>Mean inference time</strong><br>
+                0.2831 seconds
+            </div>
+
+            <div class="summary-item">
+                <strong>Mean frame MAE</strong><br>
+                0.691243
+            </div>
+
+            <div class="summary-item">
+                <strong>Peak CUDA allocation</strong><br>
+                0.904 GiB
+            </div>
+
+            <div class="summary-item">
+                <strong>GPU</strong><br>
+                NVIDIA GeForce RTX 5060
+            </div>
+        </div>
+
+        <p class="warning">
+            This report is a pipeline and representation diagnostic.
+            The pretrained policy expects three cameras and six action
+            dimensions, while the LIBERO data supplies two cameras and seven
+            action dimensions. The third policy camera is a duplicated input,
+            and the seventh recorded action is not compared with the
+            six-dimensional prediction.
+        </p>
+    </section>
+
+    
+            <section class="frame-card">
+                <header>
+                    <h2>
+                        Selected frame 1
+                        — dataset index 0
+                    </h2>
+                    <p class="task">
+                        <strong>Task:</strong>
+                        put the white mug on the left plate and put the yellow and white mug on the right plate
+                    </p>
+                </header>
+
+                <div class="image-grid">
+                    
+                <figure>
+                    <img
+                        src="images/frame_0000_image.png"
+                        alt="Camera 1"
+                    >
+                    <figcaption>
+                        Camera 1<br>
+                        <code>observation.images.image</code>
+                    </figcaption>
+                </figure>
+                
+                <figure>
+                    <img
+                        src="images/frame_0000_image2.png"
+                        alt="Camera 2"
+                    >
+                    <figcaption>
+                        Camera 2<br>
+                        <code>observation.images.image2</code>
+                    </figcaption>
+                </figure>
+                
+                </div>
+
+                <div class="camera-note">
+                    The policy was supplied with the two real LIBERO camera
+                    views. Its required third camera input was created by
+                    duplicating camera2 for diagnostic compatibility.
+                </div>
+
+                <h3>Action comparison</h3>
+
+                <div class="legend">
+                    <span class="legend-predicted"></span> Predicted
+                    <span class="legend-recorded"></span> Recorded
+                </div>
+
+                <div class="chart-container">
+                    <svg viewBox="0 0 760 396" role="img" aria-label="Action comparison chart">
+<line x1="326.0" y1="18" x2="326.0" y2="372" stroke="#666" stroke-width="1"/>
+<text x="326.0" y="18" text-anchor="middle" font-size="12">zero</text>
+<text x="8" y="54" font-size="13">A1</text>
+<rect x="326.0" y="36" width="7.1" height="16" fill="#4472c4"/>
+<rect x="326.0" y="58" width="1.8" height="16" fill="#ed7d31"/>
+<text x="590" y="49" font-size="12">Predicted: 0.06248</text>
+<text x="590" y="71" font-size="12">Recorded: 0.01607</text>
+<text x="8" y="110" font-size="13">A2</text>
+<rect x="326.0" y="92" width="32.7" height="16" fill="#4472c4"/>
+<rect x="326.0" y="114" width="0.0" height="16" fill="#ed7d31"/>
+<text x="590" y="105" font-size="12">Predicted: 0.28563</text>
+<text x="590" y="127" font-size="12">Recorded: 0.00000</text>
+<text x="8" y="166" font-size="13">A3</text>
+<rect x="326.0" y="148" width="88.3" height="16" fill="#4472c4"/>
+<rect x="326.0" y="170" width="0.0" height="16" fill="#ed7d31"/>
+<text x="590" y="161" font-size="12">Predicted: 0.77195</text>
+<text x="590" y="183" font-size="12">Recorded: -0.00000</text>
+<text x="8" y="222" font-size="13">A4</text>
+<rect x="326.0" y="204" width="242.0" height="16" fill="#4472c4"/>
+<rect x="326.0" y="226" width="0.0" height="16" fill="#ed7d31"/>
+<text x="590" y="217" font-size="12">Predicted: 2.11560</text>
+<text x="590" y="239" font-size="12">Recorded: 0.00000</text>
+<text x="8" y="278" font-size="13">A5</text>
+<rect x="326.0" y="260" width="10.7" height="16" fill="#4472c4"/>
+<rect x="326.0" y="282" width="0.0" height="16" fill="#ed7d31"/>
+<text x="590" y="273" font-size="12">Predicted: 0.09326</text>
+<text x="590" y="295" font-size="12">Recorded: 0.00000</text>
+<text x="8" y="334" font-size="13">A6</text>
+<rect x="255.9" y="316" width="70.1" height="16" fill="#4472c4"/>
+<rect x="326.0" y="338" width="0.0" height="16" fill="#ed7d31"/>
+<text x="590" y="329" font-size="12">Predicted: -0.61297</text>
+<text x="590" y="351" font-size="12">Recorded: -0.00000</text>
+</svg>
+                </div>
+
+                <p><strong>Unmatched recorded action value(s):</strong> -1.000000</p>
+
+                <table class="metrics">
+                    <tr>
+                        <th>Inference time</th>
+                        <td>0.7454 seconds</td>
+                    </tr>
+                    <tr>
+                        <th>Comparable dimensions</th>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <th>Mean absolute error</th>
+                        <td>
+                            0.654302
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Root mean squared error</th>
+                        <td>
+                            0.960886
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Maximum absolute error</th>
+                        <td>
+                            2.115596
+                        </td>
+                    </tr>
+                </table>
+            </section>
+            
+            <section class="frame-card">
+                <header>
+                    <h2>
+                        Selected frame 2
+                        — dataset index 24
+                    </h2>
+                    <p class="task">
+                        <strong>Task:</strong>
+                        put the white mug on the left plate and put the yellow and white mug on the right plate
+                    </p>
+                </header>
+
+                <div class="image-grid">
+                    
+                <figure>
+                    <img
+                        src="images/frame_0024_image.png"
+                        alt="Camera 1"
+                    >
+                    <figcaption>
+                        Camera 1<br>
+                        <code>observation.images.image</code>
+                    </figcaption>
+                </figure>
+                
+                <figure>
+                    <img
+                        src="images/frame_0024_image2.png"
+                        alt="Camera 2"
+                    >
+                    <figcaption>
+                        Camera 2<br>
+                        <code>observation.images.image2</code>
+                    </figcaption>
+                </figure>
+                
+                </div>
+
+                <div class="camera-note">
+                    The policy was supplied with the two real LIBERO camera
+                    views. Its required third camera input was created by
+                    duplicating camera2 for diagnostic compatibility.
+                </div>
+
+                <h3>Action comparison</h3>
+
+                <div class="legend">
+                    <span class="legend-predicted"></span> Predicted
+                    <span class="legend-recorded"></span> Recorded
+                </div>
+
+                <div class="chart-container">
+                    <svg viewBox="0 0 760 396" role="img" aria-label="Action comparison chart">
+<line x1="326.0" y1="18" x2="326.0" y2="372" stroke="#666" stroke-width="1"/>
+<text x="326.0" y="18" text-anchor="middle" font-size="12">zero</text>
+<text x="8" y="54" font-size="13">A1</text>
+<rect x="315.3" y="36" width="10.7" height="16" fill="#4472c4"/>
+<rect x="326.0" y="58" width="0.0" height="16" fill="#ed7d31"/>
+<text x="590" y="49" font-size="12">Predicted: -0.09759</text>
+<text x="590" y="71" font-size="12">Recorded: 0.00000</text>
+<text x="8" y="110" font-size="13">A2</text>
+<rect x="326.0" y="92" width="9.8" height="16" fill="#4472c4"/>
+<rect x="315.4" y="114" width="10.6" height="16" fill="#ed7d31"/>
+<text x="590" y="105" font-size="12">Predicted: 0.08885</text>
+<text x="590" y="127" font-size="12">Recorded: -0.09643</text>
+<text x="8" y="166" font-size="13">A3</text>
+<rect x="326.0" y="148" width="89.3" height="16" fill="#4472c4"/>
+<rect x="286.3" y="170" width="39.7" height="16" fill="#ed7d31"/>
+<text x="590" y="161" font-size="12">Predicted: 0.81259</text>
+<text x="590" y="183" font-size="12">Recorded: -0.36161</text>
+<text x="8" y="222" font-size="13">A4</text>
+<rect x="326.0" y="204" width="242.0" height="16" fill="#4472c4"/>
+<rect x="326.0" y="226" width="0.0" height="16" fill="#ed7d31"/>
+<text x="590" y="217" font-size="12">Predicted: 2.20230</text>
+<text x="590" y="239" font-size="12">Recorded: 0.00000</text>
+<text x="8" y="278" font-size="13">A5</text>
+<rect x="326.0" y="260" width="11.3" height="16" fill="#4472c4"/>
+<rect x="326.0" y="282" width="0.0" height="16" fill="#ed7d31"/>
+<text x="590" y="273" font-size="12">Predicted: 0.10274</text>
+<text x="590" y="295" font-size="12">Recorded: 0.00000</text>
+<text x="8" y="334" font-size="13">A6</text>
+<rect x="326.0" y="316" width="60.4" height="16" fill="#4472c4"/>
+<rect x="326.0" y="338" width="5.2" height="16" fill="#ed7d31"/>
+<text x="590" y="329" font-size="12">Predicted: 0.54944</text>
+<text x="590" y="351" font-size="12">Recorded: 0.04714</text>
+</svg>
+                </div>
+
+                <p><strong>Unmatched recorded action value(s):</strong> -1.000000</p>
+
+                <table class="metrics">
+                    <tr>
+                        <th>Inference time</th>
+                        <td>0.2242 seconds</td>
+                    </tr>
+                    <tr>
+                        <th>Comparable dimensions</th>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <th>Mean absolute error</th>
+                        <td>
+                            0.710735
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Root mean squared error</th>
+                        <td>
+                            1.043679
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Maximum absolute error</th>
+                        <td>
+                            2.202305
+                        </td>
+                    </tr>
+                </table>
+            </section>
+            
+            <section class="frame-card">
+                <header>
+                    <h2>
+                        Selected frame 3
+                        — dataset index 47
+                    </h2>
+                    <p class="task">
+                        <strong>Task:</strong>
+                        put the white mug on the left plate and put the yellow and white mug on the right plate
+                    </p>
+                </header>
+
+                <div class="image-grid">
+                    
+                <figure>
+                    <img
+                        src="images/frame_0047_image.png"
+                        alt="Camera 1"
+                    >
+                    <figcaption>
+                        Camera 1<br>
+                        <code>observation.images.image</code>
+                    </figcaption>
+                </figure>
+                
+                <figure>
+                    <img
+                        src="images/frame_0047_image2.png"
+                        alt="Camera 2"
+                    >
+                    <figcaption>
+                        Camera 2<br>
+                        <code>observation.images.image2</code>
+                    </figcaption>
+                </figure>
+                
+                </div>
+
+                <div class="camera-note">
+                    The policy was supplied with the two real LIBERO camera
+                    views. Its required third camera input was created by
+                    duplicating camera2 for diagnostic compatibility.
+                </div>
+
+                <h3>Action comparison</h3>
+
+                <div class="legend">
+                    <span class="legend-predicted"></span> Predicted
+                    <span class="legend-recorded"></span> Recorded
+                </div>
+
+                <div class="chart-container">
+                    <svg viewBox="0 0 760 396" role="img" aria-label="Action comparison chart">
+<line x1="326.0" y1="18" x2="326.0" y2="372" stroke="#666" stroke-width="1"/>
+<text x="326.0" y="18" text-anchor="middle" font-size="12">zero</text>
+<text x="8" y="54" font-size="13">A1</text>
+<rect x="326.0" y="36" width="12.9" height="16" fill="#4472c4"/>
+<rect x="326.0" y="58" width="1.1" height="16" fill="#ed7d31"/>
+<text x="590" y="49" font-size="12">Predicted: 0.12658</text>
+<text x="590" y="71" font-size="12">Recorded: 0.01071</text>
+<text x="8" y="110" font-size="13">A2</text>
+<rect x="326.0" y="92" width="21.0" height="16" fill="#4472c4"/>
+<rect x="316.7" y="114" width="9.3" height="16" fill="#ed7d31"/>
+<text x="590" y="105" font-size="12">Predicted: 0.20588</text>
+<text x="590" y="127" font-size="12">Recorded: -0.09107</text>
+<text x="8" y="166" font-size="13">A3</text>
+<rect x="326.0" y="148" width="63.1" height="16" fill="#4472c4"/>
+<rect x="326.0" y="170" width="0.0" height="16" fill="#ed7d31"/>
+<text x="590" y="161" font-size="12">Predicted: 0.61810</text>
+<text x="590" y="183" font-size="12">Recorded: -0.00000</text>
+<text x="8" y="222" font-size="13">A4</text>
+<rect x="326.0" y="204" width="242.0" height="16" fill="#4472c4"/>
+<rect x="319.7" y="226" width="6.3" height="16" fill="#ed7d31"/>
+<text x="590" y="217" font-size="12">Predicted: 2.37134</text>
+<text x="590" y="239" font-size="12">Recorded: -0.06214</text>
+<text x="8" y="278" font-size="13">A5</text>
+<rect x="317.3" y="260" width="8.7" height="16" fill="#4472c4"/>
+<rect x="326.0" y="282" width="1.3" height="16" fill="#ed7d31"/>
+<text x="590" y="273" font-size="12">Predicted: -0.08495</text>
+<text x="590" y="295" font-size="12">Recorded: 0.01286</text>
+<text x="8" y="334" font-size="13">A6</text>
+<rect x="270.1" y="316" width="55.9" height="16" fill="#4472c4"/>
+<rect x="326.0" y="338" width="3.1" height="16" fill="#ed7d31"/>
+<text x="590" y="329" font-size="12">Predicted: -0.54796</text>
+<text x="590" y="351" font-size="12">Recorded: 0.03000</text>
+</svg>
+                </div>
+
+                <p><strong>Unmatched recorded action value(s):</strong> 1.000000</p>
+
+                <table class="metrics">
+                    <tr>
+                        <th>Inference time</th>
+                        <td>0.2363 seconds</td>
+                    </tr>
+                    <tr>
+                        <th>Comparable dimensions</th>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <th>Mean absolute error</th>
+                        <td>
+                            0.690029
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Root mean squared error</th>
+                        <td>
+                            1.060588
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Maximum absolute error</th>
+                        <td>
+                            2.433480
+                        </td>
+                    </tr>
+                </table>
+            </section>
+            
+            <section class="frame-card">
+                <header>
+                    <h2>
+                        Selected frame 4
+                        — dataset index 71
+                    </h2>
+                    <p class="task">
+                        <strong>Task:</strong>
+                        put the white mug on the left plate and put the yellow and white mug on the right plate
+                    </p>
+                </header>
+
+                <div class="image-grid">
+                    
+                <figure>
+                    <img
+                        src="images/frame_0071_image.png"
+                        alt="Camera 1"
+                    >
+                    <figcaption>
+                        Camera 1<br>
+                        <code>observation.images.image</code>
+                    </figcaption>
+                </figure>
+                
+                <figure>
+                    <img
+                        src="images/frame_0071_image2.png"
+                        alt="Camera 2"
+                    >
+                    <figcaption>
+                        Camera 2<br>
+                        <code>observation.images.image2</code>
+                    </figcaption>
+                </figure>
+                
+                </div>
+
+                <div class="camera-note">
+                    The policy was supplied with the two real LIBERO camera
+                    views. Its required third camera input was created by
+                    duplicating camera2 for diagnostic compatibility.
+                </div>
+
+                <h3>Action comparison</h3>
+
+                <div class="legend">
+                    <span class="legend-predicted"></span> Predicted
+                    <span class="legend-recorded"></span> Recorded
+                </div>
+
+                <div class="chart-container">
+                    <svg viewBox="0 0 760 396" role="img" aria-label="Action comparison chart">
+<line x1="326.0" y1="18" x2="326.0" y2="372" stroke="#666" stroke-width="1"/>
+<text x="326.0" y="18" text-anchor="middle" font-size="12">zero</text>
+<text x="8" y="54" font-size="13">A1</text>
+<rect x="299.5" y="36" width="26.5" height="16" fill="#4472c4"/>
+<rect x="326.0" y="58" width="37.3" height="16" fill="#ed7d31"/>
+<text x="590" y="49" font-size="12">Predicted: -0.25099</text>
+<text x="590" y="71" font-size="12">Recorded: 0.35357</text>
+<text x="8" y="110" font-size="13">A2</text>
+<rect x="317.9" y="92" width="8.1" height="16" fill="#4472c4"/>
+<rect x="276.3" y="114" width="49.7" height="16" fill="#ed7d31"/>
+<text x="590" y="105" font-size="12">Predicted: -0.07667</text>
+<text x="590" y="127" font-size="12">Recorded: -0.47143</text>
+<text x="8" y="166" font-size="13">A3</text>
+<rect x="326.0" y="148" width="77.7" height="16" fill="#4472c4"/>
+<rect x="303.7" y="170" width="22.3" height="16" fill="#ed7d31"/>
+<text x="590" y="161" font-size="12">Predicted: 0.73714</text>
+<text x="590" y="183" font-size="12">Recorded: -0.21161</text>
+<text x="8" y="222" font-size="13">A4</text>
+<rect x="326.0" y="204" width="242.0" height="16" fill="#4472c4"/>
+<rect x="326.0" y="226" width="0.0" height="16" fill="#ed7d31"/>
+<text x="590" y="217" font-size="12">Predicted: 2.29600</text>
+<text x="590" y="239" font-size="12">Recorded: 0.00000</text>
+<text x="8" y="278" font-size="13">A5</text>
+<rect x="326.0" y="260" width="27.6" height="16" fill="#4472c4"/>
+<rect x="326.0" y="282" width="2.0" height="16" fill="#ed7d31"/>
+<text x="590" y="273" font-size="12">Predicted: 0.26172</text>
+<text x="590" y="295" font-size="12">Recorded: 0.01929</text>
+<text x="8" y="334" font-size="13">A6</text>
+<rect x="280.8" y="316" width="45.2" height="16" fill="#4472c4"/>
+<rect x="325.1" y="338" width="0.9" height="16" fill="#ed7d31"/>
+<text x="590" y="329" font-size="12">Predicted: -0.42906</text>
+<text x="590" y="351" font-size="12">Recorded: -0.00857</text>
+</svg>
+                </div>
+
+                <p><strong>Unmatched recorded action value(s):</strong> 1.000000</p>
+
+                <table class="metrics">
+                    <tr>
+                        <th>Inference time</th>
+                        <td>0.2261 seconds</td>
+                    </tr>
+                    <tr>
+                        <th>Comparable dimensions</th>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <th>Mean absolute error</th>
+                        <td>
+                            0.817831
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Root mean squared error</th>
+                        <td>
+                            1.074604
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Maximum absolute error</th>
+                        <td>
+                            2.296000
+                        </td>
+                    </tr>
+                </table>
+            </section>
+            
+            <section class="frame-card">
+                <header>
+                    <h2>
+                        Selected frame 5
+                        — dataset index 95
+                    </h2>
+                    <p class="task">
+                        <strong>Task:</strong>
+                        put the white mug on the left plate and put the yellow and white mug on the right plate
+                    </p>
+                </header>
+
+                <div class="image-grid">
+                    
+                <figure>
+                    <img
+                        src="images/frame_0095_image.png"
+                        alt="Camera 1"
+                    >
+                    <figcaption>
+                        Camera 1<br>
+                        <code>observation.images.image</code>
+                    </figcaption>
+                </figure>
+                
+                <figure>
+                    <img
+                        src="images/frame_0095_image2.png"
+                        alt="Camera 2"
+                    >
+                    <figcaption>
+                        Camera 2<br>
+                        <code>observation.images.image2</code>
+                    </figcaption>
+                </figure>
+                
+                </div>
+
+                <div class="camera-note">
+                    The policy was supplied with the two real LIBERO camera
+                    views. Its required third camera input was created by
+                    duplicating camera2 for diagnostic compatibility.
+                </div>
+
+                <h3>Action comparison</h3>
+
+                <div class="legend">
+                    <span class="legend-predicted"></span> Predicted
+                    <span class="legend-recorded"></span> Recorded
+                </div>
+
+                <div class="chart-container">
+                    <svg viewBox="0 0 760 396" role="img" aria-label="Action comparison chart">
+<line x1="326.0" y1="18" x2="326.0" y2="372" stroke="#666" stroke-width="1"/>
+<text x="326.0" y="18" text-anchor="middle" font-size="12">zero</text>
+<text x="8" y="54" font-size="13">A1</text>
+<rect x="326.0" y="36" width="12.8" height="16" fill="#4472c4"/>
+<rect x="326.0" y="58" width="18.8" height="16" fill="#ed7d31"/>
+<text x="590" y="49" font-size="12">Predicted: 0.11275</text>
+<text x="590" y="71" font-size="12">Recorded: 0.16607</text>
+<text x="8" y="110" font-size="13">A2</text>
+<rect x="326.0" y="92" width="14.7" height="16" fill="#4472c4"/>
+<rect x="326.0" y="114" width="5.2" height="16" fill="#ed7d31"/>
+<text x="590" y="105" font-size="12">Predicted: 0.12998</text>
+<text x="590" y="127" font-size="12">Recorded: 0.04554</text>
+<text x="8" y="166" font-size="13">A3</text>
+<rect x="326.0" y="148" width="74.5" height="16" fill="#4472c4"/>
+<rect x="326.0" y="170" width="35.2" height="16" fill="#ed7d31"/>
+<text x="590" y="161" font-size="12">Predicted: 0.65761</text>
+<text x="590" y="183" font-size="12">Recorded: 0.31071</text>
+<text x="8" y="222" font-size="13">A4</text>
+<rect x="326.0" y="204" width="242.0" height="16" fill="#4472c4"/>
+<rect x="313.6" y="226" width="12.4" height="16" fill="#ed7d31"/>
+<text x="590" y="217" font-size="12">Predicted: 2.13667</text>
+<text x="590" y="239" font-size="12">Recorded: -0.10929</text>
+<text x="8" y="278" font-size="13">A5</text>
+<rect x="326.0" y="260" width="42.0" height="16" fill="#4472c4"/>
+<rect x="325.8" y="282" width="0.2" height="16" fill="#ed7d31"/>
+<text x="590" y="273" font-size="12">Predicted: 0.37070</text>
+<text x="590" y="295" font-size="12">Recorded: -0.00214</text>
+<text x="8" y="334" font-size="13">A6</text>
+<rect x="269.1" y="316" width="56.9" height="16" fill="#4472c4"/>
+<rect x="320.2" y="338" width="5.8" height="16" fill="#ed7d31"/>
+<text x="590" y="329" font-size="12">Predicted: -0.50260</text>
+<text x="590" y="351" font-size="12">Recorded: -0.05143</text>
+</svg>
+                </div>
+
+                <p><strong>Unmatched recorded action value(s):</strong> -1.000000</p>
+
+                <table class="metrics">
+                    <tr>
+                        <th>Inference time</th>
+                        <td>0.2256 seconds</td>
+                    </tr>
+                    <tr>
+                        <th>Comparable dimensions</th>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <th>Mean absolute error</th>
+                        <td>
+                            0.592439
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Root mean squared error</th>
+                        <td>
+                            0.958922
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Maximum absolute error</th>
+                        <td>
+                            2.245954
+                        </td>
+                    </tr>
+                </table>
+            </section>
+            
+            <section class="frame-card">
+                <header>
+                    <h2>
+                        Selected frame 6
+                        — dataset index 118
+                    </h2>
+                    <p class="task">
+                        <strong>Task:</strong>
+                        put the white mug on the left plate and put the yellow and white mug on the right plate
+                    </p>
+                </header>
+
+                <div class="image-grid">
+                    
+                <figure>
+                    <img
+                        src="images/frame_0118_image.png"
+                        alt="Camera 1"
+                    >
+                    <figcaption>
+                        Camera 1<br>
+                        <code>observation.images.image</code>
+                    </figcaption>
+                </figure>
+                
+                <figure>
+                    <img
+                        src="images/frame_0118_image2.png"
+                        alt="Camera 2"
+                    >
+                    <figcaption>
+                        Camera 2<br>
+                        <code>observation.images.image2</code>
+                    </figcaption>
+                </figure>
+                
+                </div>
+
+                <div class="camera-note">
+                    The policy was supplied with the two real LIBERO camera
+                    views. Its required third camera input was created by
+                    duplicating camera2 for diagnostic compatibility.
+                </div>
+
+                <h3>Action comparison</h3>
+
+                <div class="legend">
+                    <span class="legend-predicted"></span> Predicted
+                    <span class="legend-recorded"></span> Recorded
+                </div>
+
+                <div class="chart-container">
+                    <svg viewBox="0 0 760 396" role="img" aria-label="Action comparison chart">
+<line x1="326.0" y1="18" x2="326.0" y2="372" stroke="#666" stroke-width="1"/>
+<text x="326.0" y="18" text-anchor="middle" font-size="12">zero</text>
+<text x="8" y="54" font-size="13">A1</text>
+<rect x="326.0" y="36" width="6.1" height="16" fill="#4472c4"/>
+<rect x="320.3" y="58" width="5.7" height="16" fill="#ed7d31"/>
+<text x="590" y="49" font-size="12">Predicted: 0.05195</text>
+<text x="590" y="71" font-size="12">Recorded: -0.04821</text>
+<text x="8" y="110" font-size="13">A2</text>
+<rect x="326.0" y="92" width="22.9" height="16" fill="#4472c4"/>
+<rect x="326.0" y="114" width="83.2" height="16" fill="#ed7d31"/>
+<text x="590" y="105" font-size="12">Predicted: 0.19390</text>
+<text x="590" y="127" font-size="12">Recorded: 0.70446</text>
+<text x="8" y="166" font-size="13">A3</text>
+<rect x="326.0" y="148" width="82.7" height="16" fill="#4472c4"/>
+<rect x="326.0" y="170" width="1.3" height="16" fill="#ed7d31"/>
+<text x="590" y="161" font-size="12">Predicted: 0.70013</text>
+<text x="590" y="183" font-size="12">Recorded: 0.01071</text>
+<text x="8" y="222" font-size="13">A4</text>
+<rect x="326.0" y="204" width="242.0" height="16" fill="#4472c4"/>
+<rect x="326.0" y="226" width="4.0" height="16" fill="#ed7d31"/>
+<text x="590" y="217" font-size="12">Predicted: 2.04872</text>
+<text x="590" y="239" font-size="12">Recorded: 0.03429</text>
+<text x="8" y="278" font-size="13">A5</text>
+<rect x="326.0" y="260" width="9.8" height="16" fill="#4472c4"/>
+<rect x="319.2" y="282" width="6.8" height="16" fill="#ed7d31"/>
+<text x="590" y="273" font-size="12">Predicted: 0.08328</text>
+<text x="590" y="295" font-size="12">Recorded: -0.05786</text>
+<text x="8" y="334" font-size="13">A6</text>
+<rect x="260.0" y="316" width="66.0" height="16" fill="#4472c4"/>
+<rect x="316.0" y="338" width="10.0" height="16" fill="#ed7d31"/>
+<text x="590" y="329" font-size="12">Predicted: -0.55863</text>
+<text x="590" y="351" font-size="12">Recorded: -0.08464</text>
+</svg>
+                </div>
+
+                <p><strong>Unmatched recorded action value(s):</strong> -1.000000</p>
+
+                <table class="metrics">
+                    <tr>
+                        <th>Inference time</th>
+                        <td>0.2313 seconds</td>
+                    </tr>
+                    <tr>
+                        <th>Comparable dimensions</th>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <th>Mean absolute error</th>
+                        <td>
+                            0.654951
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Root mean squared error</th>
+                        <td>
+                            0.917291
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Maximum absolute error</th>
+                        <td>
+                            2.014436
+                        </td>
+                    </tr>
+                </table>
+            </section>
+            
+            <section class="frame-card">
+                <header>
+                    <h2>
+                        Selected frame 7
+                        — dataset index 142
+                    </h2>
+                    <p class="task">
+                        <strong>Task:</strong>
+                        put the white mug on the left plate and put the yellow and white mug on the right plate
+                    </p>
+                </header>
+
+                <div class="image-grid">
+                    
+                <figure>
+                    <img
+                        src="images/frame_0142_image.png"
+                        alt="Camera 1"
+                    >
+                    <figcaption>
+                        Camera 1<br>
+                        <code>observation.images.image</code>
+                    </figcaption>
+                </figure>
+                
+                <figure>
+                    <img
+                        src="images/frame_0142_image2.png"
+                        alt="Camera 2"
+                    >
+                    <figcaption>
+                        Camera 2<br>
+                        <code>observation.images.image2</code>
+                    </figcaption>
+                </figure>
+                
+                </div>
+
+                <div class="camera-note">
+                    The policy was supplied with the two real LIBERO camera
+                    views. Its required third camera input was created by
+                    duplicating camera2 for diagnostic compatibility.
+                </div>
+
+                <h3>Action comparison</h3>
+
+                <div class="legend">
+                    <span class="legend-predicted"></span> Predicted
+                    <span class="legend-recorded"></span> Recorded
+                </div>
+
+                <div class="chart-container">
+                    <svg viewBox="0 0 760 396" role="img" aria-label="Action comparison chart">
+<line x1="326.0" y1="18" x2="326.0" y2="372" stroke="#666" stroke-width="1"/>
+<text x="326.0" y="18" text-anchor="middle" font-size="12">zero</text>
+<text x="8" y="54" font-size="13">A1</text>
+<rect x="324.3" y="36" width="1.7" height="16" fill="#4472c4"/>
+<rect x="326.0" y="58" width="0.0" height="16" fill="#ed7d31"/>
+<text x="590" y="49" font-size="12">Predicted: -0.01503</text>
+<text x="590" y="71" font-size="12">Recorded: 0.00000</text>
+<text x="8" y="110" font-size="13">A2</text>
+<rect x="326.0" y="92" width="39.1" height="16" fill="#4472c4"/>
+<rect x="326.0" y="114" width="61.1" height="16" fill="#ed7d31"/>
+<text x="590" y="105" font-size="12">Predicted: 0.34444</text>
+<text x="590" y="127" font-size="12">Recorded: 0.53839</text>
+<text x="8" y="166" font-size="13">A3</text>
+<rect x="326.0" y="148" width="93.2" height="16" fill="#4472c4"/>
+<rect x="298.9" y="170" width="27.1" height="16" fill="#ed7d31"/>
+<text x="590" y="161" font-size="12">Predicted: 0.82033</text>
+<text x="590" y="183" font-size="12">Recorded: -0.23839</text>
+<text x="8" y="222" font-size="13">A4</text>
+<rect x="326.0" y="204" width="242.0" height="16" fill="#4472c4"/>
+<rect x="326.0" y="226" width="2.6" height="16" fill="#ed7d31"/>
+<text x="590" y="217" font-size="12">Predicted: 2.13113</text>
+<text x="590" y="239" font-size="12">Recorded: 0.02250</text>
+<text x="8" y="278" font-size="13">A5</text>
+<rect x="299.6" y="260" width="26.4" height="16" fill="#4472c4"/>
+<rect x="326.0" y="282" width="0.0" height="16" fill="#ed7d31"/>
+<text x="590" y="273" font-size="12">Predicted: -0.23251</text>
+<text x="590" y="295" font-size="12">Recorded: 0.00000</text>
+<text x="8" y="334" font-size="13">A6</text>
+<rect x="326.0" y="316" width="64.2" height="16" fill="#4472c4"/>
+<rect x="323.1" y="338" width="2.9" height="16" fill="#ed7d31"/>
+<text x="590" y="329" font-size="12">Predicted: 0.56537</text>
+<text x="590" y="351" font-size="12">Recorded: -0.02571</text>
+</svg>
+                </div>
+
+                <p><strong>Unmatched recorded action value(s):</strong> -1.000000</p>
+
+                <table class="metrics">
+                    <tr>
+                        <th>Inference time</th>
+                        <td>0.2319 seconds</td>
+                    </tr>
+                    <tr>
+                        <th>Comparable dimensions</th>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <th>Mean absolute error</th>
+                        <td>
+                            0.699988
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Root mean squared error</th>
+                        <td>
+                            1.000709
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Maximum absolute error</th>
+                        <td>
+                            2.108635
+                        </td>
+                    </tr>
+                </table>
+            </section>
+            
+            <section class="frame-card">
+                <header>
+                    <h2>
+                        Selected frame 8
+                        — dataset index 166
+                    </h2>
+                    <p class="task">
+                        <strong>Task:</strong>
+                        put the white mug on the left plate and put the yellow and white mug on the right plate
+                    </p>
+                </header>
+
+                <div class="image-grid">
+                    
+                <figure>
+                    <img
+                        src="images/frame_0166_image.png"
+                        alt="Camera 1"
+                    >
+                    <figcaption>
+                        Camera 1<br>
+                        <code>observation.images.image</code>
+                    </figcaption>
+                </figure>
+                
+                <figure>
+                    <img
+                        src="images/frame_0166_image2.png"
+                        alt="Camera 2"
+                    >
+                    <figcaption>
+                        Camera 2<br>
+                        <code>observation.images.image2</code>
+                    </figcaption>
+                </figure>
+                
+                </div>
+
+                <div class="camera-note">
+                    The policy was supplied with the two real LIBERO camera
+                    views. Its required third camera input was created by
+                    duplicating camera2 for diagnostic compatibility.
+                </div>
+
+                <h3>Action comparison</h3>
+
+                <div class="legend">
+                    <span class="legend-predicted"></span> Predicted
+                    <span class="legend-recorded"></span> Recorded
+                </div>
+
+                <div class="chart-container">
+                    <svg viewBox="0 0 760 396" role="img" aria-label="Action comparison chart">
+<line x1="326.0" y1="18" x2="326.0" y2="372" stroke="#666" stroke-width="1"/>
+<text x="326.0" y="18" text-anchor="middle" font-size="12">zero</text>
+<text x="8" y="54" font-size="13">A1</text>
+<rect x="288.3" y="36" width="37.7" height="16" fill="#4472c4"/>
+<rect x="326.0" y="58" width="12.5" height="16" fill="#ed7d31"/>
+<text x="590" y="49" font-size="12">Predicted: -0.35537</text>
+<text x="590" y="71" font-size="12">Recorded: 0.11786</text>
+<text x="8" y="110" font-size="13">A2</text>
+<rect x="326.0" y="92" width="18.2" height="16" fill="#4472c4"/>
+<rect x="326.0" y="114" width="0.0" height="16" fill="#ed7d31"/>
+<text x="590" y="105" font-size="12">Predicted: 0.17139</text>
+<text x="590" y="127" font-size="12">Recorded: 0.00000</text>
+<text x="8" y="166" font-size="13">A3</text>
+<rect x="326.0" y="148" width="28.9" height="16" fill="#4472c4"/>
+<rect x="326.0" y="170" width="9.1" height="16" fill="#ed7d31"/>
+<text x="590" y="161" font-size="12">Predicted: 0.27267</text>
+<text x="590" y="183" font-size="12">Recorded: 0.08571</text>
+<text x="8" y="222" font-size="13">A4</text>
+<rect x="326.0" y="204" width="242.0" height="16" fill="#4472c4"/>
+<rect x="326.0" y="226" width="0.0" height="16" fill="#ed7d31"/>
+<text x="590" y="217" font-size="12">Predicted: 2.28115</text>
+<text x="590" y="239" font-size="12">Recorded: 0.00000</text>
+<text x="8" y="278" font-size="13">A5</text>
+<rect x="292.7" y="260" width="33.3" height="16" fill="#4472c4"/>
+<rect x="326.0" y="282" width="11.3" height="16" fill="#ed7d31"/>
+<text x="590" y="273" font-size="12">Predicted: -0.31345</text>
+<text x="590" y="295" font-size="12">Recorded: 0.10607</text>
+<text x="8" y="334" font-size="13">A6</text>
+<rect x="274.3" y="316" width="51.7" height="16" fill="#4472c4"/>
+<rect x="325.8" y="338" width="0.2" height="16" fill="#ed7d31"/>
+<text x="590" y="329" font-size="12">Predicted: -0.48714</text>
+<text x="590" y="351" font-size="12">Recorded: -0.00214</text>
+</svg>
+                </div>
+
+                <p><strong>Unmatched recorded action value(s):</strong> 1.000000</p>
+
+                <table class="metrics">
+                    <tr>
+                        <th>Inference time</th>
+                        <td>0.2497 seconds</td>
+                    </tr>
+                    <tr>
+                        <th>Comparable dimensions</th>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <th>Mean absolute error</th>
+                        <td>
+                            0.669541
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Root mean squared error</th>
+                        <td>
+                            0.991895
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Maximum absolute error</th>
+                        <td>
+                            2.281149
+                        </td>
+                    </tr>
+                </table>
+            </section>
+            
+            <section class="frame-card">
+                <header>
+                    <h2>
+                        Selected frame 9
+                        — dataset index 189
+                    </h2>
+                    <p class="task">
+                        <strong>Task:</strong>
+                        put the white mug on the left plate and put the yellow and white mug on the right plate
+                    </p>
+                </header>
+
+                <div class="image-grid">
+                    
+                <figure>
+                    <img
+                        src="images/frame_0189_image.png"
+                        alt="Camera 1"
+                    >
+                    <figcaption>
+                        Camera 1<br>
+                        <code>observation.images.image</code>
+                    </figcaption>
+                </figure>
+                
+                <figure>
+                    <img
+                        src="images/frame_0189_image2.png"
+                        alt="Camera 2"
+                    >
+                    <figcaption>
+                        Camera 2<br>
+                        <code>observation.images.image2</code>
+                    </figcaption>
+                </figure>
+                
+                </div>
+
+                <div class="camera-note">
+                    The policy was supplied with the two real LIBERO camera
+                    views. Its required third camera input was created by
+                    duplicating camera2 for diagnostic compatibility.
+                </div>
+
+                <h3>Action comparison</h3>
+
+                <div class="legend">
+                    <span class="legend-predicted"></span> Predicted
+                    <span class="legend-recorded"></span> Recorded
+                </div>
+
+                <div class="chart-container">
+                    <svg viewBox="0 0 760 396" role="img" aria-label="Action comparison chart">
+<line x1="326.0" y1="18" x2="326.0" y2="372" stroke="#666" stroke-width="1"/>
+<text x="326.0" y="18" text-anchor="middle" font-size="12">zero</text>
+<text x="8" y="54" font-size="13">A1</text>
+<rect x="297.1" y="36" width="28.9" height="16" fill="#4472c4"/>
+<rect x="326.0" y="58" width="16.0" height="16" fill="#ed7d31"/>
+<text x="590" y="49" font-size="12">Predicted: -0.24128</text>
+<text x="590" y="71" font-size="12">Recorded: 0.13393</text>
+<text x="8" y="110" font-size="13">A2</text>
+<rect x="326.0" y="92" width="49.1" height="16" fill="#4472c4"/>
+<rect x="326.0" y="114" width="85.1" height="16" fill="#ed7d31"/>
+<text x="590" y="105" font-size="12">Predicted: 0.40951</text>
+<text x="590" y="127" font-size="12">Recorded: 0.70982</text>
+<text x="8" y="166" font-size="13">A3</text>
+<rect x="326.0" y="148" width="65.7" height="16" fill="#4472c4"/>
+<rect x="301.6" y="170" width="24.4" height="16" fill="#ed7d31"/>
+<text x="590" y="161" font-size="12">Predicted: 0.54802</text>
+<text x="590" y="183" font-size="12">Recorded: -0.20357</text>
+<text x="8" y="222" font-size="13">A4</text>
+<rect x="326.0" y="204" width="242.0" height="16" fill="#4472c4"/>
+<rect x="326.0" y="226" width="0.0" height="16" fill="#ed7d31"/>
+<text x="590" y="217" font-size="12">Predicted: 2.01947</text>
+<text x="590" y="239" font-size="12">Recorded: 0.00000</text>
+<text x="8" y="278" font-size="13">A5</text>
+<rect x="274.0" y="260" width="52.0" height="16" fill="#4472c4"/>
+<rect x="323.7" y="282" width="2.3" height="16" fill="#ed7d31"/>
+<text x="590" y="273" font-size="12">Predicted: -0.43408</text>
+<text x="590" y="295" font-size="12">Recorded: -0.01929</text>
+<text x="8" y="334" font-size="13">A6</text>
+<rect x="265.1" y="316" width="60.9" height="16" fill="#4472c4"/>
+<rect x="325.4" y="338" width="0.6" height="16" fill="#ed7d31"/>
+<text x="590" y="329" font-size="12">Predicted: -0.50803</text>
+<text x="590" y="351" font-size="12">Recorded: -0.00536</text>
+</svg>
+                </div>
+
+                <p><strong>Unmatched recorded action value(s):</strong> 1.000000</p>
+
+                <table class="metrics">
+                    <tr>
+                        <th>Inference time</th>
+                        <td>0.2324 seconds</td>
+                    </tr>
+                    <tr>
+                        <th>Comparable dimensions</th>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <th>Mean absolute error</th>
+                        <td>
+                            0.727342
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Root mean squared error</th>
+                        <td>
+                            0.939756
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Maximum absolute error</th>
+                        <td>
+                            2.019468
+                        </td>
+                    </tr>
+                </table>
+            </section>
+            
+            <section class="frame-card">
+                <header>
+                    <h2>
+                        Selected frame 10
+                        — dataset index 213
+                    </h2>
+                    <p class="task">
+                        <strong>Task:</strong>
+                        put the white mug on the left plate and put the yellow and white mug on the right plate
+                    </p>
+                </header>
+
+                <div class="image-grid">
+                    
+                <figure>
+                    <img
+                        src="images/frame_0213_image.png"
+                        alt="Camera 1"
+                    >
+                    <figcaption>
+                        Camera 1<br>
+                        <code>observation.images.image</code>
+                    </figcaption>
+                </figure>
+                
+                <figure>
+                    <img
+                        src="images/frame_0213_image2.png"
+                        alt="Camera 2"
+                    >
+                    <figcaption>
+                        Camera 2<br>
+                        <code>observation.images.image2</code>
+                    </figcaption>
+                </figure>
+                
+                </div>
+
+                <div class="camera-note">
+                    The policy was supplied with the two real LIBERO camera
+                    views. Its required third camera input was created by
+                    duplicating camera2 for diagnostic compatibility.
+                </div>
+
+                <h3>Action comparison</h3>
+
+                <div class="legend">
+                    <span class="legend-predicted"></span> Predicted
+                    <span class="legend-recorded"></span> Recorded
+                </div>
+
+                <div class="chart-container">
+                    <svg viewBox="0 0 760 396" role="img" aria-label="Action comparison chart">
+<line x1="326.0" y1="18" x2="326.0" y2="372" stroke="#666" stroke-width="1"/>
+<text x="326.0" y="18" text-anchor="middle" font-size="12">zero</text>
+<text x="8" y="54" font-size="13">A1</text>
+<rect x="304.0" y="36" width="22.0" height="16" fill="#4472c4"/>
+<rect x="326.0" y="58" width="3.1" height="16" fill="#ed7d31"/>
+<text x="590" y="49" font-size="12">Predicted: -0.18981</text>
+<text x="590" y="71" font-size="12">Recorded: 0.02679</text>
+<text x="8" y="110" font-size="13">A2</text>
+<rect x="326.0" y="92" width="49.4" height="16" fill="#4472c4"/>
+<rect x="326.0" y="114" width="4.7" height="16" fill="#ed7d31"/>
+<text x="590" y="105" font-size="12">Predicted: 0.42538</text>
+<text x="590" y="127" font-size="12">Recorded: 0.04018</text>
+<text x="8" y="166" font-size="13">A3</text>
+<rect x="326.0" y="148" width="72.8" height="16" fill="#4472c4"/>
+<rect x="326.0" y="170" width="28.3" height="16" fill="#ed7d31"/>
+<text x="590" y="161" font-size="12">Predicted: 0.62761</text>
+<text x="590" y="183" font-size="12">Recorded: 0.24375</text>
+<text x="8" y="222" font-size="13">A4</text>
+<rect x="326.0" y="204" width="242.0" height="16" fill="#4472c4"/>
+<rect x="321.4" y="226" width="4.6" height="16" fill="#ed7d31"/>
+<text x="590" y="217" font-size="12">Predicted: 2.08587</text>
+<text x="590" y="239" font-size="12">Recorded: -0.03964</text>
+<text x="8" y="278" font-size="13">A5</text>
+<rect x="260.6" y="260" width="65.4" height="16" fill="#4472c4"/>
+<rect x="326.0" y="282" width="1.2" height="16" fill="#ed7d31"/>
+<text x="590" y="273" font-size="12">Predicted: -0.56384</text>
+<text x="590" y="295" font-size="12">Recorded: 0.01071</text>
+<text x="8" y="334" font-size="13">A6</text>
+<rect x="269.6" y="316" width="56.4" height="16" fill="#4472c4"/>
+<rect x="326.0" y="338" width="0.0" height="16" fill="#ed7d31"/>
+<text x="590" y="329" font-size="12">Predicted: -0.48591</text>
+<text x="590" y="351" font-size="12">Recorded: -0.00000</text>
+</svg>
+                </div>
+
+                <p><strong>Unmatched recorded action value(s):</strong> -1.000000</p>
+
+                <table class="metrics">
+                    <tr>
+                        <th>Inference time</th>
+                        <td>0.2282 seconds</td>
+                    </tr>
+                    <tr>
+                        <th>Comparable dimensions</th>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <th>Mean absolute error</th>
+                        <td>
+                            0.695272
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Root mean squared error</th>
+                        <td>
+                            0.951022
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Maximum absolute error</th>
+                        <td>
+                            2.125512
+                        </td>
+                    </tr>
+                </table>
+            </section>
+            
+</main>
+</body>
+</html>

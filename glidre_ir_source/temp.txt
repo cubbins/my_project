@@ -1,0 +1,104 @@
+PDF scanned.
+Matches found: 163
+CSV report: pdf_ontology_sentence_hits.csv
+JSON report: pdf_ontology_sentence_hits.json
+
+Page 1, sentence 1
+Concept: artifact
+Matched: Technology
+https://doi.org/10.1177/0270467617714944 Bulletin of Science, Technology & Society 2016, Vol.
+
+Page 1, sentence 2
+Concept: affordance
+Matched: Affordance
+36(4) 241­–248 © The Author(s) 2017 Reprints and permissions: sagepub.com/journalsPermissions.nav DOI: 10.1177/0270467617714944 journals.sagepub.com/home/bst Article Affordance has emerged as a central analytic tool within science and technology studies, ecological psychology, communication studies, and design fields (Evans, Pearce, Vitak, & Treem, 2017; Nagy & Neff, 2015; Parchoma, 2014; Torenvliet, 2003).
+
+Page 1, sentence 2
+Concept: artifact
+Matched: technology, tool
+36(4) 241­–248 © The Author(s) 2017 Reprints and permissions: sagepub.com/journalsPermissions.nav DOI: 10.1177/0270467617714944 journals.sagepub.com/home/bst Article Affordance has emerged as a central analytic tool within science and technology studies, ecological psychology, communication studies, and design fields (Evans, Pearce, Vitak, & Treem, 2017; Nagy & Neff, 2015; Parchoma, 2014; Torenvliet, 2003).
+
+Page 1, sentence 3
+Concept: affordance
+Matched: affordance
+Broadly, affordance refers to the range of functions and constraints that an object provides for, and places upon, structurally situated subjects.
+
+Page 1, sentence 3
+Concept: artifact
+Matched: object
+Broadly, affordance refers to the range of functions and constraints that an object provides for, and places upon, structurally situated subjects.
+
+Page 1, sentence 4
+Concept: affordance
+Matched: affordance
+In the context of this article, the analytic import of affordance is its capacity to recognize technology as efficacious, without falling prey to technological determinism (Neff, Jordan, McVeigh-Schultz, & Gillespie, 2012).
+
+Page 1, sentence 4
+Concept: artifact
+Matched: technology
+In the context of this article, the analytic import of affordance is its capacity to recognize technology as efficacious, without falling prey to technological determinism (Neff, Jordan, McVeigh-Schultz, & Gillespie, 2012).
+
+Page 1, sentence 6
+Concept: affordance
+Matched: affordance
+As an interdisciplinary construct, affordance is both persis- tent and pervasive across literatures (Evans et al., 2017; McGrenere & Ho, 2000; Parchoma, 2014).
+
+Page 1, sentence 8
+Concept: affordance
+Matched: affordance
+Despite widespread application, affordance maintains a sordid history in which overuse, misuse, and varied uses have led some to argue that analysts should abandon the term altogether (Oliver, 2005).
+
+Page 1, sentence 10
+Concept: affordance
+Matched: affordance
+Beginning with the assumption that affordance does important theoretical and practical work, this article proposes a nuanced and dynamic model that brings much needed structure and precision to affordance theory, facilitating complex analyses of subject-artifact relationships through a user-friendly framework.
+
+Page 1, sentence 10
+Concept: artifact
+Matched: artifact
+Beginning with the assumption that affordance does important theoretical and practical work, this article proposes a nuanced and dynamic model that brings much needed structure and precision to affordance theory, facilitating complex analyses of subject-artifact relationships through a user-friendly framework.
+
+Page 1, sentence 11
+Concept: affordance
+Matched: afford
+Out of debates within the affordances literature, we distill three broad critiques: (a) definitional confusion, (b) a false binary in which artifacts either afford or do not, and (c) failure to account for diverse subjects and circumstances.
+
+Page 1, sentence 15
+Concept: affordance
+Matched: afford
+Mechanisms represent grada- tions in the ways that artifacts afford and conditions repre- sent the diverse circumstances through which mechanisms take shape.
+
+Page 1, sentence 16
+Concept: affordance
+Matched: Affordance
+Conceptualization: What Is an Affordance?
+
+Page 1, sentence 17
+Concept: affordance
+Matched: Affordance
+Affordance first emerged within ecological psychology, defined succinctly as “what things furnish, for good or ill” (Gibson, 1966, p. 285).
+
+Page 1, sentence 22
+Concept: artifact
+Matched: Technology
+(Gibson, 1979, p. 127, italics in original) A decade later, Norman (1988) proposed an alternate defini- tion, one that emphasized perception and brought the con- cept into design studies: 714944 BSTXXX10.1177/0270467617714944Bulletin of Science, Technology & SocietyDavis and Chouinard research-article2017 1Australian National University, Canberra, ACT, Australia Corresponding Author: Jenny L. Davis, School of Sociology, Australian National University, Building 22, Haydon Allen Building, Acton, ACT 2601, Australia.
+
+Page 1, sentence 22
+Concept: perception
+Matched: perception
+(Gibson, 1979, p. 127, italics in original) A decade later, Norman (1988) proposed an alternate defini- tion, one that emphasized perception and brought the con- cept into design studies: 714944 BSTXXX10.1177/0270467617714944Bulletin of Science, Technology & SocietyDavis and Chouinard research-article2017 1Australian National University, Canberra, ACT, Australia Corresponding Author: Jenny L. Davis, School of Sociology, Australian National University, Building 22, Haydon Allen Building, Acton, ACT 2601, Australia.
+
+Page 1, sentence 23
+Concept: affordance
+Matched: affordance
+Email: jennifer.davis@anu.edu.au Theorizing Affordances: From Request to Refuse Jenny L. Davis1 and James B. Chouinard1 Abstract As a concept, affordance is integral to scholarly analysis across multiple fields—including media studies, science and technology studies, communication studies, ecological psychology, and design studies among others.
+
+Page 1, sentence 23
+Concept: artifact
+Matched: technology
+Email: jennifer.davis@anu.edu.au Theorizing Affordances: From Request to Refuse Jenny L. Davis1 and James B. Chouinard1 Abstract As a concept, affordance is integral to scholarly analysis across multiple fields—including media studies, science and technology studies, communication studies, ecological psychology, and design studies among others.
+
+Page 1, sentence 24
+Concept: affordance
+Matched: afford
+Critics, however, rightly point to the following shortcomings: definitional confusion, a false binary in which artifacts either afford or do not, and failure to account for diverse subject-artifact relations.
