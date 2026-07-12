@@ -1,4 +1,0 @@
-torch 2.11.0+cu130
-transformers 5.5.4
-accelerate 1.14.0
-lerobot C:\Users\cubbi\anaconda3\envs\robot_test\Lib\site-packages\lerobot\__init__.py
