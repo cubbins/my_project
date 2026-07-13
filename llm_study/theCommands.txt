@@ -1,0 +1,2521 @@
+
+
+
+Below is a CUDA implementation of the **Latency Insertion Method (LIM)** in the form the slides suggest:
+
+* one array of **node voltages** (V_i^{n+1/2})
+* one array of **branch currents** (I_{ij}^{n})
+* one kernel for **node updates**
+* one kernel for **branch updates**
+
+This maps well to CUDA because both updates are **local**.
+
+---
+
+# 1. Discrete LIM equations
+
+Using the slide notation, a common explicit form is:
+
+## Node update
+
+[
+V_i^{n+1/2} =
+\frac{
+\frac{C_i}{\Delta t} V_i^{n-1/2} + H_i^n - \sum_k I_{ik}^n
+}{
+\frac{C_i}{\Delta t} + G_i
+}
+]
+
+## Branch update
+
+[
+I_{ij}^{n+1} =
+I_{ij}^{n}
++
+\frac{\Delta t}{L_{ij}}
+\left(
+V_i^{n+1/2} - V_j^{n+1/2} - R_{ij} I_{ij}^{n} + E_{ij}^{n+1/2}
+\right)
+]
+
+where:
+
+* (C_i) = shunt capacitance at node (i)
+* (G_i) = shunt conductance at node (i)
+* (H_i^n) = current injection into node (i)
+* (L_{ij}), (R_{ij}) = branch inductance/resistance
+* (E_{ij}) = branch voltage source term, if any
+
+---
+
+# 2. CUDA mapping
+
+The natural map is:
+
+* **one thread per node** for the voltage update
+* **one thread per branch** for the current update
+
+This avoids a global matrix solve.
+
+---
+
+# 3. Data layout
+
+We need two graph views:
+
+## For nodes
+
+Each node needs the list of incident branches and the sign of each branch current contribution.
+
+Use CSR-like storage:
+
+* `node_branch_ptr[i] ... node_branch_ptr[i+1]-1` gives the incident entries for node `i`
+* `node_branch_ids[p]` gives the branch index
+* `node_branch_signs[p]` gives `+1` or `-1`
+
+The sign convention here is:
+
+* each branch is oriented from `src[b] -> dst[b]`
+* branch current `I[b]` is positive from `src` to `dst`
+* in KCL at node `i`, contribution is:
+
+  * `+I[b]` if current leaves node `i`
+  * `-I[b]` if current enters node `i`
+
+Then node equation uses `sum(sign * I[b])`.
+
+## For branches
+
+Each branch just needs:
+
+* `branch_src[b]`
+* `branch_dst[b]`
+* `R[b]`
+* `L[b]`
+
+---
+
+# 4. CUDA code
+
+## `lim_cuda.cu`
+
+```cpp
+#include <cuda_runtime.h>
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <cassert>
+
+#define CUDA_CHECK(call)                                                      \
+    do {                                                                      \
+        cudaError_t err__ = (call);                                           \
+        if (err__ != cudaSuccess) {                                           \
+            std::cerr << "CUDA error: " << cudaGetErrorString(err__)          \
+                      << " at " << __FILE__ << ":" << __LINE__ << "\n";       \
+            std::exit(EXIT_FAILURE);                                          \
+        }                                                                     \
+    } while (0)
+
+// ============================================================
+// Node update kernel
+//
+// V_next[i] = ((Ci/dt)*V_prev[i] + H[i] - sum_k sign_k*I[b_k]) / ((Ci/dt)+Gi)
+//
+// sign convention:
+//   branch b has orientation src[b] -> dst[b]
+//   I[b] > 0 means current flows src -> dst
+//   for KCL sum(sign * I[b]):
+//     +1 at src node
+//     -1 at dst node
+// ============================================================
+__global__ void update_nodes_kernel(
+    int Nn,
+    const int* __restrict__ node_branch_ptr,
+    const int* __restrict__ node_branch_ids,
+    const int* __restrict__ node_branch_signs,
+    const double* __restrict__ C,
+    const double* __restrict__ G,
+    const double* __restrict__ H,
+    const double* __restrict__ I_curr,
+    const double* __restrict__ V_prev,
+    double* __restrict__ V_next,
+    double dt
+) {
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    if (i >= Nn) return;
+
+    double kcl_sum = 0.0;
+
+    int start = node_branch_ptr[i];
+    int end   = node_branch_ptr[i + 1];
+
+    for (int p = start; p < end; ++p) {
+        int b = node_branch_ids[p];
+        int s = node_branch_signs[p];
+        kcl_sum += static_cast<double>(s) * I_curr[b];
+    }
+
+    double numer = (C[i] / dt) * V_prev[i] + H[i] - kcl_sum;
+    double denom = (C[i] / dt) + G[i];
+
+    V_next[i] = numer / denom;
+}
+
+// ============================================================
+// Branch update kernel
+//
+// I_next[b] = I_curr[b] + (dt/L[b]) * (V[src]-V[dst]-R[b]*I_curr[b]+E[b])
+// ============================================================
+__global__ void update_branches_kernel(
+    int Nb,
+    const int* __restrict__ branch_src,
+    const int* __restrict__ branch_dst,
+    const double* __restrict__ R,
+    const double* __restrict__ L,
+    const double* __restrict__ E,
+    const double* __restrict__ V_curr,
+    const double* __restrict__ I_curr,
+    double* __restrict__ I_next,
+    double dt
+) {
+    int b = blockIdx.x * blockDim.x + threadIdx.x;
+    if (b >= Nb) return;
+
+    int i = branch_src[b];
+    int j = branch_dst[b];
+
+    double vij = V_curr[i] - V_curr[j];
+    double rhs = vij - R[b] * I_curr[b] + E[b];
+
+    I_next[b] = I_curr[b] + (dt / L[b]) * rhs;
+}
+
+// ============================================================
+// Utility: build a tiny demo network
+//
+// Example network:
+//   node 0 --branch 0--> node 1 --branch 1--> node 2
+//
+// branch 0: 0 -> 1
+// branch 1: 1 -> 2
+//
+// node incidence:
+//   node 0: +b0
+//   node 1: -b0, +b1
+//   node 2: -b1
+// ============================================================
+struct LimNetworkHost {
+    int Nn = 0;
+    int Nb = 0;
+
+    std::vector<int> branch_src;
+    std::vector<int> branch_dst;
+
+    std::vector<double> R;
+    std::vector<double> L;
+    std::vector<double> E;
+
+    std::vector<double> C;
+    std::vector<double> G;
+    std::vector<double> H;
+
+    std::vector<int> node_branch_ptr;
+    std::vector<int> node_branch_ids;
+    std::vector<int> node_branch_signs;
+};
+
+LimNetworkHost make_demo_network() {
+    LimNetworkHost net;
+    net.Nn = 3;
+    net.Nb = 2;
+
+    net.branch_src = {0, 1};
+    net.branch_dst = {1, 2};
+
+    net.R = {1.0, 1.0};
+    net.L = {1e-9, 1e-9};
+    net.E = {0.0, 0.0};
+
+    net.C = {1e-12, 1e-12, 1e-12};
+    net.G = {1e-3, 1e-3, 1e-3};
+
+    // Inject a pulse/current into node 0
+    net.H = {1e-3, 0.0, 0.0};
+
+    // CSR incidence
+    // node 0 -> [ b0(+1) ]
+    // node 1 -> [ b0(-1), b1(+1) ]
+    // node 2 -> [ b1(-1) ]
+    net.node_branch_ptr   = {0, 1, 3, 4};
+    net.node_branch_ids   = {0, 0, 1, 1};
+    net.node_branch_signs = {+1, -1, +1, -1};
+
+    return net;
+}
+
+// ============================================================
+// Device container
+// ============================================================
+struct LimNetworkDevice {
+    int Nn = 0;
+    int Nb = 0;
+
+    int* d_branch_src = nullptr;
+    int* d_branch_dst = nullptr;
+
+    double* d_R = nullptr;
+    double* d_L = nullptr;
+    double* d_E = nullptr;
+
+    double* d_C = nullptr;
+    double* d_G = nullptr;
+    double* d_H = nullptr;
+
+    int* d_node_branch_ptr = nullptr;
+    int* d_node_branch_ids = nullptr;
+    int* d_node_branch_signs = nullptr;
+
+    double* d_V_a = nullptr;
+    double* d_V_b = nullptr;
+
+    double* d_I_a = nullptr;
+    double* d_I_b = nullptr;
+};
+
+void allocate_and_copy(LimNetworkDevice& dev, const LimNetworkHost& host) {
+    dev.Nn = host.Nn;
+    dev.Nb = host.Nb;
+
+    CUDA_CHECK(cudaMalloc(&dev.d_branch_src, host.Nb * sizeof(int)));
+    CUDA_CHECK(cudaMalloc(&dev.d_branch_dst, host.Nb * sizeof(int)));
+
+    CUDA_CHECK(cudaMalloc(&dev.d_R, host.Nb * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dev.d_L, host.Nb * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dev.d_E, host.Nb * sizeof(double)));
+
+    CUDA_CHECK(cudaMalloc(&dev.d_C, host.Nn * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dev.d_G, host.Nn * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dev.d_H, host.Nn * sizeof(double)));
+
+    CUDA_CHECK(cudaMalloc(&dev.d_node_branch_ptr, host.node_branch_ptr.size() * sizeof(int)));
+    CUDA_CHECK(cudaMalloc(&dev.d_node_branch_ids, host.node_branch_ids.size() * sizeof(int)));
+    CUDA_CHECK(cudaMalloc(&dev.d_node_branch_signs, host.node_branch_signs.size() * sizeof(int)));
+
+    CUDA_CHECK(cudaMalloc(&dev.d_V_a, host.Nn * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dev.d_V_b, host.Nn * sizeof(double)));
+
+    CUDA_CHECK(cudaMalloc(&dev.d_I_a, host.Nb * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dev.d_I_b, host.Nb * sizeof(double)));
+
+    CUDA_CHECK(cudaMemcpy(dev.d_branch_src, host.branch_src.data(), host.Nb * sizeof(int), cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(dev.d_branch_dst, host.branch_dst.data(), host.Nb * sizeof(int), cudaMemcpyHostToDevice));
+
+    CUDA_CHECK(cudaMemcpy(dev.d_R, host.R.data(), host.Nb * sizeof(double), cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(dev.d_L, host.L.data(), host.Nb * sizeof(double), cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(dev.d_E, host.E.data(), host.Nb * sizeof(double), cudaMemcpyHostToDevice));
+
+    CUDA_CHECK(cudaMemcpy(dev.d_C, host.C.data(), host.Nn * sizeof(double), cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(dev.d_G, host.G.data(), host.Nn * sizeof(double), cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(dev.d_H, host.H.data(), host.Nn * sizeof(double), cudaMemcpyHostToDevice));
+
+    CUDA_CHECK(cudaMemcpy(dev.d_node_branch_ptr, host.node_branch_ptr.data(),
+                          host.node_branch_ptr.size() * sizeof(int), cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(dev.d_node_branch_ids, host.node_branch_ids.data(),
+                          host.node_branch_ids.size() * sizeof(int), cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(dev.d_node_branch_signs, host.node_branch_signs.data(),
+                          host.node_branch_signs.size() * sizeof(int), cudaMemcpyHostToDevice));
+
+    CUDA_CHECK(cudaMemset(dev.d_V_a, 0, host.Nn * sizeof(double)));
+    CUDA_CHECK(cudaMemset(dev.d_V_b, 0, host.Nn * sizeof(double)));
+    CUDA_CHECK(cudaMemset(dev.d_I_a, 0, host.Nb * sizeof(double)));
+    CUDA_CHECK(cudaMemset(dev.d_I_b, 0, host.Nb * sizeof(double)));
+}
+
+void cleanup(LimNetworkDevice& dev) {
+    cudaFree(dev.d_branch_src);
+    cudaFree(dev.d_branch_dst);
+
+    cudaFree(dev.d_R);
+    cudaFree(dev.d_L);
+    cudaFree(dev.d_E);
+
+    cudaFree(dev.d_C);
+    cudaFree(dev.d_G);
+    cudaFree(dev.d_H);
+
+    cudaFree(dev.d_node_branch_ptr);
+    cudaFree(dev.d_node_branch_ids);
+    cudaFree(dev.d_node_branch_signs);
+
+    cudaFree(dev.d_V_a);
+    cudaFree(dev.d_V_b);
+
+    cudaFree(dev.d_I_a);
+    cudaFree(dev.d_I_b);
+}
+
+// ============================================================
+// Main simulation loop
+// ============================================================
+int main() {
+    LimNetworkHost host = make_demo_network();
+    LimNetworkDevice dev{};
+    allocate_and_copy(dev, host);
+
+    const double dt = 1e-13;
+    const int steps = 1000;
+
+    const int threads = 256;
+    const int blocks_nodes = (dev.Nn + threads - 1) / threads;
+    const int blocks_branches = (dev.Nb + threads - 1) / threads;
+
+    double* V_prev = dev.d_V_a;
+    double* V_next = dev.d_V_b;
+    double* I_curr = dev.d_I_a;
+    double* I_next = dev.d_I_b;
+
+    for (int n = 0; n < steps; ++n) {
+        update_nodes_kernel<<<blocks_nodes, threads>>>(
+            dev.Nn,
+            dev.d_node_branch_ptr,
+            dev.d_node_branch_ids,
+            dev.d_node_branch_signs,
+            dev.d_C,
+            dev.d_G,
+            dev.d_H,
+            I_curr,
+            V_prev,
+            V_next,
+            dt
+        );
+        CUDA_CHECK(cudaGetLastError());
+
+        update_branches_kernel<<<blocks_branches, threads>>>(
+            dev.Nb,
+            dev.d_branch_src,
+            dev.d_branch_dst,
+            dev.d_R,
+            dev.d_L,
+            dev.d_E,
+            V_next,
+            I_curr,
+            I_next,
+            dt
+        );
+        CUDA_CHECK(cudaGetLastError());
+
+        std::swap(V_prev, V_next);
+        std::swap(I_curr, I_next);
+    }
+
+    std::vector<double> V_final(dev.Nn);
+    std::vector<double> I_final(dev.Nb);
+
+    CUDA_CHECK(cudaMemcpy(V_final.data(), V_prev, dev.Nn * sizeof(double), cudaMemcpyDeviceToHost));
+    CUDA_CHECK(cudaMemcpy(I_final.data(), I_curr, dev.Nb * sizeof(double), cudaMemcpyDeviceToHost));
+    CUDA_CHECK(cudaDeviceSynchronize());
+
+    std::cout << "Final node voltages:\n";
+    for (int i = 0; i < dev.Nn; ++i) {
+        std::cout << "  V[" << i << "] = " << V_final[i] << "\n";
+    }
+
+    std::cout << "Final branch currents:\n";
+    for (int b = 0; b < dev.Nb; ++b) {
+        std::cout << "  I[" << b << "] = " << I_final[b] << "\n";
+    }
+
+    cleanup(dev);
+    return 0;
+}
+```
+
+---
+
+# 5. How to compile
+
+```bash
+nvcc -O3 -arch=sm_90 -o lim_cuda lim_cuda.cu
+```
+
+Replace `sm_90` with your actual architecture, for example:
+
+* `sm_89`
+* `sm_120`
+
+---
+
+# 6. Why this maps well to CUDA
+
+The reason LIM is attractive for CUDA is that it removes the heavy part of classic circuit simulation:
+
+## Traditional implicit solver
+
+At each step you often do:
+
+[
+A x = b
+]
+
+That means:
+
+* sparse matrix assembly
+* factorization
+* triangular solves
+* global dependency
+
+## LIM
+
+At each step you do:
+
+* local node update
+* local branch update
+
+That means:
+
+* simple arithmetic
+* regular memory access
+* high parallelism
+* no global linear solve
+
+So structurally it looks more like:
+
+* FDTD
+* stencil update
+* graph-local propagation
+
+than like SPICE Newton-Raphson.
+
+---
+
+# 7. Important details about correctness
+
+## A. Sign convention matters
+
+The most common bug is incorrect KCL sign handling.
+
+In the code above:
+
+* branch current is positive from `src -> dst`
+* at node `src`, sign is `+1`
+* at node `dst`, sign is `-1`
+
+That matches the update formula used there.
+
+## B. Every branch needs an `L`
+
+If a physical branch has no inductance, LIM literature often inserts a tiny one.
+
+## C. Every node needs a `C`
+
+If a node has no capacitance, insert a tiny shunt capacitance.
+
+This is exactly what your slide says. Without it, the explicit update loses the dynamic state structure.
+
+## D. Stability
+
+Even though LIM avoids the global solve, explicit time stepping still needs a sufficiently small `dt`.
+
+A too-large `dt` can cause:
+
+* oscillation
+* divergence
+* nonphysical growth
+
+---
+
+# 8. Better GPU version: fused and optimized ideas
+
+The code above is deliberately clear, not maximally optimized.
+
+For a stronger GPU implementation, you would consider:
+
+## Branch kernel
+
+This one is already very GPU-friendly.
+
+Each thread does:
+
+* load `src`, `dst`
+* load `V[src]`, `V[dst]`
+* compute one current update
+* write one output
+
+Good arithmetic intensity is modest, but the access pattern is simple.
+
+## Node kernel
+
+This one is more irregular because each node has a variable number of incident branches.
+
+So you would likely improve it by:
+
+* storing adjacency in CSR
+* sorting nodes by degree
+* using one warp per high-degree node
+* using one thread per low-degree node
+* possibly using a segmented reduction
+
+---
+
+# 9. Warp-oriented node kernel sketch
+
+For larger degree nodes, a warp-per-node scheme can help.
+
+```cpp
+__global__ void update_nodes_warp_kernel(
+    int Nn,
+    const int* node_branch_ptr,
+    const int* node_branch_ids,
+    const int* node_branch_signs,
+    const double* C,
+    const double* G,
+    const double* H,
+    const double* I_curr,
+    const double* V_prev,
+    double* V_next,
+    double dt
+) {
+    int global_thread = blockIdx.x * blockDim.x + threadIdx.x;
+    int warp_id = global_thread / warpSize;
+    int lane = threadIdx.x & 31;
+
+    if (warp_id >= Nn) return;
+
+    int i = warp_id;
+    int start = node_branch_ptr[i];
+    int end   = node_branch_ptr[i + 1];
+
+    double partial = 0.0;
+    for (int p = start + lane; p < end; p += warpSize) {
+        int b = node_branch_ids[p];
+        int s = node_branch_signs[p];
+        partial += static_cast<double>(s) * I_curr[b];
+    }
+
+    for (int offset = 16; offset > 0; offset >>= 1) {
+        partial += __shfl_down_sync(0xffffffff, partial, offset);
+    }
+
+    if (lane == 0) {
+        double numer = (C[i] / dt) * V_prev[i] + H[i] - partial;
+        double denom = (C[i] / dt) + G[i];
+        V_next[i] = numer / denom;
+    }
+}
+```
+
+This is closer to the kind of thing you were asking about earlier with warp-engine modeling.
+
+---
+
+# 10. If you want source terms and nonlinear elements
+
+The slide version is linear RLGC-like LIM. If you want more realistic circuits:
+
+## Node-side source terms
+
+Current injections can go in `H[i]`.
+
+## Branch-side source terms
+
+Voltage excitations can go in `E[b]`.
+
+## Nonlinear devices
+
+A practical hybrid approach is:
+
+* linear interconnect handled by LIM
+* nonlinear device blocks handled separately
+* exchange interface quantities at each step
+
+That becomes more like waveform relaxation or partitioned simulation.
+
+---
+
+# 11. How this corresponds to the slide pseudocode
+
+Your slide 12 says, effectively:
+
+```text
+for time = 1..Nt:
+    for branch = 1..Nb:
+        update current
+    for node = 1..Nn:
+        update voltage
+```
+
+In CUDA terms, that becomes:
+
+```text
+for time = 1..Nt:
+    launch branch kernel over Nb threads
+    launch node kernel over Nn threads
+```
+
+or in the order I used:
+
+```text
+for time = 1..Nt:
+    launch node kernel
+    launch branch kernel
+```
+
+Both are fine as long as the staggering convention is consistent.
+
+The code above uses:
+
+* node update from old currents
+* branch update from new voltages
+
+which matches the leapfrog view.
+
+---
+
+# 12. Practical extension: output traces
+
+If you want waveform output, add arrays on the host and periodically copy sampled nodes back:
+
+```cpp
+if ((n % 10) == 0) {
+    CUDA_CHECK(cudaMemcpy(V_final.data(), V_prev, dev.Nn * sizeof(double), cudaMemcpyDeviceToHost));
+    // append to CSV
+}
+```
+
+Or better, record directly into a device trace buffer and copy once at the end.
+
+---
+
+# 13. Main conceptual takeaway
+
+This is why LIM is interesting for GPU execution:
+
+* branch update is embarrassingly parallel
+* node update is graph-local parallel
+* explicit stepping avoids the sparse linear solve bottleneck
+* the whole method looks like a time-marching graph kernel
+
+So yes — it really does map naturally to CUDA.
+
+If you want, I can next turn this into a more serious version with:
+a 2-D RLGC grid generator, CSV waveform dumps, and a `CMakeLists.txt` so you can compile and run it directly.
+
+
+====================
+
+Excellent — these slides are **very dense but extremely important**, and they connect directly to **MNA, transmission-line modeling, and even parallel computing (your GPU work)**.
+
+Let’s unpack them carefully, from **first principles → algorithm → implementation → deeper insight**.
+
+---
+
+# 🧠 1. Core Idea: What “Latency Insertion” Really Means
+
+From your first slide:
+
+> “Each branch must have an inductor, each node must have a capacitor”
+
+### 🔑 Interpretation
+
+This is not just a modeling trick — it is a **mathematical transformation**:
+
+| Original circuit                         | LIM-transformed circuit |
+| ---------------------------------------- | ----------------------- |
+| Algebraic constraints (instant coupling) | Time-delayed coupling   |
+| Dense MNA matrix                         | Local update rules      |
+| Global solve required                    | Explicit time stepping  |
+
+👉 You are **forcing the system to have dynamics everywhere**
+
+---
+
+### ⚠️ Why add L and C?
+
+Because:
+
+* Capacitor → relates **current ↔ voltage derivative**
+* Inductor → relates **voltage ↔ current derivative**
+
+This enables:
+
+```text
+“state propagation in time”
+```
+
+instead of:
+
+```text
+“instantaneous global solve”
+```
+
+---
+
+# ⚡ 2. The Key Structural Transformation
+
+From slide 2:
+
+> “Represents network as a grid of nodes and branches”
+
+This is critical.
+
+You are converting:
+
+```text
+General circuit graph
+```
+
+into:
+
+```text
+Structured grid:
+  nodes → store voltages
+  branches → store currents
+```
+
+---
+
+### 🔁 Dual Variables
+
+| Quantity           | Stored at | Updated from |
+| ------------------ | --------- | ------------ |
+| Voltage ( V_i )    | Node      | currents     |
+| Current ( I_{ij} ) | Branch    | voltages     |
+
+👉 This is **dual representation** (like EM fields: E vs H)
+
+---
+
+# 🧮 3. The Two Fundamental Update Equations
+
+These are the **heart of LIM**.
+
+---
+
+## 🟦 (A) Branch Equation (Inductor dynamics)
+
+From your slide:
+
+[
+I_{ij}^{n+1} = I_{ij}^{n} + \frac{\Delta t}{L_{ij}} \left( V_i^{n+1/2} - V_j^{n+1/2} - R_{ij} I_{ij}^{n} \right)
+]
+
+### 🔍 Meaning
+
+* Current updates from **voltage difference**
+* Includes:
+
+  * inductance → inertia
+  * resistance → damping
+
+👉 This is basically:
+
+```text
+discretized:  V = L dI/dt + R I
+```
+
+---
+
+## 🟩 (B) Node Equation (Capacitor dynamics)
+
+[
+V_i^{n+1/2} =
+\frac{
+C_i V_i^{n-1/2}/\Delta t + H_i^n - \sum I_{ik}^n
+}{
+C_i/\Delta t + G_i
+}
+]
+
+### 🔍 Meaning
+
+* Voltage updates from:
+
+  * past voltage (memory)
+  * injected currents
+  * neighboring branch currents
+
+👉 This is:
+
+```text
+discretized:  I = C dV/dt + G V
+```
+
+---
+
+# 🔁 4. Leapfrog Scheme (VERY IMPORTANT)
+
+From slide 3:
+
+> Voltages and currents are staggered in time
+
+---
+
+### ⏱ Time grid:
+
+| Time      | Variable              |
+| --------- | --------------------- |
+| ( n )     | Current ( I^n )       |
+| ( n+1/2 ) | Voltage ( V^{n+1/2} ) |
+
+---
+
+### 🔄 Update sequence:
+
+```text
+Step 1: compute V^(n+1/2) using I^n
+Step 2: compute I^(n+1)   using V^(n+1/2)
+Step 3: repeat
+```
+
+---
+
+### 🧠 Why this is powerful
+
+* No simultaneous solve needed
+* Fully **explicit**
+* Second-order accurate (as slide says)
+
+---
+
+# ⚙️ 5. Algorithm Structure (Slide 4)
+
+This is extremely important — this is **actual implementation form**
+
+---
+
+## 🔁 Time Loop
+
+```text
+for time = 1 → Nt:
+```
+
+---
+
+## 🔴 Branch Loop (parallelizable!)
+
+```text
+for each branch ij:
+    I_ij[n+1] = update using V_i, V_j
+```
+
+✔ Uses ONLY local node voltages
+
+---
+
+## 🔵 Node Loop (parallelizable!)
+
+```text
+for each node i:
+    V_i[n+1/2] = update using currents connected to node
+```
+
+✔ Uses ONLY local branch currents
+
+---
+
+# 🚀 6. Critical Insight (this is the BIG one)
+
+### LIM eliminates the global matrix solve
+
+Compare:
+
+---
+
+## ❌ Traditional MNA
+
+```text
+[G] x = b
+```
+
+* Dense / sparse matrix
+* Global coupling
+* Expensive solve each timestep
+
+---
+
+## ✅ LIM
+
+```text
+Local updates only
+```
+
+* No matrix inversion
+* No global coupling
+* Perfect for:
+
+  * parallel CPU
+  * GPU
+  * hardware simulation
+
+---
+
+# 🧬 7. Deep Interpretation (your level)
+
+This is essentially:
+
+### 🔁 A discrete wave propagation system
+
+* Inductors → “momentum”
+* Capacitors → “energy storage”
+* Updates propagate like **waves through the network**
+
+---
+
+### 🧠 Equivalent to:
+
+| Domain   | Equivalent             |
+| -------- | ---------------------- |
+| Circuits | LIM                    |
+| EM       | FDTD (Yee grid)        |
+| PDEs     | Hyperbolic system      |
+| GPUs     | Warp-local computation |
+
+---
+
+# ⚡ 8. Why tiny L and C are inserted
+
+From slide 1:
+
+> “If missing, insert tiny values”
+
+### 🔍 Reason:
+
+Without L or C:
+
+* System becomes **algebraic (DAE)**
+* No time evolution possible
+* Breaks explicit scheme
+
+👉 Adding tiny values:
+
+* regularizes system
+* ensures dynamic propagation
+* avoids singularities
+
+---
+
+# 🧪 9. Practical Interpretation (SPICE mindset)
+
+You can think of LIM as:
+
+```text
+Instead of solving nodal matrix,
+we simulate “propagation” of signals
+```
+
+---
+
+# 🧠 10. Connection to YOUR Work
+
+This directly maps to what you’ve been exploring:
+
+---
+
+## 🟢 (A) ngspice / MNA
+
+* LIM ≈ explicit alternative to Newton + matrix solve
+* avoids convergence issues in large networks
+
+---
+
+## 🔵 (B) GPU kernels
+
+Your warp-level work:
+
+```text
+Each branch update = thread
+Each node update   = thread
+```
+
+👉 This is **perfectly GPU-mappable**
+
+---
+
+## 🟣 (C) SystemVerilog modeling
+
+You can model as:
+
+```verilog
+always @(posedge clk) begin
+    I_ij <= I_ij + ...
+    V_i  <= V_i + ...
+end
+```
+
+👉 becomes **cycle-based simulation**
+
+---
+
+# 📌 Final Summary
+
+### LIM =
+
+```text
+Convert circuit → dynamic system
+Replace global solve → local updates
+Use leapfrog → stable + efficient
+```
+
+---
+
+### Core loop:
+
+```text
+for each timestep:
+    update all node voltages (parallel)
+    update all branch currents (parallel)
+```
+
+---
+
+# 🚀 If you want next step (high value)
+
+I can now:
+
+1. ✅ Derive LIM starting from full MNA equations
+2. ✅ Build a **working ngspice-compatible LIM model**
+3. ✅ Write **SystemVerilog (warp-style 32-thread engine)**
+4. ✅ Show **CUDA kernel implementing LIM (maps perfectly)**
+
+Given your current trajectory, #3 or #4 would be especially powerful.
+==============================
+
+
+Below is a CUDA implementation of the **Latency Insertion Method (LIM)** in the form the slides suggest:
+
+* one array of **node voltages** (V_i^{n+1/2})
+* one array of **branch currents** (I_{ij}^{n})
+* one kernel for **node updates**
+* one kernel for **branch updates**
+
+This maps well to CUDA because both updates are **local**.
+
+---
+
+# 1. Discrete LIM equations
+
+Using the slide notation, a common explicit form is:
+
+## Node update
+
+[
+V_i^{n+1/2} =
+\frac{
+\frac{C_i}{\Delta t} V_i^{n-1/2} + H_i^n - \sum_k I_{ik}^n
+}{
+\frac{C_i}{\Delta t} + G_i
+}
+]
+
+## Branch update
+
+[
+I_{ij}^{n+1} =
+I_{ij}^{n}
++
+\frac{\Delta t}{L_{ij}}
+\left(
+V_i^{n+1/2} - V_j^{n+1/2} - R_{ij} I_{ij}^{n} + E_{ij}^{n+1/2}
+\right)
+]
+
+where:
+
+* (C_i) = shunt capacitance at node (i)
+* (G_i) = shunt conductance at node (i)
+* (H_i^n) = current injection into node (i)
+* (L_{ij}), (R_{ij}) = branch inductance/resistance
+* (E_{ij}) = branch voltage source term, if any
+
+---
+
+# 2. CUDA mapping
+
+The natural map is:
+
+* **one thread per node** for the voltage update
+* **one thread per branch** for the current update
+
+This avoids a global matrix solve.
+
+---
+
+# 3. Data layout
+
+We need two graph views:
+
+## For nodes
+
+Each node needs the list of incident branches and the sign of each branch current contribution.
+
+Use CSR-like storage:
+
+* `node_branch_ptr[i] ... node_branch_ptr[i+1]-1` gives the incident entries for node `i`
+* `node_branch_ids[p]` gives the branch index
+* `node_branch_signs[p]` gives `+1` or `-1`
+
+The sign convention here is:
+
+* each branch is oriented from `src[b] -> dst[b]`
+* branch current `I[b]` is positive from `src` to `dst`
+* in KCL at node `i`, contribution is:
+
+  * `+I[b]` if current leaves node `i`
+  * `-I[b]` if current enters node `i`
+
+Then node equation uses `sum(sign * I[b])`.
+
+## For branches
+
+Each branch just needs:
+
+* `branch_src[b]`
+* `branch_dst[b]`
+* `R[b]`
+* `L[b]`
+
+---
+
+# 4. CUDA code
+
+## `lim_cuda.cu`
+
+```cpp
+#include <cuda_runtime.h>
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <cassert>
+
+#define CUDA_CHECK(call)                                                      \
+    do {                                                                      \
+        cudaError_t err__ = (call);                                           \
+        if (err__ != cudaSuccess) {                                           \
+            std::cerr << "CUDA error: " << cudaGetErrorString(err__)          \
+                      << " at " << __FILE__ << ":" << __LINE__ << "\n";       \
+            std::exit(EXIT_FAILURE);                                          \
+        }                                                                     \
+    } while (0)
+
+// ============================================================
+// Node update kernel
+//
+// V_next[i] = ((Ci/dt)*V_prev[i] + H[i] - sum_k sign_k*I[b_k]) / ((Ci/dt)+Gi)
+//
+// sign convention:
+//   branch b has orientation src[b] -> dst[b]
+//   I[b] > 0 means current flows src -> dst
+//   for KCL sum(sign * I[b]):
+//     +1 at src node
+//     -1 at dst node
+// ============================================================
+__global__ void update_nodes_kernel(
+    int Nn,
+    const int* __restrict__ node_branch_ptr,
+    const int* __restrict__ node_branch_ids,
+    const int* __restrict__ node_branch_signs,
+    const double* __restrict__ C,
+    const double* __restrict__ G,
+    const double* __restrict__ H,
+    const double* __restrict__ I_curr,
+    const double* __restrict__ V_prev,
+    double* __restrict__ V_next,
+    double dt
+) {
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    if (i >= Nn) return;
+
+    double kcl_sum = 0.0;
+
+    int start = node_branch_ptr[i];
+    int end   = node_branch_ptr[i + 1];
+
+    for (int p = start; p < end; ++p) {
+        int b = node_branch_ids[p];
+        int s = node_branch_signs[p];
+        kcl_sum += static_cast<double>(s) * I_curr[b];
+    }
+
+    double numer = (C[i] / dt) * V_prev[i] + H[i] - kcl_sum;
+    double denom = (C[i] / dt) + G[i];
+
+    V_next[i] = numer / denom;
+}
+
+// ============================================================
+// Branch update kernel
+//
+// I_next[b] = I_curr[b] + (dt/L[b]) * (V[src]-V[dst]-R[b]*I_curr[b]+E[b])
+// ============================================================
+__global__ void update_branches_kernel(
+    int Nb,
+    const int* __restrict__ branch_src,
+    const int* __restrict__ branch_dst,
+    const double* __restrict__ R,
+    const double* __restrict__ L,
+    const double* __restrict__ E,
+    const double* __restrict__ V_curr,
+    const double* __restrict__ I_curr,
+    double* __restrict__ I_next,
+    double dt
+) {
+    int b = blockIdx.x * blockDim.x + threadIdx.x;
+    if (b >= Nb) return;
+
+    int i = branch_src[b];
+    int j = branch_dst[b];
+
+    double vij = V_curr[i] - V_curr[j];
+    double rhs = vij - R[b] * I_curr[b] + E[b];
+
+    I_next[b] = I_curr[b] + (dt / L[b]) * rhs;
+}
+
+// ============================================================
+// Utility: build a tiny demo network
+//
+// Example network:
+//   node 0 --branch 0--> node 1 --branch 1--> node 2
+//
+// branch 0: 0 -> 1
+// branch 1: 1 -> 2
+//
+// node incidence:
+//   node 0: +b0
+//   node 1: -b0, +b1
+//   node 2: -b1
+// ============================================================
+struct LimNetworkHost {
+    int Nn = 0;
+    int Nb = 0;
+
+    std::vector<int> branch_src;
+    std::vector<int> branch_dst;
+
+    std::vector<double> R;
+    std::vector<double> L;
+    std::vector<double> E;
+
+    std::vector<double> C;
+    std::vector<double> G;
+    std::vector<double> H;
+
+    std::vector<int> node_branch_ptr;
+    std::vector<int> node_branch_ids;
+    std::vector<int> node_branch_signs;
+};
+
+LimNetworkHost make_demo_network() {
+    LimNetworkHost net;
+    net.Nn = 3;
+    net.Nb = 2;
+
+    net.branch_src = {0, 1};
+    net.branch_dst = {1, 2};
+
+    net.R = {1.0, 1.0};
+    net.L = {1e-9, 1e-9};
+    net.E = {0.0, 0.0};
+
+    net.C = {1e-12, 1e-12, 1e-12};
+    net.G = {1e-3, 1e-3, 1e-3};
+
+    // Inject a pulse/current into node 0
+    net.H = {1e-3, 0.0, 0.0};
+
+    // CSR incidence
+    // node 0 -> [ b0(+1) ]
+    // node 1 -> [ b0(-1), b1(+1) ]
+    // node 2 -> [ b1(-1) ]
+    net.node_branch_ptr   = {0, 1, 3, 4};
+    net.node_branch_ids   = {0, 0, 1, 1};
+    net.node_branch_signs = {+1, -1, +1, -1};
+
+    return net;
+}
+
+// ============================================================
+// Device container
+// ============================================================
+struct LimNetworkDevice {
+    int Nn = 0;
+    int Nb = 0;
+
+    int* d_branch_src = nullptr;
+    int* d_branch_dst = nullptr;
+
+    double* d_R = nullptr;
+    double* d_L = nullptr;
+    double* d_E = nullptr;
+
+    double* d_C = nullptr;
+    double* d_G = nullptr;
+    double* d_H = nullptr;
+
+    int* d_node_branch_ptr = nullptr;
+    int* d_node_branch_ids = nullptr;
+    int* d_node_branch_signs = nullptr;
+
+    double* d_V_a = nullptr;
+    double* d_V_b = nullptr;
+
+    double* d_I_a = nullptr;
+    double* d_I_b = nullptr;
+};
+
+void allocate_and_copy(LimNetworkDevice& dev, const LimNetworkHost& host) {
+    dev.Nn = host.Nn;
+    dev.Nb = host.Nb;
+
+    CUDA_CHECK(cudaMalloc(&dev.d_branch_src, host.Nb * sizeof(int)));
+    CUDA_CHECK(cudaMalloc(&dev.d_branch_dst, host.Nb * sizeof(int)));
+
+    CUDA_CHECK(cudaMalloc(&dev.d_R, host.Nb * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dev.d_L, host.Nb * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dev.d_E, host.Nb * sizeof(double)));
+
+    CUDA_CHECK(cudaMalloc(&dev.d_C, host.Nn * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dev.d_G, host.Nn * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dev.d_H, host.Nn * sizeof(double)));
+
+    CUDA_CHECK(cudaMalloc(&dev.d_node_branch_ptr, host.node_branch_ptr.size() * sizeof(int)));
+    CUDA_CHECK(cudaMalloc(&dev.d_node_branch_ids, host.node_branch_ids.size() * sizeof(int)));
+    CUDA_CHECK(cudaMalloc(&dev.d_node_branch_signs, host.node_branch_signs.size() * sizeof(int)));
+
+    CUDA_CHECK(cudaMalloc(&dev.d_V_a, host.Nn * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dev.d_V_b, host.Nn * sizeof(double)));
+
+    CUDA_CHECK(cudaMalloc(&dev.d_I_a, host.Nb * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dev.d_I_b, host.Nb * sizeof(double)));
+
+    CUDA_CHECK(cudaMemcpy(dev.d_branch_src, host.branch_src.data(), host.Nb * sizeof(int), cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(dev.d_branch_dst, host.branch_dst.data(), host.Nb * sizeof(int), cudaMemcpyHostToDevice));
+
+    CUDA_CHECK(cudaMemcpy(dev.d_R, host.R.data(), host.Nb * sizeof(double), cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(dev.d_L, host.L.data(), host.Nb * sizeof(double), cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(dev.d_E, host.E.data(), host.Nb * sizeof(double), cudaMemcpyHostToDevice));
+
+    CUDA_CHECK(cudaMemcpy(dev.d_C, host.C.data(), host.Nn * sizeof(double), cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(dev.d_G, host.G.data(), host.Nn * sizeof(double), cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(dev.d_H, host.H.data(), host.Nn * sizeof(double), cudaMemcpyHostToDevice));
+
+    CUDA_CHECK(cudaMemcpy(dev.d_node_branch_ptr, host.node_branch_ptr.data(),
+                          host.node_branch_ptr.size() * sizeof(int), cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(dev.d_node_branch_ids, host.node_branch_ids.data(),
+                          host.node_branch_ids.size() * sizeof(int), cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(dev.d_node_branch_signs, host.node_branch_signs.data(),
+                          host.node_branch_signs.size() * sizeof(int), cudaMemcpyHostToDevice));
+
+    CUDA_CHECK(cudaMemset(dev.d_V_a, 0, host.Nn * sizeof(double)));
+    CUDA_CHECK(cudaMemset(dev.d_V_b, 0, host.Nn * sizeof(double)));
+    CUDA_CHECK(cudaMemset(dev.d_I_a, 0, host.Nb * sizeof(double)));
+    CUDA_CHECK(cudaMemset(dev.d_I_b, 0, host.Nb * sizeof(double)));
+}
+
+void cleanup(LimNetworkDevice& dev) {
+    cudaFree(dev.d_branch_src);
+    cudaFree(dev.d_branch_dst);
+
+    cudaFree(dev.d_R);
+    cudaFree(dev.d_L);
+    cudaFree(dev.d_E);
+
+    cudaFree(dev.d_C);
+    cudaFree(dev.d_G);
+    cudaFree(dev.d_H);
+
+    cudaFree(dev.d_node_branch_ptr);
+    cudaFree(dev.d_node_branch_ids);
+    cudaFree(dev.d_node_branch_signs);
+
+    cudaFree(dev.d_V_a);
+    cudaFree(dev.d_V_b);
+
+    cudaFree(dev.d_I_a);
+    cudaFree(dev.d_I_b);
+}
+
+// ============================================================
+// Main simulation loop
+// ============================================================
+int main() {
+    LimNetworkHost host = make_demo_network();
+    LimNetworkDevice dev{};
+    allocate_and_copy(dev, host);
+
+    const double dt = 1e-13;
+    const int steps = 1000;
+
+    const int threads = 256;
+    const int blocks_nodes = (dev.Nn + threads - 1) / threads;
+    const int blocks_branches = (dev.Nb + threads - 1) / threads;
+
+    double* V_prev = dev.d_V_a;
+    double* V_next = dev.d_V_b;
+    double* I_curr = dev.d_I_a;
+    double* I_next = dev.d_I_b;
+
+    for (int n = 0; n < steps; ++n) {
+        update_nodes_kernel<<<blocks_nodes, threads>>>(
+            dev.Nn,
+            dev.d_node_branch_ptr,
+            dev.d_node_branch_ids,
+            dev.d_node_branch_signs,
+            dev.d_C,
+            dev.d_G,
+            dev.d_H,
+            I_curr,
+            V_prev,
+            V_next,
+            dt
+        );
+        CUDA_CHECK(cudaGetLastError());
+
+        update_branches_kernel<<<blocks_branches, threads>>>(
+            dev.Nb,
+            dev.d_branch_src,
+            dev.d_branch_dst,
+            dev.d_R,
+            dev.d_L,
+            dev.d_E,
+            V_next,
+            I_curr,
+            I_next,
+            dt
+        );
+        CUDA_CHECK(cudaGetLastError());
+
+        std::swap(V_prev, V_next);
+        std::swap(I_curr, I_next);
+    }
+
+    std::vector<double> V_final(dev.Nn);
+    std::vector<double> I_final(dev.Nb);
+
+    CUDA_CHECK(cudaMemcpy(V_final.data(), V_prev, dev.Nn * sizeof(double), cudaMemcpyDeviceToHost));
+    CUDA_CHECK(cudaMemcpy(I_final.data(), I_curr, dev.Nb * sizeof(double), cudaMemcpyDeviceToHost));
+    CUDA_CHECK(cudaDeviceSynchronize());
+
+    std::cout << "Final node voltages:\n";
+    for (int i = 0; i < dev.Nn; ++i) {
+        std::cout << "  V[" << i << "] = " << V_final[i] << "\n";
+    }
+
+    std::cout << "Final branch currents:\n";
+    for (int b = 0; b < dev.Nb; ++b) {
+        std::cout << "  I[" << b << "] = " << I_final[b] << "\n";
+    }
+
+    cleanup(dev);
+    return 0;
+}
+```
+
+---
+
+# 5. How to compile
+
+```bash
+nvcc -O3 -arch=sm_90 -o lim_cuda lim_cuda.cu
+```
+
+Replace `sm_90` with your actual architecture, for example:
+
+* `sm_89`
+* `sm_120`
+
+---
+
+# 6. Why this maps well to CUDA
+
+The reason LIM is attractive for CUDA is that it removes the heavy part of classic circuit simulation:
+
+## Traditional implicit solver
+
+At each step you often do:
+
+[
+A x = b
+]
+
+That means:
+
+* sparse matrix assembly
+* factorization
+* triangular solves
+* global dependency
+
+## LIM
+
+At each step you do:
+
+* local node update
+* local branch update
+
+That means:
+
+* simple arithmetic
+* regular memory access
+* high parallelism
+* no global linear solve
+
+So structurally it looks more like:
+
+* FDTD
+* stencil update
+* graph-local propagation
+
+than like SPICE Newton-Raphson.
+
+---
+
+# 7. Important details about correctness
+
+## A. Sign convention matters
+
+The most common bug is incorrect KCL sign handling.
+
+In the code above:
+
+* branch current is positive from `src -> dst`
+* at node `src`, sign is `+1`
+* at node `dst`, sign is `-1`
+
+That matches the update formula used there.
+
+## B. Every branch needs an `L`
+
+If a physical branch has no inductance, LIM literature often inserts a tiny one.
+
+## C. Every node needs a `C`
+
+If a node has no capacitance, insert a tiny shunt capacitance.
+
+This is exactly what your slide says. Without it, the explicit update loses the dynamic state structure.
+
+## D. Stability
+
+Even though LIM avoids the global solve, explicit time stepping still needs a sufficiently small `dt`.
+
+A too-large `dt` can cause:
+
+* oscillation
+* divergence
+* nonphysical growth
+
+---
+
+# 8. Better GPU version: fused and optimized ideas
+
+The code above is deliberately clear, not maximally optimized.
+
+For a stronger GPU implementation, you would consider:
+
+## Branch kernel
+
+This one is already very GPU-friendly.
+
+Each thread does:
+
+* load `src`, `dst`
+* load `V[src]`, `V[dst]`
+* compute one current update
+* write one output
+
+Good arithmetic intensity is modest, but the access pattern is simple.
+
+## Node kernel
+
+This one is more irregular because each node has a variable number of incident branches.
+
+So you would likely improve it by:
+
+* storing adjacency in CSR
+* sorting nodes by degree
+* using one warp per high-degree node
+* using one thread per low-degree node
+* possibly using a segmented reduction
+
+---
+
+# 9. Warp-oriented node kernel sketch
+
+For larger degree nodes, a warp-per-node scheme can help.
+
+```cpp
+__global__ void update_nodes_warp_kernel(
+    int Nn,
+    const int* node_branch_ptr,
+    const int* node_branch_ids,
+    const int* node_branch_signs,
+    const double* C,
+    const double* G,
+    const double* H,
+    const double* I_curr,
+    const double* V_prev,
+    double* V_next,
+    double dt
+) {
+    int global_thread = blockIdx.x * blockDim.x + threadIdx.x;
+    int warp_id = global_thread / warpSize;
+    int lane = threadIdx.x & 31;
+
+    if (warp_id >= Nn) return;
+
+    int i = warp_id;
+    int start = node_branch_ptr[i];
+    int end   = node_branch_ptr[i + 1];
+
+    double partial = 0.0;
+    for (int p = start + lane; p < end; p += warpSize) {
+        int b = node_branch_ids[p];
+        int s = node_branch_signs[p];
+        partial += static_cast<double>(s) * I_curr[b];
+    }
+
+    for (int offset = 16; offset > 0; offset >>= 1) {
+        partial += __shfl_down_sync(0xffffffff, partial, offset);
+    }
+
+    if (lane == 0) {
+        double numer = (C[i] / dt) * V_prev[i] + H[i] - partial;
+        double denom = (C[i] / dt) + G[i];
+        V_next[i] = numer / denom;
+    }
+}
+```
+
+This is closer to the kind of thing you were asking about earlier with warp-engine modeling.
+
+---
+
+# 10. If you want source terms and nonlinear elements
+
+The slide version is linear RLGC-like LIM. If you want more realistic circuits:
+
+## Node-side source terms
+
+Current injections can go in `H[i]`.
+
+## Branch-side source terms
+
+Voltage excitations can go in `E[b]`.
+
+## Nonlinear devices
+
+A practical hybrid approach is:
+
+* linear interconnect handled by LIM
+* nonlinear device blocks handled separately
+* exchange interface quantities at each step
+
+That becomes more like waveform relaxation or partitioned simulation.
+
+---
+
+# 11. How this corresponds to the slide pseudocode
+
+Your slide 12 says, effectively:
+
+```text
+for time = 1..Nt:
+    for branch = 1..Nb:
+        update current
+    for node = 1..Nn:
+        update voltage
+```
+
+In CUDA terms, that becomes:
+
+```text
+for time = 1..Nt:
+    launch branch kernel over Nb threads
+    launch node kernel over Nn threads
+```
+
+or in the order I used:
+
+```text
+for time = 1..Nt:
+    launch node kernel
+    launch branch kernel
+```
+
+Both are fine as long as the staggering convention is consistent.
+
+The code above uses:
+
+* node update from old currents
+* branch update from new voltages
+
+which matches the leapfrog view.
+
+---
+
+# 12. Practical extension: output traces
+
+If you want waveform output, add arrays on the host and periodically copy sampled nodes back:
+
+```cpp
+if ((n % 10) == 0) {
+    CUDA_CHECK(cudaMemcpy(V_final.data(), V_prev, dev.Nn * sizeof(double), cudaMemcpyDeviceToHost));
+    // append to CSV
+}
+```
+
+Or better, record directly into a device trace buffer and copy once at the end.
+
+---
+
+# 13. Main conceptual takeaway
+
+This is why LIM is interesting for GPU execution:
+
+* branch update is embarrassingly parallel
+* node update is graph-local parallel
+* explicit stepping avoids the sparse linear solve bottleneck
+* the whole method looks like a time-marching graph kernel
+
+So yes — it really does map naturally to CUDA.
+
+If you want, I can next turn this into a more serious version with:
+a 2-D RLGC grid generator, CSV waveform dumps, and a `CMakeLists.txt` so you can compile and run it directly.
+
+
+==============================
+
+Below is a more serious LIM/CUDA version with:
+
+* a **2-D RLGC grid generator**
+* **CSR node adjacency**
+* **GPU kernels** for node and branch updates
+* **CSV waveform dump**
+* a **CMakeLists.txt**
+* a cleaner host/device structure
+
+This is still a research/demo implementation, but it is much closer to something you can build on.
+
+---
+
+# Design
+
+We model a rectangular grid:
+
+* each grid point is a **node**
+* each horizontal/vertical edge is a **branch**
+* each branch has `R`, `L`, optional source `E`
+* each node has `C`, `G`, current injection `H`
+
+We use the explicit LIM leapfrog form:
+
+[
+V_i^{n+1/2} =
+\frac{
+(C_i/\Delta t)V_i^{n-1/2} + H_i^n - \sum_k s_{ik} I_k^n
+}{
+(C_i/\Delta t) + G_i
+}
+]
+
+[
+I_b^{n+1} =
+I_b^n + \frac{\Delta t}{L_b}
+\left(
+V_{src(b)}^{n+1/2} - V_{dst(b)}^{n+1/2} - R_b I_b^n + E_b^{n+1/2}
+\right)
+]
+
+with branch orientation fixed as `src -> dst`.
+
+---
+
+# File 1: `lim_grid_cuda.cu`
+
+```cpp
+#include <cuda_runtime.h>
+#include <iostream>
+#include <vector>
+#include <fstream>
+#include <sstream>
+#include <iomanip>
+#include <string>
+#include <cmath>
+#include <cstdlib>
+#include <algorithm>
+
+#define CUDA_CHECK(call)                                                      \
+    do {                                                                      \
+        cudaError_t err__ = (call);                                           \
+        if (err__ != cudaSuccess) {                                           \
+            std::cerr << "CUDA error: " << cudaGetErrorString(err__)          \
+                      << " at " << __FILE__ << ":" << __LINE__ << "\n";       \
+            std::exit(EXIT_FAILURE);                                          \
+        }                                                                     \
+    } while (0)
+
+struct SimConfig {
+    int nx = 32;
+    int ny = 32;
+    int steps = 5000;
+    int sample_every = 20;
+
+    double dt = 1e-13;
+
+    double R_branch = 0.5;
+    double L_branch = 1e-9;
+    double C_node   = 1e-12;
+    double G_node   = 1e-4;
+
+    double inject_amp = 1e-3;
+    int source_x = 0;
+    int source_y = 0;
+
+    int probe0_x = 0;
+    int probe0_y = 0;
+    int probe1_x = 15;
+    int probe1_y = 15;
+    int probe2_x = 31;
+    int probe2_y = 31;
+
+    std::string csv_path = "lim_waveforms.csv";
+};
+
+static int node_id(int x, int y, int nx) {
+    return y * nx + x;
+}
+
+struct HostNetwork {
+    int Nn = 0;
+    int Nb = 0;
+
+    std::vector<int> branch_src;
+    std::vector<int> branch_dst;
+
+    std::vector<double> R;
+    std::vector<double> L;
+    std::vector<double> E;
+
+    std::vector<double> C;
+    std::vector<double> G;
+    std::vector<double> H;
+
+    std::vector<int> node_branch_ptr;
+    std::vector<int> node_branch_ids;
+    std::vector<int> node_branch_signs;
+};
+
+struct DeviceNetwork {
+    int Nn = 0;
+    int Nb = 0;
+
+    int *d_branch_src = nullptr, *d_branch_dst = nullptr;
+    double *d_R = nullptr, *d_L = nullptr, *d_E = nullptr;
+    double *d_C = nullptr, *d_G = nullptr, *d_H = nullptr;
+    int *d_node_branch_ptr = nullptr, *d_node_branch_ids = nullptr, *d_node_branch_signs = nullptr;
+
+    double *d_V_a = nullptr, *d_V_b = nullptr;
+    double *d_I_a = nullptr, *d_I_b = nullptr;
+};
+
+HostNetwork make_grid_network(const SimConfig& cfg) {
+    HostNetwork net;
+    net.Nn = cfg.nx * cfg.ny;
+
+    net.C.assign(net.Nn, cfg.C_node);
+    net.G.assign(net.Nn, cfg.G_node);
+    net.H.assign(net.Nn, 0.0);
+
+    int src_node = node_id(cfg.source_x, cfg.source_y, cfg.nx);
+    if (src_node >= 0 && src_node < net.Nn) {
+        net.H[src_node] = cfg.inject_amp;
+    }
+
+    struct Edge {
+        int src;
+        int dst;
+    };
+    std::vector<Edge> edges;
+    edges.reserve((cfg.nx - 1) * cfg.ny + cfg.nx * (cfg.ny - 1));
+
+    for (int y = 0; y < cfg.ny; ++y) {
+        for (int x = 0; x < cfg.nx; ++x) {
+            int a = node_id(x, y, cfg.nx);
+            if (x + 1 < cfg.nx) {
+                int b = node_id(x + 1, y, cfg.nx);
+                edges.push_back({a, b});
+            }
+            if (y + 1 < cfg.ny) {
+                int b = node_id(x, y + 1, cfg.nx);
+                edges.push_back({a, b});
+            }
+        }
+    }
+
+    net.Nb = static_cast<int>(edges.size());
+    net.branch_src.resize(net.Nb);
+    net.branch_dst.resize(net.Nb);
+    net.R.assign(net.Nb, cfg.R_branch);
+    net.L.assign(net.Nb, cfg.L_branch);
+    net.E.assign(net.Nb, 0.0);
+
+    for (int b = 0; b < net.Nb; ++b) {
+        net.branch_src[b] = edges[b].src;
+        net.branch_dst[b] = edges[b].dst;
+    }
+
+    std::vector<std::vector<std::pair<int,int>>> adj(net.Nn);
+    for (int b = 0; b < net.Nb; ++b) {
+        int s = net.branch_src[b];
+        int d = net.branch_dst[b];
+        adj[s].push_back({b, +1});
+        adj[d].push_back({b, -1});
+    }
+
+    net.node_branch_ptr.resize(net.Nn + 1);
+    net.node_branch_ptr[0] = 0;
+    for (int i = 0; i < net.Nn; ++i) {
+        net.node_branch_ptr[i + 1] = net.node_branch_ptr[i] + static_cast<int>(adj[i].size());
+    }
+
+    int nnz = net.node_branch_ptr.back();
+    net.node_branch_ids.resize(nnz);
+    net.node_branch_signs.resize(nnz);
+
+    for (int i = 0; i < net.Nn; ++i) {
+        int base = net.node_branch_ptr[i];
+        for (int k = 0; k < static_cast<int>(adj[i].size()); ++k) {
+            net.node_branch_ids[base + k] = adj[i][k].first;
+            net.node_branch_signs[base + k] = adj[i][k].second;
+        }
+    }
+
+    return net;
+}
+
+void upload_network(DeviceNetwork& dev, const HostNetwork& host) {
+    dev.Nn = host.Nn;
+    dev.Nb = host.Nb;
+
+    CUDA_CHECK(cudaMalloc(&dev.d_branch_src, host.Nb * sizeof(int)));
+    CUDA_CHECK(cudaMalloc(&dev.d_branch_dst, host.Nb * sizeof(int)));
+    CUDA_CHECK(cudaMalloc(&dev.d_R, host.Nb * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dev.d_L, host.Nb * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dev.d_E, host.Nb * sizeof(double)));
+
+    CUDA_CHECK(cudaMalloc(&dev.d_C, host.Nn * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dev.d_G, host.Nn * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dev.d_H, host.Nn * sizeof(double)));
+
+    CUDA_CHECK(cudaMalloc(&dev.d_node_branch_ptr, host.node_branch_ptr.size() * sizeof(int)));
+    CUDA_CHECK(cudaMalloc(&dev.d_node_branch_ids, host.node_branch_ids.size() * sizeof(int)));
+    CUDA_CHECK(cudaMalloc(&dev.d_node_branch_signs, host.node_branch_signs.size() * sizeof(int)));
+
+    CUDA_CHECK(cudaMalloc(&dev.d_V_a, host.Nn * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dev.d_V_b, host.Nn * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dev.d_I_a, host.Nb * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dev.d_I_b, host.Nb * sizeof(double)));
+
+    CUDA_CHECK(cudaMemcpy(dev.d_branch_src, host.branch_src.data(), host.Nb * sizeof(int), cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(dev.d_branch_dst, host.branch_dst.data(), host.Nb * sizeof(int), cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(dev.d_R, host.R.data(), host.Nb * sizeof(double), cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(dev.d_L, host.L.data(), host.Nb * sizeof(double), cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(dev.d_E, host.E.data(), host.Nb * sizeof(double), cudaMemcpyHostToDevice));
+
+    CUDA_CHECK(cudaMemcpy(dev.d_C, host.C.data(), host.Nn * sizeof(double), cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(dev.d_G, host.G.data(), host.Nn * sizeof(double), cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(dev.d_H, host.H.data(), host.Nn * sizeof(double), cudaMemcpyHostToDevice));
+
+    CUDA_CHECK(cudaMemcpy(dev.d_node_branch_ptr, host.node_branch_ptr.data(),
+                          host.node_branch_ptr.size() * sizeof(int), cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(dev.d_node_branch_ids, host.node_branch_ids.data(),
+                          host.node_branch_ids.size() * sizeof(int), cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(dev.d_node_branch_signs, host.node_branch_signs.data(),
+                          host.node_branch_signs.size() * sizeof(int), cudaMemcpyHostToDevice));
+
+    CUDA_CHECK(cudaMemset(dev.d_V_a, 0, host.Nn * sizeof(double)));
+    CUDA_CHECK(cudaMemset(dev.d_V_b, 0, host.Nn * sizeof(double)));
+    CUDA_CHECK(cudaMemset(dev.d_I_a, 0, host.Nb * sizeof(double)));
+    CUDA_CHECK(cudaMemset(dev.d_I_b, 0, host.Nb * sizeof(double)));
+}
+
+void free_network(DeviceNetwork& dev) {
+    cudaFree(dev.d_branch_src);
+    cudaFree(dev.d_branch_dst);
+    cudaFree(dev.d_R);
+    cudaFree(dev.d_L);
+    cudaFree(dev.d_E);
+    cudaFree(dev.d_C);
+    cudaFree(dev.d_G);
+    cudaFree(dev.d_H);
+    cudaFree(dev.d_node_branch_ptr);
+    cudaFree(dev.d_node_branch_ids);
+    cudaFree(dev.d_node_branch_signs);
+    cudaFree(dev.d_V_a);
+    cudaFree(dev.d_V_b);
+    cudaFree(dev.d_I_a);
+    cudaFree(dev.d_I_b);
+}
+
+__global__ void update_nodes_kernel(
+    int Nn,
+    const int* __restrict__ node_branch_ptr,
+    const int* __restrict__ node_branch_ids,
+    const int* __restrict__ node_branch_signs,
+    const double* __restrict__ C,
+    const double* __restrict__ G,
+    const double* __restrict__ H,
+    const double* __restrict__ I_curr,
+    const double* __restrict__ V_prev,
+    double* __restrict__ V_next,
+    double dt
+) {
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    if (i >= Nn) return;
+
+    double sumI = 0.0;
+    int start = node_branch_ptr[i];
+    int end   = node_branch_ptr[i + 1];
+
+    for (int p = start; p < end; ++p) {
+        int b = node_branch_ids[p];
+        int s = node_branch_signs[p];
+        sumI += static_cast<double>(s) * I_curr[b];
+    }
+
+    double numer = (C[i] / dt) * V_prev[i] + H[i] - sumI;
+    double denom = (C[i] / dt) + G[i];
+    V_next[i] = numer / denom;
+}
+
+__global__ void update_branches_kernel(
+    int Nb,
+    const int* __restrict__ branch_src,
+    const int* __restrict__ branch_dst,
+    const double* __restrict__ R,
+    const double* __restrict__ L,
+    const double* __restrict__ E,
+    const double* __restrict__ V_curr,
+    const double* __restrict__ I_curr,
+    double* __restrict__ I_next,
+    double dt
+) {
+    int b = blockIdx.x * blockDim.x + threadIdx.x;
+    if (b >= Nb) return;
+
+    int i = branch_src[b];
+    int j = branch_dst[b];
+
+    double vij = V_curr[i] - V_curr[j];
+    double rhs = vij - R[b] * I_curr[b] + E[b];
+    I_next[b] = I_curr[b] + (dt / L[b]) * rhs;
+}
+
+static std::vector<double> download_vector(const double* d_ptr, int n) {
+    std::vector<double> h(n);
+    CUDA_CHECK(cudaMemcpy(h.data(), d_ptr, n * sizeof(double), cudaMemcpyDeviceToHost));
+    return h;
+}
+
+void write_csv_header(std::ofstream& ofs) {
+    ofs << "step,time_s,V_probe0,V_probe1,V_probe2\n";
+}
+
+int main(int argc, char** argv) {
+    SimConfig cfg;
+
+    if (argc >= 3) {
+        cfg.nx = std::atoi(argv[1]);
+        cfg.ny = std::atoi(argv[2]);
+        cfg.probe2_x = std::min(cfg.nx - 1, cfg.probe2_x);
+        cfg.probe2_y = std::min(cfg.ny - 1, cfg.probe2_y);
+        cfg.probe1_x = std::min(cfg.nx - 1, cfg.probe1_x);
+        cfg.probe1_y = std::min(cfg.ny - 1, cfg.probe1_y);
+    }
+
+    HostNetwork host = make_grid_network(cfg);
+    DeviceNetwork dev{};
+    upload_network(dev, host);
+
+    int p0 = node_id(cfg.probe0_x, cfg.probe0_y, cfg.nx);
+    int p1 = node_id(cfg.probe1_x, cfg.probe1_y, cfg.nx);
+    int p2 = node_id(cfg.probe2_x, cfg.probe2_y, cfg.nx);
+
+    std::ofstream ofs(cfg.csv_path);
+    if (!ofs) {
+        std::cerr << "Failed to open CSV file: " << cfg.csv_path << "\n";
+        free_network(dev);
+        return 1;
+    }
+    write_csv_header(ofs);
+
+    const int threads = 256;
+    const int blocks_nodes = (dev.Nn + threads - 1) / threads;
+    const int blocks_branches = (dev.Nb + threads - 1) / threads;
+
+    double* V_prev = dev.d_V_a;
+    double* V_next = dev.d_V_b;
+    double* I_curr = dev.d_I_a;
+    double* I_next = dev.d_I_b;
+
+    cudaEvent_t ev0, ev1;
+    CUDA_CHECK(cudaEventCreate(&ev0));
+    CUDA_CHECK(cudaEventCreate(&ev1));
+    CUDA_CHECK(cudaEventRecord(ev0));
+
+    for (int n = 0; n < cfg.steps; ++n) {
+        update_nodes_kernel<<<blocks_nodes, threads>>>(
+            dev.Nn,
+            dev.d_node_branch_ptr,
+            dev.d_node_branch_ids,
+            dev.d_node_branch_signs,
+            dev.d_C,
+            dev.d_G,
+            dev.d_H,
+            I_curr,
+            V_prev,
+            V_next,
+            cfg.dt
+        );
+        CUDA_CHECK(cudaGetLastError());
+
+        update_branches_kernel<<<blocks_branches, threads>>>(
+            dev.Nb,
+            dev.d_branch_src,
+            dev.d_branch_dst,
+            dev.d_R,
+            dev.d_L,
+            dev.d_E,
+            V_next,
+            I_curr,
+            I_next,
+            cfg.dt
+        );
+        CUDA_CHECK(cudaGetLastError());
+
+        if ((n % cfg.sample_every) == 0) {
+            std::vector<double> V_sample = download_vector(V_next, dev.Nn);
+            ofs << n
+                << "," << std::setprecision(16) << (n * cfg.dt)
+                << "," << V_sample[p0]
+                << "," << V_sample[p1]
+                << "," << V_sample[p2]
+                << "\n";
+        }
+
+        std::swap(V_prev, V_next);
+        std::swap(I_curr, I_next);
+    }
+
+    CUDA_CHECK(cudaEventRecord(ev1));
+    CUDA_CHECK(cudaEventSynchronize(ev1));
+
+    float ms = 0.0f;
+    CUDA_CHECK(cudaEventElapsedTime(&ms, ev0, ev1));
+
+    CUDA_CHECK(cudaDeviceSynchronize());
+
+    auto V_final = download_vector(V_prev, dev.Nn);
+    auto I_final = download_vector(I_curr, dev.Nb);
+
+    std::cout << "LIM CUDA grid simulation complete\n";
+    std::cout << "Grid: " << cfg.nx << " x " << cfg.ny << "\n";
+    std::cout << "Nodes: " << dev.Nn << ", Branches: " << dev.Nb << "\n";
+    std::cout << "Steps: " << cfg.steps << ", dt = " << cfg.dt << "\n";
+    std::cout << "Elapsed kernel time: " << ms << " ms\n";
+    std::cout << "CSV: " << cfg.csv_path << "\n";
+
+    std::cout << "Final probe voltages:\n";
+    std::cout << "  probe0 (" << cfg.probe0_x << "," << cfg.probe0_y << ") = " << V_final[p0] << "\n";
+    std::cout << "  probe1 (" << cfg.probe1_x << "," << cfg.probe1_y << ") = " << V_final[p1] << "\n";
+    std::cout << "  probe2 (" << cfg.probe2_x << "," << cfg.probe2_y << ") = " << V_final[p2] << "\n";
+
+    CUDA_CHECK(cudaEventDestroy(ev0));
+    CUDA_CHECK(cudaEventDestroy(ev1));
+    free_network(dev);
+    return 0;
+}
+```
+
+---
+
+# File 2: `CMakeLists.txt`
+
+```cmake
+cmake_minimum_required(VERSION 3.21)
+project(lim_cuda_grid LANGUAGES CXX CUDA)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CUDA_STANDARD 17)
+set(CMAKE_CUDA_STANDARD_REQUIRED ON)
+
+add_executable(lim_grid_cuda lim_grid_cuda.cu)
+
+set_target_properties(lim_grid_cuda PROPERTIES
+    CUDA_SEPARABLE_COMPILATION ON
+    CUDA_ARCHITECTURES "89;90;120"
+)
+
+target_compile_options(lim_grid_cuda PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3>
+    $<$<COMPILE_LANGUAGE:CXX>:-O3>
+)
+```
+
+If your toolchain complains about `120`, remove it and keep the architecture you actually have installed support for.
+
+---
+
+# Build
+
+With CMake:
+
+```bash
+cmake -S . -B build
+cmake --build build -j
+```
+
+Or directly with `nvcc`:
+
+```bash
+nvcc -O3 -std=c++17 -arch=sm_89 -o lim_grid_cuda lim_grid_cuda.cu
+```
+
+---
+
+# Run
+
+Default:
+
+```bash
+./build/lim_grid_cuda
+```
+
+Or with grid dimensions:
+
+```bash
+./build/lim_grid_cuda 64 64
+```
+
+This writes:
+
+```text
+lim_waveforms.csv
+```
+
+with columns:
+
+```text
+step,time_s,V_probe0,V_probe1,V_probe2
+```
+
+---
+
+# Why this version is more serious
+
+Compared to the earlier toy code, this version adds:
+
+### 1. A real topology generator
+
+It builds a rectangular RLGC graph automatically.
+
+### 2. CSR node incidence
+
+That is the right way to represent irregular node-to-branch adjacency for GPU node updates.
+
+### 3. Trace export
+
+You can inspect propagation across the grid in CSV form.
+
+### 4. Better probe structure
+
+You can observe source, mid-grid, and far-end behavior.
+
+### 5. Timing
+
+It measures kernel time with CUDA events.
+
+---
+
+# What behavior to expect
+
+If the parameters are stable, you should see:
+
+* source node rises first
+* interior node responds later
+* far node responds later still
+* damping from `R` and `G`
+* smoother behavior as `C` and `L` increase
+
+So this starts to resemble a discrete propagation medium rather than a static resistor network.
+
+---
+
+# Important numerical notes
+
+This code is still explicit, so `dt` matters a lot.
+
+If you see blow-up or nonsense:
+
+* reduce `dt`
+* increase `R_branch`
+* increase `G_node`
+* increase `C_node` or `L_branch`
+
+A reasonable first move is:
+
+```cpp
+dt = 1e-14;
+R_branch = 1.0;
+G_node = 1e-3;
+```
+
+for a very safe run.
+
+---
+
+# Next improvements beyond this
+
+The main weak spot now is the **node kernel**. It is correct, but not yet optimized for degree variation. The next serious step would be:
+
+* warp-per-node kernel for medium/high-degree nodes
+* one-thread-per-node for low-degree nodes
+* optional branch-source waveforms `E[b](n)`
+* pulsed or sinusoidal node injection `H[i](n)`
+* device-side trace buffer instead of repeated host copies
+* binary output plus Python plotting script
+* tiled/shared-memory branch updates for structured grids
+
+---
+
+# Warp-oriented node kernel upgrade
+
+For your GPU studies, here is the next-stage node kernel. It is useful when some nodes have enough incident branches to justify warp reduction.
+
+```cpp
+__global__ void update_nodes_warp_kernel(
+    int Nn,
+    const int* __restrict__ node_branch_ptr,
+    const int* __restrict__ node_branch_ids,
+    const int* __restrict__ node_branch_signs,
+    const double* __restrict__ C,
+    const double* __restrict__ G,
+    const double* __restrict__ H,
+    const double* __restrict__ I_curr,
+    const double* __restrict__ V_prev,
+    double* __restrict__ V_next,
+    double dt
+) {
+    int global_tid = blockIdx.x * blockDim.x + threadIdx.x;
+    int warp_global = global_tid >> 5;
+    int lane = threadIdx.x & 31;
+
+    if (warp_global >= Nn) return;
+    int i = warp_global;
+
+    int start = node_branch_ptr[i];
+    int end   = node_branch_ptr[i + 1];
+
+    double partial = 0.0;
+    for (int p = start + lane; p < end; p += 32) {
+        int b = node_branch_ids[p];
+        int s = node_branch_signs[p];
+        partial += static_cast<double>(s) * I_curr[b];
+    }
+
+    for (int offset = 16; offset > 0; offset >>= 1) {
+        partial += __shfl_down_sync(0xffffffff, partial, offset);
+    }
+
+    if (lane == 0) {
+        double numer = (C[i] / dt) * V_prev[i] + H[i] - partial;
+        double denom = (C[i] / dt) + G[i];
+        V_next[i] = numer / denom;
+    }
+}
+```
+
+For a pure 2-D orthogonal grid, node degree is small, so this may not beat the scalar kernel. But for richer circuit graphs it becomes more interesting.
+
+---
+
+# A practical interpretation
+
+This code is already very close to a graph-time-marching simulator:
+
+* branch update = edge kernel
+* node update = vertex kernel
+* leapfrog staggering = explicit state exchange
+* CSV probes = transient measurement
+
+So conceptually it sits somewhere between:
+
+* FDTD
+* graph PDE propagation
+* interconnect transient simulation
+* hardware-friendly explicit circuit evolution
+
+---
+
+# If you want the next concrete step
+
+The best next upgrade would be a version with:
+
+* **pulse excitation**
+* **device-side waveform capture**
+* **Python plot script**
+* **optional image heatmap snapshots of the 2-D voltage field**
+
+That would let you actually visualize latency propagation across the grid.
+
+
+==============================
+
+Build
+
+With CMake:
+
+cmake -S . -B build
+cmake --build build -j
+
+Or directly with nvcc:
+
+nvcc -O3 -std=c++17 -arch=sm_89 -o lim_grid_cuda lim_grid_cuda.cu
+Run
+
+Default:
+
+./build/lim_grid_cuda
+
+Or with grid dimensions:
+
+./build/lim_grid_cuda 64 64
+
+This writes:
+
+lim_waveforms.csv
+
+with columns:
+
+step,time_s,V_probe0,V_probe1,V_probe2
+
+==============================
+
+nvcc -O3 -arch=sm_120 -o lim_cuda lim_cuda.cu
+
+nvcc -O3 -std=c++17 -arch=sm_120 -o lim_grid_cuda lim_grid_cuda.cu
+
+====================
+git init && git add . && git -c user.name='cubbins' -c user.email='cubbins@users.noreply.github.com' commit -m "Initial commit"
+
+gh repo create cubbins/llm_study --public --source=. --remote=origin --push
+
+sudo apt update && sudo apt install -y gh
+gh auth login
+gh repo create cubbins/llm_study --public --source=. --remote=origin --push
+
+git remote add origin git@github.com:cubbins/llm_study.git
+
+sudo apt update && sudo apt install -y gh
+
+

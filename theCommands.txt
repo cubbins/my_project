@@ -30,3 +30,4 @@ git add .
 git commit -m "Add matlab and mathematica local pytorch Windows"
 git push -u origin master
 
+git push --verbose origin master

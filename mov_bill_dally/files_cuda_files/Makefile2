@@ -1,0 +1,84 @@
+# ============================================================
+#  Makefile — NVIDIA DPX Smith-Waterman CUDA Examples
+#  Bill Dally / NVIDIA Bioinformatics (RTX 5060 / Blackwell)
+# ============================================================
+#
+# USAGE
+#   make                  — build both targets (auto-detects GPU)
+#   make simple           — build smith_waterman_cuda only
+#   make advanced         — build sw_dpx_batch only
+#   make run_simple       — build and run the simple version
+#   make run_advanced     — build and run the advanced version
+#   make clean            — remove compiled binaries
+#
+# GPU ARCHITECTURE NOTES
+#   RTX 5060 (Blackwell)   sm_120  → use sm_100a or sm_100
+#   H100    (Hopper)       sm_90   → use sm_90a for DPX
+#   RTX 4090 (Ada)         sm_89   → no DPX, uses #else path
+#   A100    (Ampere)       sm_80   → no DPX, uses #else path
+#
+# The default ARCH below (sm_90,sm_100) produces a binary that:
+#   • Uses DPX instructions on Hopper (sm_90) and Blackwell (sm_100)
+#   • Falls back to standard max() on older GPUs via PTX JIT
+# ============================================================
+
+NVCC        := nvcc
+NVCC_FLAGS  := -O3 -lineinfo
+CUDA_STD    := --std=c++17
+
+# Default: portable binary that runs on Hopper and Blackwell with DPX,
+# and falls back cleanly on Ada / Ampere / Turing via PTX JIT.
+ARCH        ?= -arch=sm_90 -code=sm_90,sm_100
+
+# ── Override targets ─────────────────────────────────────────
+# Uncomment ONE line below to target a specific GPU exclusively:
+# ARCH = -arch=sm_120            # RTX 5060  (Blackwell, native cubin)
+# ARCH = -arch=sm_100a           # Blackwell (DPX, native cubin)
+# ARCH = -arch=sm_90a            # H100      (DPX, native cubin)
+# ARCH = -arch=sm_89             # RTX 4090  (Ada, no DPX)
+# ARCH = -arch=sm_80             # A100      (Ampere, no DPX)
+# ARCH = -arch=sm_75             # RTX 2080  (Turing, no DPX)
+
+TARGETS     := sw_simple sw_dpx_batch
+
+.PHONY: all simple advanced run_simple run_advanced clean info
+
+all: simple advanced
+	@echo ""
+	@echo "✓  Both targets compiled successfully."
+	@echo "   Run:  ./sw_simple      (basic anti-diagonal wavefront)"
+	@echo "   Run:  ./sw_dpx_batch   (packed 16-bit DPX batch aligner)"
+
+# ── Target 1: Simple Smith-Waterman (anti-diagonal wavefront) ────────────────
+simple: smith_waterman_cuda.cu
+	$(NVCC) $(NVCC_FLAGS) $(CUDA_STD) $(ARCH) \
+	    -o sw_simple smith_waterman_cuda.cu
+	@echo "✓  sw_simple compiled  [$(ARCH)]"
+
+# ── Target 2: Advanced DPX packed 16-bit batch aligner ──────────────────────
+advanced: sw_dpx_batch.cu
+	$(NVCC) $(NVCC_FLAGS) $(CUDA_STD) $(ARCH) \
+	    -o sw_dpx_batch sw_dpx_batch.cu
+	@echo "✓  sw_dpx_batch compiled  [$(ARCH)]"
+
+# ── Convenience run targets ──────────────────────────────────────────────────
+run_simple: simple
+	@echo "\n─── Running sw_simple ───────────────────────────────"
+	./sw_simple
+
+run_advanced: advanced
+	@echo "\n─── Running sw_dpx_batch ────────────────────────────"
+	./sw_dpx_batch
+
+# ── Clean ────────────────────────────────────────────────────────────────────
+clean:
+	rm -f sw_simple sw_dpx_batch *.o *.ptx *.cubin
+
+# ── Info: show detected GPU ──────────────────────────────────────────────────
+info:
+	@echo "Detected NVIDIA GPU(s):"
+	@nvidia-smi --query-gpu=name,compute_cap --format=csv,noheader 2>/dev/null \
+	    || echo "  nvidia-smi not found — is the CUDA driver installed?"
+	@echo ""
+	@echo "NVCC version:"
+	@$(NVCC) --version 2>/dev/null || echo "  nvcc not found — install CUDA Toolkit 12.8+"
